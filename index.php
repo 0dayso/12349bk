@@ -31,18 +31,31 @@ Flight::register('db', 'medoo', array(
 	'port' 			=> Flight::get('DB_PORT'),
 ));
 
+// 定义路径
+Flight::set('ROOT_PATH', dirname(__FILE__));
+Flight::set('VIEW_PATH', dirname(__FILE__).'/view');
+
+
 Flight::route('/|/backend', function(){
-    
-
-
-
+    echo "main";
 });
 
+Flight::route('/public/@name', function($name){
+    echo $name;
+});
 
 Flight::before('start', function(&$params, &$output){
     // 判断是否登录状态
     
-	if($_COOKIE['is_login'])
+    if (session_id() == '') {
+        session_start();
+    }
+
+	if(!isset($_SESSION['is_login'])) {
+		Flight::render("common/header", array('public_url', ''));
+		Flight::render("user/login");
+		return false;
+	}
 
 });
 
