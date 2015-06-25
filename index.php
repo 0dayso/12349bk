@@ -32,32 +32,18 @@ Flight::register('db', 'medoo', array(
 ));
 
 // 定义路径
-Flight::set('ROOT_PATH', dirname(__FILE__));
-Flight::set('VIEW_PATH', dirname(__FILE__).'/view');
+define('ROOT_PATH', dirname(__FILE__));
+define('VIEW_PATH', dirname(__FILE__).'/view');
+define('CORE_PATH', dirname(__FILE__).'/core');
+define('VENDER_PATH', dirname(__FILE__).'/vender');
+define('LOG_PATH', dirname(__FILE__).'/log');
 
-
-Flight::route('/|/backend', function(){
-    echo "main";
-});
-
-Flight::route('/public/@name', function($name){
-    echo $name;
-});
-
-Flight::before('start', function(&$params, &$output){
-    // 判断是否登录状态
-    
-    if (session_id() == '') {
-        session_start();
-    }
-
-	if(!isset($_SESSION['is_login'])) {
-		Flight::render("common/header", array('public_url', ''));
-		Flight::render("user/login");
-		return false;
-	}
-
-});
+// 加载核心公用方法
+require CORE_PATH.'/core.php';
+// 加载模板引擎相关方法
+require CORE_PATH.'/view.php';
+// 加载路由及行为控制解析
+require CORE_PATH.'/router.php';
 
 Flight::start();
 ?>

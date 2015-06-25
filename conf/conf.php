@@ -19,5 +19,7 @@ return array(
 	
 	'COOKIE_DOMAIN' => '.ls.com',
 	'COOKIE_PATH'   => '/',
+
+	'VERSION'		=> '1.0.0'
 );
 
