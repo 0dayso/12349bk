@@ -20,6 +20,9 @@ Flight::set('flight.log_errors', true);
 // 包含视图模板文件的目录 (默认: ./views)
 Flight::set('flight.views.path', './view');
 
+// 添加半自动类路径
+Flight::path(dirname(__FILE__).'/controller');
+
 // 注册数据库函数方法, 使用medoo
 Flight::register('db', 'medoo', array(
 	'database_type' => Flight::get('DB_TYPE'),
@@ -37,6 +40,7 @@ define('VIEW_PATH', dirname(__FILE__).'/view');
 define('CORE_PATH', dirname(__FILE__).'/core');
 define('VENDER_PATH', dirname(__FILE__).'/vender');
 define('LOG_PATH', dirname(__FILE__).'/log');
+define('CONF_PATH', dirname(__FILE__).'/conf');
 
 // 加载核心公用方法
 require CORE_PATH.'/core.php';

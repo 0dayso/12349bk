@@ -25,9 +25,9 @@ Flight::before('start', function(&$params, &$output){
         session_start();
     }
 
-	// if(!isset($_SESSION['is_login'])) {
-	// 	Flight::render("user/login", array(), false);
-	// 	return false;
-	// }
+	if(!isset($_SESSION['is_login'])) {
+		Flight::render("user/login", array(), false);
+        return false;
+    }
 
 });
