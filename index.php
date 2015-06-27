@@ -33,7 +33,6 @@ Flight::register('db', 'medoo', array(
 	'charset'       => Flight::get('DB_ENCODING'),
 	'port' 			=> Flight::get('DB_PORT'),
 ));
-
 // 定义路径
 define('ROOT_PATH', dirname(__FILE__));
 define('VIEW_PATH', dirname(__FILE__).'/view');
@@ -41,6 +40,11 @@ define('CORE_PATH', dirname(__FILE__).'/core');
 define('VENDER_PATH', dirname(__FILE__).'/vender');
 define('LOG_PATH', dirname(__FILE__).'/log');
 define('CONF_PATH', dirname(__FILE__).'/conf');
+
+// start session
+if (session_id() == '') {
+    session_start();
+}
 
 // 加载核心公用方法
 require CORE_PATH.'/core.php';
