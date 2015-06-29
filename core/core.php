@@ -17,28 +17,20 @@ if($request->ajax) {
 	define('IS_AJAX', true);
 }
 
-/**
- *  rdump的别名
- *
- *  @author Garbin
- *  @param  any
- *  @return void
- */
-function dump($arr) {
-    $args = func_get_args();
-    call_user_func_array('rdump', $args);
-}
 
-/**
- *  格式化显示出变量
- *
- *  @author Garbin
- *  @param  any
- *  @return void
- */
-function rdump($arr) {
-    echo '<pre>';
-    array_walk(func_get_args(), create_function('&$item, $key', 'print_r($item);'));
-    echo '</pre>';
-    //exit();
-}
+// 注册数据库函数方法, 使用medoo
+$db =  new medoo(array(
+	// required
+	'database_type' => Flight::get('DB_TYPE'),
+	'database_name' => Flight::get('DB_NAME'),
+	'server'        => Flight::get('DB_HOST'),
+	'username'      => Flight::get('DB_USER'),
+	'password'      => Flight::get('DB_PWD'),
+	'charset'       => Flight::get('DB_ENCODING'),
+	'port' 			=> Flight::get('DB_PORT'),
+	'option' => array(
+		PDO::ATTR_CASE => PDO::CASE_NATURAL
+	)
+)); 
+
+Flight::set('db', $db);

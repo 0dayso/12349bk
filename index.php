@@ -1,4 +1,5 @@
 <?php
+require 'vender/session/class.session.php';
 require 'vender/flight/Flight.php';
 require 'vender/medoo/medoo.min.php';
 
@@ -23,16 +24,6 @@ Flight::set('flight.views.path', './view');
 // 添加半自动类路径
 Flight::path(dirname(__FILE__).'/controller');
 
-// 注册数据库函数方法, 使用medoo
-Flight::register('db', 'medoo', array(
-	'database_type' => Flight::get('DB_TYPE'),
-	'database_name' => Flight::get('DB_NAME'),
-	'server'        => Flight::get('DB_HOST'),
-	'username'      => Flight::get('DB_USER'),
-	'password'      => Flight::get('DB_PWD'),
-	'charset'       => Flight::get('DB_ENCODING'),
-	'port' 			=> Flight::get('DB_PORT'),
-));
 // 定义路径
 define('ROOT_PATH', dirname(__FILE__));
 define('VIEW_PATH', dirname(__FILE__).'/view');
@@ -42,9 +33,7 @@ define('LOG_PATH', dirname(__FILE__).'/log');
 define('CONF_PATH', dirname(__FILE__).'/conf');
 
 // start session
-if (session_id() == '') {
-    session_start();
-}
+Session::init();
 
 // 加载核心公用方法
 require CORE_PATH.'/core.php';
