@@ -30,8 +30,7 @@ Flight::map('render', function($template, $data = array(), $isall = true){
 			$cssHeader = $csshtml.$cssHeader;
 			$jsHeader = $jshtml.$jsHeader;
 
-			$aModule = explode('/', $path); // 获取当前模块,like dashboard/index, 即为dashboard模块
-		    $leftMenu = Flight::renderLeft($aModule[0],$aModule[1]);
+		    $leftMenu = Flight::renderLeft();
 
 		    $_s = new stdClass();
 		    $_s->login_user = $_SESSION['admin_name'];
@@ -40,11 +39,8 @@ Flight::map('render', function($template, $data = array(), $isall = true){
 			$_s->leftMenu   = $leftMenu;
 			$_s->mainContentLink = $template;
 
-			$_s->videoUrl = $guideVideos[strtoupper($aModule[0])];
-			
-			
-			$smarty->assign('_s', $_s);
-			$smarty->display(VIEW_PATH.'/index.tpl');
+			Flight::view()->assign('_s', $_s);
+			Flight::view()->display(VIEW_PATH.'/index.tpl');
 
 		}else{
 			// 加载单个页面
@@ -56,7 +52,7 @@ Flight::map('render', function($template, $data = array(), $isall = true){
 
 	}else{
 		header("Content-type: text/html; charset=utf-8"); 
-		die("找不到模板{$template}");
+		Error::handle(404, "找不到模板{$template}");
 	}
 	
 });
@@ -88,29 +84,34 @@ Flight::map('jsrender', function($jspath) {
 });
 
 // 打印js
-Flight::map('printscss', function() {
+Flight::map('printcss', function() {
 
 	$csshtml = '';
 
-	foreach (Flight::get('csslib') as $value) {
-		if(! strpos($value, '?'))
-	        $csshtml .= "<link href=\"" . $value . "?v=" . VERSION . "\" rel=\"stylesheet\" >\n";
-      	else
-	        $csshtml .= "<link href=\"" . $value . "&v=" . VERSION . "\" rel=\"stylesheet\" >\n";
+	if(Flight::has('csslib')) {
+		foreach (Flight::get('csslib') as $value) {
+			if(! strpos($value, '?'))
+		        $csshtml .= "<link href=\"" . $value . "?v=" . Flight::get('VERSION') . "\" rel=\"stylesheet\" >\n";
+	      	else
+		        $csshtml .= "<link href=\"" . $value . "&v=" . Flight::get('VERSION') . "\" rel=\"stylesheet\" >\n";
+		}
+		
 	}
 
 	return $csshtml;
 });
 
 // 打印js
-Flight::map('printsjs', function() {
+Flight::map('printjs', function() {
 	$jshtml = '';
 
-	foreach (Flight::get('jslib') as $value) {
-		if(! strpos($value, '?'))
-       		$jshtml .= "<script src=\"" . $value . "?v=" . VERSION . "\"></script>\n";
-      	else
-        	$jshtml .= "<script src=\"" . $value . "&v=" . VERSION . "\"></script>\n";
+	if(Flight::has('jslib')) {
+		foreach (Flight::get('jslib') as $value) {
+			if(! strpos($value, '?'))
+	       		$jshtml .= "<script src=\"" . $value . "?v=" . Flight::get('VERSION') . "\"></script>\n";
+	      	else
+	        	$jshtml .= "<script src=\"" . $value . "&v=" . Flight::get('VERSION') . "\"></script>\n";
+		}
 	}
 
 	return $jshtml;
@@ -118,7 +119,7 @@ Flight::map('printsjs', function() {
 
 Flight::map('defaultassets', function($tag = 1) {
 
-	if($tag = 1) { // css
+	if($tag == 1) { // css
 		$html = '<link rel="stylesheet" href="/public/css/style.default.css" type="text/css" />';
 	}else{
 		$html = '
@@ -126,21 +127,58 @@ Flight::map('defaultassets', function($tag = 1) {
 		<script type="text/javascript" src="/public/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.cookie.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.uniform.min.js"></script>
-		<script type="text/javascript" src="/public/js/plugins/jquery.flot.min.js"></script>
-		<script type="text/javascript" src="/public/js/plugins/jquery.flot.resize.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.slimscroll.js"></script>
-		<script type="text/javascript" src="/public/js/custom/general.js"></script>
-		<script type="text/javascript" src="/public/js/custom/dashboard.js"></script>';
+		<script type="text/javascript" src="/public/js/plugins/jquery.jgrowl.js"></script>
+		<script type="text/javascript" src="/public/js/plugins/jquery.alerts.js"></script>
+		<script type="text/javascript" src="/public/js/custom/general.js"></script>';
 	}
 
 	return $html;
 });
 
 // 初始化默认模块
-Flight::map('renderLeft', function($module, $act) {
+Flight::map('renderLeft', function() {
 
-	
+	// 定义在router.php
+	$module = Flight::get('app');
+	$act = Flight::get('act');
+	// 定义在Base.php里面
+	$my_menus = Flight::get('my_menus');
 
+	$icons = array('editor', 'elements', 'widgets', 'calendar', 'support', 'typo', 'tables', 'buttons', 'error');
 
+	$str_html = '';
+	$index = 0;
+	foreach ($my_menus as $key => $value) {
+
+		if($key == $module){
+			$currentClass = 'current';
+		}else{
+			$currentClass = '';
+		}
+
+		$subStrHtml = '';
+		// 子菜单
+	    if(isset($value['subs'])) {
+	    	foreach ($value['subs'] as $sub => $subname) {
+	    		
+	    		if($sub == $act) {
+	    			$subStrHtml .= '<li class="current"><a href="../'.$key.'/'.$sub.'">'.$subname.'</a></li>';
+	    		}else{
+	    			$subStrHtml .= '<li><a href="../'.$key.'/'.$sub.'">'.$subname.'</a></li>';
+	    		}
+
+	    	}
+	    }
+
+		$str_html .= '<li class="'.$currentClass.'"><a href="#'.$key.'" class="'.$icons[$index].'">'.$value['title'].'</a>
+	    	<span class="arrow"></span>
+	    	<ul id="'.$key.'">'.$subStrHtml.'</ul>
+	    </li>';
+
+	    $index++;
+	}
+
+	return $str_html;
 	
 });

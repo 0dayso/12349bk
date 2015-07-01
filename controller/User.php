@@ -34,7 +34,7 @@ class User {
 			$remember_me = $data->remember_me;
 
 			$db = Flight::get('db');
-			$res = $db->get("lk_admin", array("*"), array("admin_name" => trim($username)));
+			$res = $db->get("lk_admin", "*", array("admin_name" => trim($username)));
 
 			if($res) {
 
@@ -46,16 +46,14 @@ class User {
 		            Session::set('is_login', true);
 		            Session::set('admin_id', $res['admin_id']);
 		            Session::set('admin_name', $res['admin_name']);
-		            Session::set('phome_mob', $res['phome_mob']);
+		            Session::set('phone_mob', $res['phone_mob']);
 		            Session::set('group_id', $res['group_id']);
 
-		            if($remember_me) {
+		            if($remember_me == "true") {
 						// set cookie
 						// COOKIE RUNTIME(7 days)
 						$runTime = 7*24*60*60;
 
-		                setcookie('remmember_user', $res['admin_id'], time() + $runTime, "/");
-					}else{
 		                setcookie('remmember_user', $res['admin_id'], time() + $runTime, "/");
 					}
 
@@ -92,7 +90,7 @@ class User {
 		}
 
 		$db = Flight::get('db');
-		$user = $db->get("lk_admin", array("*"), array("admin_id" => $cookie['remmember_user']));
+		$user = $db->get("lk_admin", array("*"), array("admin_id" => $cookie));
 		if($user) {
 
 			// login process, write user data to session
@@ -100,7 +98,7 @@ class User {
             Session::set('is_login', true);
             Session::set('admin_id', $res['admin_id']);
             Session::set('admin_name', $res['admin_name']);
-            Session::set('phome_mob', $res['phome_mob']);
+            Session::set('phone_mob', $res['phone_mob']);
             Session::set('group_id', $res['group_id']);
 
 			// set cookie

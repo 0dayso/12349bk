@@ -20,7 +20,9 @@ class Base{
 		if(!in_array("{$app}.{$act}", self::$no_login_array)) {
 
 			// Login With Cookie
-			User::loginWithCookie();
+			if(isset($_COOKIE['remmember_user']) && $_COOKIE['remmember_user'] ) {
+				User::loginWithCookie();
+			}
 
 			if(!Session::get('is_login')) {
 				User::login();
@@ -30,21 +32,45 @@ class Base{
 		    	$group_id = Session::get('group_id');
 
 		    	$db = Flight::get('db');
-				$res = $db->get("lk_group", array("*"), array("group_id" => $group_id));
+				$res = $db->get("lk_group", "*", array("group_id" => $group_id));
 
 				$pers = $res['permissions'];
 				$perArray = unserialize($pers);
+// test
+// // 获取你有权限的菜单
+					$menus = include(CONF_PATH . '/menu.php');
+					$my_menus = array();
+					foreach ($menus as $key => $value) {
+						if(isset($menus[$key])) {
+							$my_menus[$key] = $menus[$key];
+						}
+					}
+					Flight::set('my_menus' , $my_menus);
+					return true;
 
-				if(isset($perArray[$app])) {
+				if($perArray && isset($perArray[$app])) {
 
-					$app::$act();
+					// 获取你有权限的菜单
+					$menus = include(CONF_PATH . '/menu.php');
+					$my_menus = array();
+					foreach ($perArray as $key => $value) {
+						if(isset($menus[$key])) {
+							$my_menus[$key] = $menus[$key];
+						}
+					}
 
+
+
+
+
+					return true;
 				}else{
 					// 没权限
 					$hasApp = $perArray['defaultapp'];
 					$hasAct = $perArray['defaultact'];
 
 					Error::handle('1', $hasApp, $hasAct);
+					return false;
 
 				}
 		    }
