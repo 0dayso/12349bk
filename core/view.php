@@ -39,6 +39,10 @@ Flight::map('render', function($template, $data = array(), $isall = true){
 			$_s->leftMenu   = $leftMenu;
 			$_s->mainContentLink = $template;
 
+			// 加载单个页面
+			if(!empty($data))
+		    	Flight::view()->assign($data);
+
 			Flight::view()->assign('_s', $_s);
 			Flight::view()->display(VIEW_PATH.'/index.tpl');
 
@@ -126,6 +130,7 @@ Flight::map('defaultassets', function($tag = 1) {
 		<script type="text/javascript" src="/public/js/plugins/jquery-1.7.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/public/js/plugins/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.uniform.min.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.slimscroll.js"></script>
 		<script type="text/javascript" src="/public/js/plugins/jquery.jgrowl.js"></script>

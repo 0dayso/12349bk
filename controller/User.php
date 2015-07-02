@@ -113,5 +113,17 @@ class User {
 
 	}
 
+	/**
+	 * 登出操作
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-02
+	 */
+	public static function logout() {
+
+		Session::destroy();
+		Flight::redirect('user/login');
+
+	}
 
 }

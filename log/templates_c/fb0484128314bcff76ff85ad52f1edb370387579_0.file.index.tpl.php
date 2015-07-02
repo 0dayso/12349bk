@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-01 17:08:17
+<?php /* Smarty version 3.1.27, created on 2015-07-02 16:35:56
          compiled from "E:\myphp\www\12349bk\view\index.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:685593ae0118ccd4_30486464%%*/
+/*%%SmartyHeaderCode:247685594f7ecf24af6_33357168%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,24 +9,24 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'fb0484128314bcff76ff85ad52f1edb370387579' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\view\\index.tpl',
-      1 => 1435741695,
+      1 => 1435804344,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '685593ae0118ccd4_30486464',
+  'nocache_hash' => '247685594f7ecf24af6_33357168',
   'variables' => 
   array (
     '_s' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5593ae011c37e0_35503851',
+  'unifunc' => 'content_5594f7ed044180_36532037',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5593ae011c37e0_35503851')) {
-function content_5593ae011c37e0_35503851 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_5594f7ed044180_36532037')) {
+function content_5594f7ed044180_36532037 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '685593ae0118ccd4_30486464';
+$_smarty_tpl->properties['nocache_hash'] = '247685594f7ecf24af6_33357168';
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -77,10 +77,8 @@ $_smarty_tpl->properties['nocache_hash'] = '685593ae0118ccd4_30486464';
                     <h4><?php echo $_smarty_tpl->tpl_vars['_s']->value->login_user;?>
 </h4>
                     <ul>
-                        <li><a href="editprofile.html">Edit Profile</a></li>
-                        <li><a href="accountsettings.html">Account Settings</a></li>
-                        <li><a href="help.html">Help</a></li>
-                        <li><a href="index.html">Sign Out</a></li>
+                        <li><a href="/user/accountsetting">账号设置</a></li>
+                        <li><a href="/user/logout">退出登录</a></li>
                     </ul>
                 </div><!--userdata-->
             </div><!--userinfodrop-->
@@ -98,7 +96,7 @@ $_smarty_tpl->properties['nocache_hash'] = '685593ae0118ccd4_30486464';
     </div>
     <!-- End Top-Menu Rendering -->
     
-    <div class="centercontent">
+    <div class="centercontent tables">
     
         <!-- Begin Content Rendering -->
         <?php echo $_smarty_tpl->getSubTemplate (((string)$_smarty_tpl->tpl_vars['_s']->value->mainContentLink), $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('title'=>'foo'), 0);

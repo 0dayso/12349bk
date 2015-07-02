@@ -40,10 +40,8 @@
                 <div class="userdata">
                     <h4>{$_s->login_user}</h4>
                     <ul>
-                        <li><a href="editprofile.html">Edit Profile</a></li>
-                        <li><a href="accountsettings.html">Account Settings</a></li>
-                        <li><a href="help.html">Help</a></li>
-                        <li><a href="index.html">Sign Out</a></li>
+                        <li><a href="/user/accountsetting">账号设置</a></li>
+                        <li><a href="/user/logout">退出登录</a></li>
                     </ul>
                 </div><!--userdata-->
             </div><!--userinfodrop-->
@@ -60,7 +58,7 @@
     </div>
     <!-- End Top-Menu Rendering -->
     
-    <div class="centercontent">
+    <div class="centercontent tables">
     
         <!-- Begin Content Rendering -->
         {include file="{$_s->mainContentLink}" title=foo}
