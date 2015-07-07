@@ -2520,38 +2520,3 @@ blockquote.bq2 {
 .btn_link:hover {
 	color: #0077EE;
 }
-
-.top{
-	height: 45px;
-	background-color: #fcfcfc;
-	border: 1px solid #ddd;
-}
-
-.bottom .dataTables_length {
-	float: left;
-	border: none;
-	border-left: 1px solid #ddd;
-  	border-bottom: 1px solid #ddd;
-}
-
-.bottom .dataTables_info {
-	float: left;
-  	padding: 5px;
-  	position: relative;
-  	top: 5px;
-}
-
-.infoTable td{
-	padding: 8px;
-	width: 20%;
-}
-
-.infoTable th{
-	padding: 8px;
-	width: 10%;
-}
-
-.infoTableOne td{
-	padding: 8px;
-	width: 25%;
-}

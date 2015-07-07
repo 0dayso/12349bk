@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * 订单模块管理
+ */
+class Order {
+
+
+	/**
+	 * 待审核订单
+	 *
+	 * @return page
+	 * @author zhaozl
+	 * @since  2015-07-01
+	 */
+	public static function waitorder() {
+
+		Flight::jsrender('/public/js/order/waitorder.js');
+
+		$db = Flight::get('db');
+		$res = $db->select('lk_service_item', array('item_id, item_name, ser_id'), array('is_use' => 1));
+
+		// 此处获取类型
+
+
+		Flight::render('order/waitorder', array('types' => $types));
+
+	}
+
+	/**
+	 * 获取订单
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-06
+	 */
+	public static function getOrders() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$type = isset($req->type)?$req->type:'';
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = $req['sSortDir_0'];
+
+		$db = Flight::get('db');
+		$condtion = array(
+			'ORDER' => "{$sort_item} {$sort_sort}", 
+			'LIMIT' => "{$start},{$length}"
+		);
+
+		switch ($type) {
+			case '1':
+			// 待审核订单
+				$condtion['AND']['status'] = "0";
+				break;
+			case '2':
+			// 带接单订单
+				$condtion['AND']['status'] = "1";
+				break;
+			case '3':
+			// 投诉订单
+				// $condtion['status'] = "1";
+				break;
+			default:
+			// 全版订单
+				break;
+		}
+		if($search) {
+			$condtion['AND']['OR']['admin_name[~]'] = "{$search}";
+			$condtion['AND']['OR']['contact[~]'] = "{$search}";
+		}
+
+		$res = $db->select('lk_order', array(
+			"[>]lk_order_service" => "order_sn",
+			"[>]lk_order_address" => "order_sn",
+			), "*", $condtion);
+
+		$result = array();
+		if($res){
+			foreach ($res as $key => $value) {
+
+				$result[] = array(
+					'order_sn' => $value['order_sn'],
+					'type_name' => $value['service_name']. '·'. $value['item_name'],
+					'contact' => $value['contact'],
+					'phone_mob' => isset($value['phone_mob'])?$value['phone_mob']:$value['phone_tel'],
+					'address_detail' => $value['region_name'].$value['address'],
+					'need_time' => date('Y-m-d H:i:s', $value['need_time']),
+					'remark' => $value['remark'],
+					'order_id' => $value['order_id'],
+				);
+			}
+		}
+
+		$iFilteredTotal = $db->count('lk_order', $condtion);
+		$iTotalRecords = $db->count('lk_order');
+
+		Flight::json(array(
+			'aaData' => $result, 
+			"sEcho" => intval($req->sEcho),
+			"iTotalRecords" => $iTotalRecords,
+			"iTotalDisplayRecords" => $iFilteredTotal,
+		));
+
+
+	}
+
+
+}

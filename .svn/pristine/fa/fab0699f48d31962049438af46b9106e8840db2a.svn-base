@@ -36,34 +36,42 @@ class Base{
 
 				$pers = $res['permissions'];
 				$perArray = unserialize($pers);
+// test
+// // 获取你有权限的菜单
+					$menus = include(CONF_PATH . '/menu.php');
+					$my_menus = array();
+					foreach ($menus as $key => $value) {
+						if(isset($menus[$key])) {
+							$my_menus[$key] = $menus[$key];
+						}
+					}
+					Flight::set('my_menus' , $my_menus);
+					return true;
 
-				if($perArray) {
+				if($perArray && isset($perArray[$app])) {
 
 					// 获取你有权限的菜单
 					$menus = include(CONF_PATH . '/menu.php');
 					$my_menus = array();
 					foreach ($perArray as $key => $value) {
 						if(isset($menus[$key])) {
-							$subs = array();
-							foreach ($value as $a) {
-								$subs[$a] = $menus[$key]['subs'][$a];
-							}
-							$menus[$key]['subs'] = $subs;
-
 							$my_menus[$key] = $menus[$key];
 						}
 					}
 
-					Flight::set('my_menus' , $my_menus);
 
-					if(isset($perArray[$app]) && in_array($act, $perArray[$app]) || !isset($menus[$app]['subs'][$act])) {
-						return true;
-					}else{
-						// 没权限
-						$hasApp = $perArray['defaultapp'];
-						$hasAct = $perArray['defaultact'];
-						Handle::result('403', '您没有权限访问此页面', "../{$hasApp}/{$hasAct}");
-					}
+
+
+
+					return true;
+				}else{
+					// 没权限
+					$hasApp = $perArray['defaultapp'];
+					$hasAct = $perArray['defaultact'];
+
+					Handle::result('403', '您没有权限访问此页面', "../{$hasApp}/{$hasAct}");
+					return false;
+
 				}
 		    }
 			

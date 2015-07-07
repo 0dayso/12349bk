@@ -1,0 +1,13 @@
+<div id="contentwrapper" class="contentwrapper">
+	<div class="tableoptions">
+    	<button class="deletebutton radius3" id="add_admin_btn">添加管理员</button> &nbsp;
+		<select class="radius3">
+        	<option value="">类型</option>
+        	{html_option option=}
+            <option value="">Rendering Engine</option>
+            <option value="">Platform</option>
+        </select>
+    </div><!--tableoptions-->	
+    <table id="waitorders" class="stdtable" cellspacing="0" width="100%">
+    </table>
+</div>

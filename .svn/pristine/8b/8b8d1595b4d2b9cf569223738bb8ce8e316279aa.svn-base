@@ -53,25 +53,12 @@
             <span class="formwrapper">
                 <table border="0" cellspacing="0" colspacing="0" style="width: 50%;">
                     {foreach from=$pers item=item key=mainkey}
-                    {if isset($permissions[$mainkey])}
                     <tr>
                         <td>{$item.title}</td>
                         {foreach from=$item.subs item=sub key=key}
-                        {if in_array($key, $permissions[$mainkey])}
-                            <td><input type="checkbox" name="check[{$mainkey}][{$key}]" checked="checked" /> {$sub} </td>
-                        {else}
-                            <td><input type="checkbox" name="check[{$mainkey}][{$key}]" /> {$sub} </td>
-                        {/if}
+                        <td><input type="checkbox" name="check[{$mainkey}][{$key}]" {if in_array($mainkey, $permissions) && in_array($key, $permissions[$mainkey])}checked="checked"{/if}    /> {$sub} </td>
                         {/foreach}
                     </tr>
-                    {else}
-                    <tr>
-                        <td>{$item.title}</td>
-                        {foreach from=$item.subs item=sub key=key}
-                            <td><input type="checkbox" name="check[{$mainkey}][{$key}]" /> {$sub} </td>
-                        {/foreach}
-                    </tr>
-                    {/if}
                     {/foreach}
                 </table>
             </span>

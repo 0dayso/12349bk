@@ -69,6 +69,16 @@ class Dashboard{
 	}
 
 	/**
+	 * 修改当前用户密码
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-02
+	 */
+	public static function changepwd() {
+
+	}
+
+	/**
 	 * 管理员管理
 	 *
 	 * @author zhaozl
@@ -394,7 +404,7 @@ class Dashboard{
 				$db->update("lk_group", array(
 					"group_name" => $group_name,
 					"permissions" => serialize($permissions),
-					"is_use" => $is_use,
+					"add_time" => time(),
 				), array('group_id' => $group_id));
 
 				Handle::result("成功", "编辑成功", '../dashboard/group', "点击再次编辑", '../dashboard/editgroup?group_id='.$group_id );
@@ -419,79 +429,5 @@ class Dashboard{
 		}
 
 	}
-
-	/**
-	 * 删除用户组
-	 *
-	 * @return [type]     [description]
-	 * @author zhaozl
-	 * @since  2015-07-06
-	 */
-	public static function delgroup() {
-		if(IS_POST) {
-			$group_id = Flight::request()->data->group_id;
-			$db = Flight::get('db');
-
-			// 先判断词组下面有没有人
-			$admins = $db->select('lk_admin', 'admin_id', array('group_id' => $group_id));
-			if($admins) {
-				$delRes = $db->update("lk_group",  array('is_del' => 1), array('group_id' => $group_id));
-			}else{
-				$delRes = $db->delete("lk_group",  array('group_id' => $group_id));
-			}
-
-			if($delRes) {
-				Flight::json(array('success' => true, 'msg' => '删除成功'));
-			}else{
-				Flight::json(array('success' => false, 'msg' => '删除失败'));
-			}
-
-		}else{
-			Handle::result('302', '非法请求', '../dashboard/admin');
-		}
-	}
-
-	/**
-	 * 变更密码界面
-	 *
-	 * @return [type]     [description]
-	 * @author zhaozl
-	 * @since  2015-07-06
-	 */
-	public static function changepwd() {
-
-		if(IS_POST) {
-
-			$data = Flight::request()->data;
-			$admin_id = Session::get('admin_id');
-
-			$admin_password = isset($data['admin_password'])?$data['admin_password']:'';
-			$admin_password_conf = isset($data['admin_password_conf'])?$data['admin_password_conf']:'';
-
-			if($admin_password == $admin_password_conf) {
-				$admin_pwd = md5($admin_password);
-
-				$db = Flight::get('db');
-				$db->update('lk_admin', array('admin_password' => $admin_pwd), array('admin_id' => $admin_id));
-
-				Handle::result("成功", "密码修改成功", '../dashboard/admin');
-				
-			}else{
-				Handle::result("错误", "密码两次输入不一样");
-			}
-
-
-		}else{
-
-			Flight::jsrender("/public/js/plugins/jquery.validate.min.js");
-			Flight::jsrender("/public/js/dashboard/changepwd.js");
-
-
-			Flight::render("dashboard/changepwd");
-			
-		}
-
-	}
-
 
 }

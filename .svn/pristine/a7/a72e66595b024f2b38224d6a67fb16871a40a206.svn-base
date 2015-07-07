@@ -114,9 +114,9 @@ Flight::map('printjs', function() {
 	if(Flight::has('jslib')) {
 		foreach (Flight::get('jslib') as $value) {
 			if(! strpos($value, '?'))
-	       		$jshtml .= "<script type='text/javascript' src=\"" . $value . "?v=" . Flight::get('VERSION') . "\"></script>\n";
+	       		$jshtml .= "<script src=\"" . $value . "?v=" . Flight::get('VERSION') . "\"></script>\n";
 	      	else
-	        	$jshtml .= "<script type='text/javascript' src=\"" . $value . "&v=" . Flight::get('VERSION') . "\"></script>\n";
+	        	$jshtml .= "<script src=\"" . $value . "&v=" . Flight::get('VERSION') . "\"></script>\n";
 		}
 	}
 

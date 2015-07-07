@@ -9,18 +9,12 @@ jQuery(document).ready(function($) {
 	jQuery(".stdform").validate({
 		rules: {
 			admin_name: "required",
-			admin_password: {
-				required: true,
-				minlength: 6	
-			},
+			admin_password: "required",
 			phone_mob: "required"
 		},
 		messages: {
 			admin_name: "请填写用户名",
-			admin_password: {
-				required: true,
-				minlength: "密码长度不小于6"
-			},
+			admin_password: "请填写密码",
 			phone_mob: "请填写手机号"
 		}
 	});

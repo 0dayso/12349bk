@@ -10,8 +10,6 @@ Flight::register('view', 'Smarty', array(), function($smarty){
     $smarty->compile_dir = LOG_PATH.'/templates_c/';
     $smarty->config_dir = LOG_PATH.'/config/';
     $smarty->cache_dir = LOG_PATH.'/cache/';
-    // 强制编译
-    $smarty->force_compile = true;
 });
 
 // 覆盖模板默认渲染方式
@@ -114,9 +112,9 @@ Flight::map('printjs', function() {
 	if(Flight::has('jslib')) {
 		foreach (Flight::get('jslib') as $value) {
 			if(! strpos($value, '?'))
-	       		$jshtml .= "<script type='text/javascript' src=\"" . $value . "?v=" . Flight::get('VERSION') . "\"></script>\n";
+	       		$jshtml .= "<script src=\"" . $value . "?v=" . Flight::get('VERSION') . "\"></script>\n";
 	      	else
-	        	$jshtml .= "<script type='text/javascript' src=\"" . $value . "&v=" . Flight::get('VERSION') . "\"></script>\n";
+	        	$jshtml .= "<script src=\"" . $value . "&v=" . Flight::get('VERSION') . "\"></script>\n";
 		}
 	}
 
@@ -151,10 +149,6 @@ Flight::map('renderLeft', function() {
 	$act = Flight::get('act');
 	// 定义在Base.php里面
 	$my_menus = Flight::get('my_menus');
-
-	if(!$my_menus) {
-		return '';
-	}
 
 	$icons = array('editor', 'elements', 'widgets', 'calendar', 'support', 'typo', 'tables', 'buttons', 'error');
 
