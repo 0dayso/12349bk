@@ -1,0 +1,116 @@
+<?php
+
+class Shop {
+
+	/**
+	 * 商家列表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function shoplist() {
+
+		Flight::jsrender('/public/js/shop/shoplist.js');
+		Flight::render("shop/shoplist");
+
+	}
+
+	/**
+	 * 获取商户数据
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getShops() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$sSearch_1 = isset($req->sSearch_1)?$req->sSearch_1:'';
+
+		$type = isset($req->type)?$req->type:'';
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = strtoupper($req['sSortDir_0']);
+
+		$db = Flight::get('db');
+		$condtion = array(
+			'ORDER' => array("{$sort_item} {$sort_sort}"), 
+			'LIMIT' => "{$start},{$length}"
+		);
+
+		if($sSearch_1 > 0) {
+			$condtion['AND']['item_id'] = $sSearch_1;
+		}
+
+	}
+
+
+	/**
+	 * 添加商家
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function addShop() {
+
+		$regions = self::getRegions();
+
+
+
+		Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+		Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+		Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+		Flight::jsrender('/public/js/shop/addShop.js');
+
+		Flight::render("shop/addShop", array('type' => 'add', 'regions' => $regions));
+
+	}
+
+	/**
+	 * 获取区域
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getRegions() {
+
+		$db = Flight::get('db');
+
+		$regions = $db->select('lk_region', array('region_id', 'region_name'), array('parent_id' => '530', 'ORDER' => "sort_order ASC") );
+
+		// 所有
+		$allRegions = $db->select('lk_region', array('region_id', 'region_name', 'parent_id'), array('parent_id[>]' => '0' ,'ORDER' => "sort_order ASC") );
+		$allRegs = array();
+
+		foreach ($allRegions as $alre) {
+			$allRegs[$alre['parent_id']]["{$alre['region_id']}"] = $alre['region_name'];
+		}
+
+		$res = array();
+		if($regions) {
+			foreach ($regions as $value) {
+				if(!isset($allRegs[$value['region_id']])) {
+					$res[$value['region_name']] = array("{$value['region_id']}" => "{$value['region_name']}");
+				}else{
+					$res[$value['region_name']] = $allRegs[$value['region_id']];
+				}
+			}
+
+		}
+
+		return $res;
+
+	}
+
+
+	
+	
+
+}

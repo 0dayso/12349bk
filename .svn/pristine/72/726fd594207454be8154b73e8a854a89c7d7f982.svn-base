@@ -1,0 +1,16 @@
+// define(function(require, exports, module) {
+// 	$  = require("jquery");
+// 	var srcObj = {
+// 		url    : '',
+// 		method : '',
+// 		sb     : function(){},
+// 		eb     : function(err){console.dir(err)},
+// 		data   : ''
+// 	}
+// 	return function(destObj){
+// 		obj = $.extend(srcObj,destObj);
+// 		console.dir(obj);
+// 		$.ajax(obj);
+
+// 	}
+// });

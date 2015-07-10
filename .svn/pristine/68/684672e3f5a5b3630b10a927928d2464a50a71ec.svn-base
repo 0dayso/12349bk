@@ -1,0 +1,221 @@
+<?php
+
+$info = array(
+	/*搬家*/
+	"moveHouse1" => array(
+		"name"           => "小型面包车",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>基础费用</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>小型面包车</td><td>6公里以内包车价</td><td>150元</td></tr><tr><td>搬家距离</td><td>超过6公里部分的里程数</td><td>5元/公里</td></tr><tr><td>垂直搬运</td><td>无电梯（含复式楼）</td><td>10元/层</td></tr><tr class="tab_title"><td colspan="3"><b>特殊费用</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>途中装卸费</td><td>到其他地点装卸物品（同区域）</td><td>100元/点</td></tr><tr><td>延误工时费</td><td>因客户原因造成作业车组到位后不能工作延误工时</td><td>100元/小时</td></tr><tr><td>放空费</td><td>车辆到位后、客户取消用车</td><td>100元</td></tr><tr><td>单用人工</td><td>不用车，只用人</td><td>50元/人/小时，2小时起步</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、制定搬家计划。</td></tr><tr><td>2、签订搬家合同。</td></tr><tr><td>3、准时发车。</td></tr><tr><td>4、货到清点物品结账。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小型面包/金杯车型，除基价外，不再额外收费。</td></tr><tr><td>*长途搬运（超过100公里的），10元/公里（油钱、过桥、过路费全包）。</td></tr></table>'
+	),
+
+	"moveHouse2" => array(
+		"name"           => "金杯面包车",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	
+	"moveHouse3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*家电维修*/
+	"eleFix1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix4" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix5" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix6" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix7" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleFix8" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*家电清洗*/
+	"eleClean1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleClean2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleClean3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleClean4" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"eleClean5" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*开锁服务*/
+	"fixLock" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*空调移机*/
+	"airMove1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"airMove2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*数码产品*/
+	"digFix1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"digFix2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"digFix3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*水电管道*/
+	"pipeFix1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"pipeFix2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"pipeFix3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"pipeFix4" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"pipeFix5" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	/*月嫂*/
+	"babyKeeper1" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+	"babyKeeper2" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '',
+		"process"        => '',
+		"notice"         => ''
+	),
+
+);
+
+
+?>

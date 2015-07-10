@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-07 17:31:32
+<?php /* Smarty version 3.1.27, created on 2015-07-08 14:58:22
          compiled from "E:\myphp\www\12349bk\backend\view\order\vieworder.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:7727559b9c740988b5_13231327%%*/
+/*%%SmartyHeaderCode:22227559cca0e58deb3_73605160%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'da8e531ee6ed9a9fd2448842f8b05ce1840febb5' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\order\\vieworder.tpl',
-      1 => 1436260663,
+      1 => 1436338695,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7727559b9c740988b5_13231327',
+  'nocache_hash' => '22227559cca0e58deb3_73605160',
   'variables' => 
   array (
     'order_sn' => 0,
@@ -40,13 +40,13 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_559b9c740cb530_76961648',
+  'unifunc' => 'content_559cca0e5a9431_18139929',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_559b9c740cb530_76961648')) {
-function content_559b9c740cb530_76961648 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_559cca0e5a9431_18139929')) {
+function content_559cca0e5a9431_18139929 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '7727559b9c740988b5_13231327';
+$_smarty_tpl->properties['nocache_hash'] = '22227559cca0e58deb3_73605160';
 ?>
 <div id="contentwrapper" class="contentwrapper">
     
@@ -83,15 +83,15 @@ $_smarty_tpl->properties['nocache_hash'] = '7727559b9c740988b5_13231327';
 		</tr>
 		<tr>
 			<th>服务费用：</th>
-			<td><?php echo $_smarty_tpl->tpl_vars['amount']->value;?>
+			<td>￥<?php echo $_smarty_tpl->tpl_vars['amount']->value;?>
 </td>
 			<th>使用红包：</th>
-			<td><?php echo $_smarty_tpl->tpl_vars['use_coupon_value']->value;?>
+			<td>￥<?php echo $_smarty_tpl->tpl_vars['use_coupon_value']->value;?>
 </td>
 		</tr>
 		<tr>
 			<th>应付：</th>
-			<td colspan="3"><?php echo $_smarty_tpl->tpl_vars['order_amount']->value;?>
+			<td colspan="3">￥<?php echo $_smarty_tpl->tpl_vars['order_amount']->value;?>
 </td>
 		</tr>
 		<tr>

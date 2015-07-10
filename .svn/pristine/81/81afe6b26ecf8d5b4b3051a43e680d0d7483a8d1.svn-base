@@ -1,0 +1,14 @@
+seajs.config({
+  base: "./assets/js/",
+   alias: {
+    'jquery'    : 'jquery-2.1.1.min.js',
+    'fastclick' : 'fastclick.min.js',
+    'mb'        : 'mobilebone.js',
+    'sb'        : 'yxMobileSlider.js',
+    'is'		    : 'iscroll-l.js',
+    'base'      : 'base.js',
+    'timeSelect': 'mobiscroll.custom-2.5.0.min.js',
+    'api'       : 'api.js',
+    'ajax'      : 'ajax.js'
+  } 
+})

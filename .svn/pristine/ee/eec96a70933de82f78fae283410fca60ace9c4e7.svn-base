@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>楼口12349</title>
+    <!--meta标签-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="browsermode" content="application" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="author" content="glivia | 286864566" />
+    <meta name="application-name" content="title | title.com" />
+    <meta name="keywords" content="#" />
+    <meta name="description" content="#" />
+
+    <!--
+    ################################################
+    IOS图标
+    ################################################
+    -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="#" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="#" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="#" />
+    <link rel="apple-touch-icon-precomposed" href="#" />
+    <link rel="shortcut icon" href="#" />
+
+    <!--
+    ################################################
+    css
+    ################################################
+    -->
+    <link type="text/css" rel="stylesheet" href="./assets/css/base.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.animate.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.css" />
+</head>
+
+<body>
+
+
+<!--
+################################################
+首页->家电维修->家电维修1->服务说明 eleFix1Info
+################################################
+-->
+<div id="eleFix1Info" class="page OutPage eleFix1Info out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">服务说明</div>
+    </div>
+    <div class="content2 C">
+        <div id="container-1" class="containerOut">
+        <div id="container-2" class="containerIn">
+            <div class="container C">
+        
+                <div class="title-nav"><i class="icon icon-yen"></i> 费用透明</div>
+                <div class="descrition-content C">
+                    <table>
+                        <tr>
+                            <th width="70">服务项目</th>
+                            <th width="30">服务价格(元)</th>
+                        </tr>
+                        <tr>
+                            <td>挂壁式</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>柜机</td>
+                            <td>130</td>
+                        </tr>
+                        <tr>
+                            <td>风口机</td>
+                            <td>70</td>
+                        </tr>
+                        <tr>
+                            <td>吸顶机</td>
+                            <td>150</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="title-nav"><i class="icon icon-transfer"></i> 服务流程</div>
+                <div class="descrition-content C">
+                    <table>
+                        <tr>
+                            <td>1、开机验机</td>
+                            <td>2、清洗过滤网</td>
+                        </tr>
+                        <tr>
+                            <td>3、蒸洗蒸发器</td>
+                            <td>4、蒸洗风轮</td>
+                        </tr>
+                        <tr>
+                            <td>5、水洗出风口</td>
+                            <td>6、擦拭干净</td>
+                        </tr>
+                        <tr>
+                            <td>7、装机验机</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="title-nav"><i class="icon icon-thumbs-up"></i> 服务特色</div>
+                <div class="descrition-content C">
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-yen"></i>
+                            财产保证
+                        </div>
+                        <div class="r">清洗过程中因为服务人员造成的财产损失由服务企业先行协商赔付。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-heart"></i>
+                            诚信保障
+                        </div>
+                        <div class="r">爽约或私自涨价免费赠送同类型服务一次。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-home"></i>
+                            安全保障
+                        </div>
+                        <div class="r">服务商行为记录良好，服务人员全部实名制。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-thumbs-up"></i>
+                            品质保障
+                        </div>
+                        <div class="r">未按标准流程进行清洗服务或私自加价的，可申请订单赔付。</div>   
+                    </div>
+                </div>
+        </div></div></div>
+    </div>
+</div>
+
+
+
+<!--
+################################################
+js
+################################################
+-->
+
+<script type="text/javascript" src="./assets/js/sea.js"></script>
+<script type="text/javascript">
+    seajs.use("./assets/js/seaConfig.js",function(){
+        seajs.use("./assets/js/app.js");
+    });
+</script>
+</body>
+</html>

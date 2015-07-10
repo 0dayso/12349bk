@@ -1,0 +1,18 @@
+<?php
+
+$info = array(
+
+	"moveHouse1" => array(
+		"name"           => "搬家",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的")
+	),
+
+	"moveHouse2" => array(
+		"name"           => "搬家2",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的")
+	),
+
+);
+
+
+?>

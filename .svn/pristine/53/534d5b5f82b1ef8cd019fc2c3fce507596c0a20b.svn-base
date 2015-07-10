@@ -1,0 +1,228 @@
+<?php
+
+$info = array(
+	/*搬家*/
+	"moveHouse1" => array(
+		"name"           => "小型面包车",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>基础费用</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>小型面包车</td><td>6公里以内包车价</td><td>150元</td></tr><tr><td>搬家距离</td><td>超过6公里部分的里程数</td><td>5元/公里</td></tr><tr><td>垂直搬运</td><td>无电梯（含复式楼）</td><td>10元/层</td></tr><tr class="tab_title"><td colspan="3"><b>特殊费用</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>途中装卸费</td><td>到其他地点装卸物品（同区域）</td><td>100元/点</td></tr><tr><td>延误工时费</td><td>因客户原因造成作业车组到位后不能工作延误工时</td><td>100元/小时</td></tr><tr><td>放空费</td><td>车辆到位后、客户取消用车</td><td>100元</td></tr><tr><td>单用人工</td><td>不用车，只用人</td><td>50元/人/小时，2小时起步</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、制定搬家计划。</td></tr><tr><td>2、签订搬家合同。</td></tr><tr><td>3、准时发车。</td></tr><tr><td>4、货到清点物品结账。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小型面包/金杯车型，除基价外，不再额外收费。</td></tr><tr><td>*长途搬运（超过100公里的），10元/公里（油钱、过桥、过路费全包）。</td></tr></table>'
+	),
+
+	"moveHouse2" => array(
+		"name"           => "金杯面包车",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>基础费用</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>金杯面包车</td><td>6公里以内包车价</td><td>200元</td></tr><tr><td>搬家距离</td><td>超过6公里部分的里程数</td><td>5元/公里</td></tr><tr><td>垂直搬运</td><td>无电梯（含复式楼）</td><td>10元/层</td></tr><tr class="tab_title"><td colspan="3"><b>特殊费用</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>途中装卸费</td><td>到其他地点装卸物品（同区域）</td><td>100元/点</td></tr><tr><td>延误工时费</td><td>因客户原因造成作业车组到位后不能工作延误工时</td><td>100元/小时</td></tr><tr><td>放空费</td><td>车辆到位后、客户取消用车</td><td>100元</td></tr><tr><td>单用人工</td><td>不用车，只用人</td><td>50元/人/小时，2小时起步</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、制定搬家计划。</td></tr><tr><td>2、签订搬家合同。</td></tr><tr><td>3、准时发车。</td></tr><tr><td>4、货到清点物品结账。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小型面包/金杯车型，除基价外，不再额外收费。</td></tr><tr><td>*长途搬运（超过100公里的），10元/公里（油钱、过桥、过路费全包）。</td></tr></table>'
+	),
+	
+	"moveHouse3" => array(
+		"name"           => "厢货或普卡",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>基础费用</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>箱货或普卡</td><td>6公里以内包车价（车厢高2米，宽2米，长4.3米）</td><td>300元</td></tr><tr><td>搬家距离</td><td>超过6公里部分的里程数</td><td>5元/公里</td></tr><tr><td>垂直搬运</td><td>无电梯（含复式楼）</td><td>10元/层</td></tr><tr colspan="3"><td><b>定制服务</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>平面搬运</td><td>停车点与单元门20米</td><td>超出部分1元/米</td></tr><tr><td>衣柜、普通柜子</td><td>一门、二门、三四门、五门</td><td>50元/门</td></tr><tr><td>普通床拆装</td><td>单人床、双人床、双层床</td><td>30/50/100元</td></tr><tr><td>工位隔断板凳</td><td>单工位隔断/双工位隔断</td><td>50/100元</td></tr><tr><td>拆装大型家具</td><td>大书柜/大文件柜/大电视柜</td><td>150元/件</td></tr><tr><td>其他单件家具拆装</td><td>沙发/梳妆台/文件柜等</td><td>50元/件</td></tr><tr><td>钢琴</td><td>130型（含）以下/135型/三角钢琴</td><td>300/350/500元/台</td></tr><tr><td>双开门大冰箱</td><td>双开门大冰箱</td><td>100元/个，单用卡车搬运双开门大冰箱250元，楼层费10元/层</td></tr><tr colspan="3"><td><b>空调移机</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>1-1.5匹</td><td>拆装/单拆/单装</td><td>150/70/80</td></tr><tr><td>2匹</td><td>拆装/单拆/单装</td><td>200/100/120</td></tr><tr><td>3匹</td><td>拆装/单移 /单拆</td><td>300/150/150</td></tr><tr colspan="3"><td><b>特殊费用</b></td></tr><tr class="tab_dark_bg"><td>类型</td><td>服务</td><td>价格</td></tr><tr><td>途中装卸费</td><td>到其他地点装卸物品（同区域）</td><td>100元/点</td></tr><tr><td>延误工时费</td><td>因客户原因造成作业车组到位后不能工作延误工时</td><td>100元/小时</td></tr><tr><td>放空费</td><td>车辆到位后、客户取消用车</td><td>100元</td></tr><tr><td>单用人工</td><td>不用车，只用人</td><td>50元/人/小时，2小时起步</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、制定搬家计划。</td></tr><tr><td>2、签订搬家合同。</td></tr><tr><td>3、准时发车。</td></tr><tr><td>4、货到清点物品结账。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小型面包/金杯车型，除基价外，不再额外收费。</td></tr><tr><td>*长途搬运（超过100公里的），10元/公里（油钱、过桥、过路费全包）。</td></tr></table>'
+	),
+	/*家电维修*/
+	"eleFix1" => array(
+		"name"           => "空调",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>1.5匹以下（含1.5匹）</td><td>小修</td><td>60元</td></tr><tr><td>中修</td><td>100元</td></tr><tr><td>大修</td><td>280元</td></tr><tr><td rowspan="3">2匹-3匹</td><td>小修</td><td>100元</td></tr><tr><td>中修</td><td>180元</td></tr><tr><td>大修</td><td>300元</td></tr><tr><td rowspan="3">3匹-5匹</td><td>小修</td><td>200元</td></tr><tr><td>中修</td><td>300元</td></tr><tr><td>大修</td><td>450元</td></tr><tr><td rowspan="3">5匹内小型中央空调</td><td>小修</td><td>250元</td></tr><tr><td>中修</td><td>350元</td></tr><tr><td>大修</td><td>600元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包括传感器、风机电容等</td></tr><tr><td>*中修包括室外风机、压缩机电容、电脑板</td></tr><tr><td>*大修包括压缩机、四通阀、蒸发器、冷凝器等</td></tr><tr><td>*维修变频机和拆卸有难度、高空危险作业另计费用</td></tr><tr><td>*含运输费用</td></tr><tr><td>*6-9月建议提前3天预约</td></tr></table>'
+	),
+	"eleFix2" => array(
+		"name"           => "冰箱",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="2">冰箱</td><td>小修</td><td>100元</td></tr><tr><td>大修</td><td>200元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包括换温控、压缩机启动器等</td></tr><tr><td>*大修包括换压缩机、蒸发器、冷凝器等</td></tr><tr><td>*含运输费用</td></tr></table>'
+	),
+	"eleFix3" => array(
+		"name"           => "洗衣机",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="3">波轮式</td><td>小修</td><td>50元</td></tr><tr><td>中修</td><td>80元</td></tr><tr><td>大修</td><td>150元</td></tr><tr><td rowspan="3">滚筒式</td><td>小修</td><td>80元</td></tr><tr><td>中修</td><td>150元</td></tr><tr><td>大修</td><td>200元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包含进排水管、闸阀、取异物等</td></tr><tr><td>*中修包括进排水电机、水位传感器、电脑板等</td></tr><tr><td>*大修含离合器、内外筒等</td></tr><tr><td>*小修包含进排水管、取异物等</td></tr><tr><td>*中修包括进水阀、排水泵、水位传感器、加热器、门锁、烘干器、电机、电脑板等</td></tr><tr><td>*大修含内筒总承、箱体等</td></tr><tr><td>*含运输费用</td></tr></table>'
+	),
+	"eleFix4" => array(
+		"name"           => "电视机",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>上门调试</td><td>1次</td><td>30元</td></tr><tr><td>CRT</td><td>CRT类型电视</td><td>90元</td></tr><tr><td rowspan="4">平板</td><td>32寸以下（含32寸）</td><td>150元</td></tr><tr><td>32寸-42寸（含42寸）</td><td>190元</td></tr><tr><td>42寸-50寸（含50寸）</td><td>230元</td></tr><tr><td>50寸以上</td><td>280元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*含运输费用</td></tr></table>'
+	),
+	"eleFix5" => array(
+		"name"           => "微波炉",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="2">微波炉</td><td>小修</td><td>40元</td></tr><tr><td>大修</td><td>60元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包含换灯泡、保险丝、高压整流管</td></tr><tr><td>*大修包含换磁控管、电脑版、电机、控制总承、搅拌器等</td></tr></table>'
+	),
+	"eleFix6" => array(
+		"name"           => "热水器",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="3">普通烟道机</td><td>小修</td><td>40元</td></tr><tr><td>中修</td><td>50元</td></tr><tr><td>大修</td><td>60元</td></tr><tr><td rowspan="3">普通强排机</td><td>小修</td><td>50元</td></tr><tr><td>中修</td><td>60元</td></tr><tr><td>大修</td><td>70元</td></tr><tr><td rowspan="3">恒温强排机</td><td>小修</td><td>50元</td></tr><tr><td>中修</td><td>60元</td></tr><tr><td>大修</td><td>70元</td></tr><tr><td rowspan="3">电热水器</td><td>小修</td><td>30元</td></tr><tr><td>中修</td><td>50元</td></tr><tr><td>大修</td><td>70元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包含换点火开关、电池盒等</td></tr><tr><td>*中修包含换皮膜、电磁阀等</td></tr><tr><td>*大修包含换水箱、换火排等</td></tr><tr><td>*普通烟道机属于电池打火型，含运输费</td></tr><tr><td>*小修包含换点火开关、换风机启动器等</td></tr><tr><td>*中修包含换皮膜、换风压器等</td></tr><tr><td>*大修包含换风机、换水箱等</td></tr><tr><td>*普通强排机属于手动调节温度型，含运输费</td></tr><tr><td>*小修包含换风机启动器、换温度探头等</td></tr><tr><td>*中修包含换流量阀、换电磁阀等</td></tr><tr><td>*大修包含换风机、换水箱等</td></tr><tr><td>*恒温强排机属于自动调节到设定温度型，含运输费</td></tr><tr><td>*小修包含换软管、漏水检查等</td></tr><tr><td>*中修包含换电脑版、换测温杆等</td></tr><tr><td>*大修包含换加热棒、清洗水箱等</td></tr><tr><td>*含运输费</td></tr></table>'
+	),
+	"eleFix7" => array(
+		"name"           => "油烟机",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="3">油烟机</td><td>小修</td><td>30元</td></tr><tr><td>中修</td><td>50元</td></tr><tr><td>大修</td><td>80元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包括过滤网、灯泡、油杯、网罩、排烟管</td></tr><tr><td>*中修包括电容、密封条</td></tr><tr><td>*大修电脑板、电机、止味阀</td></tr></table>'
+	),
+	"eleFix8" => array(
+		"name"           => "煤气灶",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td rowspan="3">煤气灶</td><td>小修</td><td>30元</td></tr><tr><td>中修</td><td>40元</td></tr><tr><td>大修</td><td>60元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*小修包括电池盒、电池、微调风门、炉盖疏通</td></tr><tr><td>*中修包括微动开关、点火针、感应针</td></tr><tr><td>*大修包括感应阀、电磁阀、进气阀、燃气内部管道堵塞、点火器</td></tr></table>'
+	),
+	/*家电清洗*/
+	"eleClean1" => array(
+		"name"           => "油烟机清洗",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>中式</td><td>60元</td></tr><tr><td>欧式</td><td>80元</td></tr><tr><td>侧式</td><td>90元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、通电验机。</td></tr><tr><td>2、台面防护。</td></tr><tr><td>3、网罩清洗。</td></tr><tr><td>4、风轮清洗。</td></tr><tr><td>5、涡盒铲洗。</td></tr><tr><td>6、外表擦洗。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*更换密封圈另计费用，10元/个</td></tr><tr><td>*室内清洗</td></tr></table>'
+	),
+	"eleClean2" => array(
+		"name"           => "油烟机深度保洁",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>中式</td><td>80元</td></tr><tr><td>欧式</td><td>100元</td></tr><tr><td>侧式</td><td>120元</td></tr><tr><td>集成式</td><td>200元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、通电验机。</td></tr><tr><td>2、外机拆移。</td></tr><tr><td>3、网罩拆洗。</td></tr><tr><td>4、风轮清洗。</td></tr><tr><td>5、涡盒清洗。</td></tr><tr><td>6、管座清洗。</td></tr><tr><td>7、外表擦洗。</td></tr><tr><td>8、安装验机。</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*更换密封圈另计费用，10元/个</td></tr></table>'
+	),
+	"eleClean3" => array(
+		"name"           => "空调清洗",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>挂壁式</td><td>80元</td></tr><tr><td>柜机</td><td>120元</td></tr><tr><td>风口机</td><td>60元</td></tr><tr><td>吸顶机</td><td>160元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、开机验机</td></tr><tr><td>2、清洗过滤网</td></tr><tr><td>3、蒸洗蒸发器</td></tr><tr><td>4、蒸洗风轮</td></tr><tr><td>5、水洗出风口</td></tr><tr><td>6、擦拭干净</td></tr><tr><td>7、装机验机</td></tr></table>',
+		"notice"         => ''
+	),
+	"eleClean4" => array(
+		"name"           => "洗衣机清洗",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>波轮</td><td>100元</td></tr><tr><td>滚筒</td><td>160元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、开机验机</td></tr><tr><td>2、转筒清洗</td></tr><tr><td>3、过滤袋清洗</td></tr><tr><td>4、出水口清洗</td></tr><tr><td>5、储液槽清洗</td></tr><tr><td>6、蒸汽消毒</td></tr><tr><td>7、装机验机</td></tr></table>',
+		"notice"         => ''
+	),
+	"eleClean5" => array(
+		"name"           => "微波炉清洗",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>微波炉</td><td>50元/台</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、开机验机</td></tr><tr><td>2、整机蒸洗</td></tr><tr><td>3、内部杀菌</td></tr><tr><td>4、更换磁母片</td></tr><tr><td>5、器具保养</td></tr><tr><td>6、检验机器</td></tr></table>',
+		"notice"         => ''
+	),
+	/*开锁服务*/
+	"fixLock" => array(
+		"name"           => "锁匠服务",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>房门</td><td></td><td>50元-80元</td></tr><tr><td>防盗门</td><td>A/B、超B/C</td><td>100元/150元/200元</td></tr><tr><td>卷帘门</td><td>手动/电动</td><td>80-150元/100元</td></tr><tr><td>办公柜锁</td><td></td><td>50元</td></tr><tr><td>拉杆箱</td><td>3组密码/4组密码</td><td>60元/80元</td></tr><tr><td>电动车、自行车</td><td></td><td>50元</td></tr><tr><td>面包车</td><td></td><td>100元</td></tr><tr><td rowspan="5">轿车</td><td>十万以内</td><td>150元</td></tr><tr><td>十万至二十万</td><td>260元</td></tr><tr><td>二十万至三十万</td><td>350元</td></tr><tr><td>三十万至五十万</td><td>500元</td></tr><tr><td>五十万以上</td><td>800元</td></tr><tr><td>电子保险箱</td><td>主锁/应急锁</td><td>200元/150元</td></tr><tr><td>机械保险箱</td><td>主锁</td><td>200元</td></tr><tr><td>电子/机械</td><td>3组密码/4组密码/盒式密码</td><td>200元/300元/500元</td></tr><tr class="tab_title"><td colspan="3"><b>拓展业务</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>换锁服务</td><td>A/B、超B/C</td><td>视品牌定价</td></tr><tr><td>修锁服务</td><td></td><td>50元</td></tr><tr><td>升级锁芯（C级）</td><td>美利保普通/防撬</td><td>280元/380元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*开锁前请出示有效证件，如：身份证、房产证、居住证、租赁合同、驾驶证、行驶证等。</td></tr></table>'
+	),
+	/*空调移机*/
+	"airMove1" => array(
+		"name"           => "空调移机",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>1-1.5匹</td><td>移机/单移 /单拆/单装/铜管（包含保温管、电线和扎带）/加液</td><td>150/100/70/80/80每米/80元</td></tr><tr><td>2匹</td><td>移机/单移/单拆/单装/铜管（包含保温管、电线和扎带）/加液</td><td>200元/120元/100元/120元/110元每米/100元</td></tr><tr><td>3匹</td><td>移机/单移 /单拆/单装/铜管（包含保温管、电线和扎带）/加液</td><td>300/150/150/150/130每米/150元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*不含打孔</td></tr><tr><td>*移机路程超过3公里，另收5元/公里</td></tr></table>'
+	),
+	"airMove2" => array(
+		"name"           => "空调换支架",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>1-1.5匹</td><td>铁支架/不锈钢支架</td><td>30/80元</td></tr><tr><td>2匹</td><td>铁支架/不锈钢支架</td><td>50/100元</td></tr><tr><td>3匹</td><td>铁支架/不锈钢支架</td><td>80/150元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*不含打孔</td></tr><tr><td>*涉及高空作业或外机移动作业等危险操作，相关费用另行协商。</td></tr></table>'
+	),
+	/*数码产品*/
+	"digFix1" => array(
+		"name"           => "台式机维修",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>基础费用</td><td>50元</td></tr><tr><td>系统重装</td><td>50元</td></tr><tr><td>硬件检测和维护</td><td>50元</td></tr><tr><td>配件组装</td><td>100元</td></tr><tr><td>数据恢复</td><td>200元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、问题诊断</td></tr><tr><td>2、维修机器</td></tr><tr><td>3、验机试机</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*系统重装MAC系统收费为200.</td></tr></table>'
+	),
+	"digFix2" => array(
+		"name"           => "笔记本维修",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>基础费用</td><td>50元</td></tr><tr><td>系统重装</td><td>50元</td></tr><tr><td>硬件检测和维护</td><td>50元</td></tr><tr><td>数据恢复</td><td>200元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、问题诊断</td></tr><tr><td>2、维修机器</td></tr><tr><td>3、验机试机</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*系统重装MAC系统收费为200.</td></tr></table>'
+	),
+	"digFix3" => array(
+		"name"           => "网络诊断",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>基础维修</td><td>50元</td></tr><tr><td>路由器安装</td><td>50元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、问题诊断</td></tr><tr><td>2、维修机器</td></tr><tr><td>3、验机试机</td></tr></table>',
+		"notice"         => ''
+	),
+	"digFix4" => array(
+		"name"           => "监控维修",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>基础费用</td><td>100元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>1、问题诊断</td></tr><tr><td>2、维修机器</td></tr><tr><td>3、验机试机</td></tr></table>',
+		"notice"         => ''
+	),
+	/*水电管道*/
+	"pipeFix1" => array(
+		"name"           => "洁具维修",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>角阀</td><td></td><td>40元</td></tr><tr><td>软管</td><td></td><td>40元</td></tr><tr><td>下水</td><td></td><td>40元</td></tr><tr><td>马桶</td><td></td><td>40元</td></tr><tr><td rowspan="3">龙头</td><td>单开龙头</td><td>40元</td></tr><tr><td>双开龙头</td><td>50元</td></tr><tr><td>花洒龙头</td><td>80元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*角阀超过2个另计费用</td></tr><tr><td>*下水浴缸下水另计费用</td></tr><tr><td>*马桶不含拆装</td></tr><tr><td>*角阀、龙头断裂墙体内收费80元</td></tr></table>'
+	),
+	"pipeFix2" => array(
+		"name"           => "洁具安装、更换",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>马桶</td><td></td><td>120元</td></tr><tr><td rowspan="3">龙头</td><td>单开龙头</td><td>40元</td></tr><tr><td>双开龙头</td><td>50元</td></tr><tr><td>花洒龙头</td><td>80元</td></tr><tr><td>台上盆</td><td></td><td>50元</td></tr><tr><td>台下盆</td><td></td><td>100元</td></tr><tr><td>水表</td><td></td><td>50元</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>马桶含密封圈和玻璃胶</td></tr></table>'
+	),
+	"pipeFix3" => array(
+		"name"           => "管道疏通",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>洗菜池/洗脸池</td><td>50元</td></tr><tr><td>马桶</td><td>50元</td></tr><tr><td>浴缸</td><td>50元</td></tr><tr><td>地漏</td><td>50元</td></tr><tr><td>总管</td><td>80元起</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*马桶不含拆装</td></tr><tr><td>*浴缸不含开孔</td></tr></table>'
+	),
+	"pipeFix4" => array(
+		"name"           => "管道维修",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>管道维修</td><td>价格面议</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => ''
+	),
+	"pipeFix5" => array(
+		"name"           => "电工",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="3"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="25%">类型</td><td width="45%">服务</td><td width="30%">价格</td></tr><tr><td>线路维修</td><td></td><td>80-150元</td></tr><tr><td>开关插座</td><td></td><td>50元</td></tr><tr><td rowspan="4">灯具</td><td>普通/圆形</td><td>50元</td></tr><tr><td>正方形</td><td>80元</td></tr><tr><td>长方形</td><td>100-150元</td></tr><tr><td>水晶灯</td><td>价格面议</td></tr><tr><td>空气开关/保险丝/闸刀</td><td>50元</td></tr><tr><td>家用配电箱</td><td></td><td>150元起</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务流程（现在该项目无服务流程）</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>*线路维修指线路短路、断路</td></tr><tr><td>*开关插座超过3个费用另计</td></tr></table>'
+	),
+	/*月嫂*/
+	"babyKeeper1" => array(
+		"name"           => "月嫂（白班）",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>一星</td><td>3000/月</td></tr><tr><td>二星</td><td>3500/月</td></tr><tr><td>三星</td><td>4000/月</td></tr><tr><td>零时服务</td><td>250-400/天</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>预约登记</td></tr><tr><td>面试阿姨</td></tr><tr><td>合约缴费</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务内容：哺乳指导、卫生护理、日常烹饪、卧室保洁</td></tr><tr><td>服务内容：新生儿：科学喂养、洗澡抚触、换洗尿布、皮肤护理</td></tr><tr><td>*双胎及多胎：多一宝宝加收费用50%</td></tr><tr><td>*如特殊宝宝则酌情收取费用：基础费用*（1.2—1.8）</td></tr><tr><td>*在试用期间，工资按实际费用/26天计算，做一天算一天。三天之后签订协议全额付款</td></tr><tr><td>*阿姨面试成功后服务商按市场价收取中介费</td></tr></table>'
+	),
+	"babyKeeper2" => array(
+		"name"           => "月嫂（住家）",
+		"commentChoose"  => array("上门前打个电话","要干活麻利的","要经验丰富的"),
+		"fee"            => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr class="tab_title"><td colspan="2"><b>费用说明</b></td></tr><tr class="tab_dark_bg"><td width="50%">类型</td><td width="50%">价格</td></tr><tr><td>一星</td><td>4500/月</td></tr><tr><td>二星</td><td>5500/月</td></tr><tr><td>三星</td><td>6500/月</td></tr><tr><td>四星</td><td>7000/月</td></tr><tr><td>五星</td><td>7500/月</td></tr><tr><td>零时服务</td><td>250-400/天</td></tr></table>',
+		"process"        => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>预约登记</td></tr><tr><td>面试阿姨</td></tr><tr><td>合约缴费</td></tr></table>',
+		"notice"         => '<table cellspacing="0" cellpadding="0" class="contentTab"><tr><td>服务内容：哺乳指导、卫生护理、日常烹饪、卧室保洁</td></tr><tr><td>服务内容：新生儿：科学喂养、洗澡抚触、换洗尿布、皮肤护理</td></tr><tr><td>*双胎及多胎：多一宝宝加收费用50%</td></tr><tr><td>*如特殊宝宝则酌情收取费用：基础费用*（1.2—1.8）</td></tr><tr><td>*在试用期间，工资按实际费用/26天计算，做一天算一天。三天之后签订协议全额付款</td></tr><tr><td>*阿姨面试成功后服务商按市场价收取中介费</td></tr></table>'
+	),
+
+);
+
+
+?>

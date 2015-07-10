@@ -1,0 +1,91 @@
+ define(function(require,exports){
+ 	var $               = require('jquery');
+    var attachFastClick = require('fastclick');
+ 	var Mobilebone      = require("mb");
+ 	var iScroll         = require("is");
+ 	//fastclick
+    attachFastClick(document.body);
+    Mobilebone.init();
+
+    require('sb')($);
+
+
+    $(".footer h4").click(function(){
+    	$(".footer h4").removeClass('active');
+    	$(this).addClass('active');
+    });
+
+   	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+    var sW = $(window).width();
+
+    $(".slider").yxMobileSlider({width:sW,height:150,during:3000})
+
+    /*每个页面切换都会执行的方法*/
+ 	Mobilebone.callback = function(page_in) {
+        var pageID=page_in.id;
+        $(".page").removeClass('in').addClass('out');
+        $("#"+pageID).addClass('in');
+        $(".footer h4").removeClass('active');
+        if( pageID == "index" ){
+            $(".footer h4").eq(0).addClass('active');
+        }else if( pageID == "order" ){
+            $(".footer h4").eq(1).addClass('active');
+        }else if( pageID == "my" ){
+            $(".footer h4").eq(2).addClass('active');
+        }
+ 	};
+ 	/*每个页面离开都会执行的方法*/
+ 	Mobilebone.fallback = function(page_in,page_out) {
+        // if( page_out.id == "services" ){
+        //     //alert("删除了");
+        //     $(page_out).remove();
+        // }
+        
+ 	};
+ 	/*每个页面开始动画都会执行的方法*/
+ 	Mobilebone.animationstart = function(page_in) {
+        // var pageID=page_in.id;
+        // if( pageID.indexOf("services") != -1 ){
+        //     require("./module/services");
+        //     return 0;
+        // }
+ 	};
+ 	/*每个页面结束动画都会执行的方法*/
+ 	Mobilebone.animationend = function() {
+
+ 	};
+
+ 	//每个页面
+ 	Mobilebone.onpagefirstinto = function(page_in) {
+ 	 
+        //加载一级页面
+        var pageJS = ['index','my','order'];
+		var pageID=page_in.id,
+			modulePath="./module/"+pageID;
+
+        //如果是服务页面
+        if( pageID.indexOf("services") != -1 ){
+            require("./module/services");
+            return 0;
+        }
+
+
+        for(var i = 0 ; i < pageJS.length ; i+=1){
+            if( pageID == pageJS[i] ){
+                break;
+            }
+            if( i == pageJS.length - 1 ){
+                return 0 ;
+            }
+        }
+
+
+		//异步加载模块
+		require.async(modulePath,function(ex){
+			if(ex) ex.init(page_in);
+		});
+	};
+
+    
+ })

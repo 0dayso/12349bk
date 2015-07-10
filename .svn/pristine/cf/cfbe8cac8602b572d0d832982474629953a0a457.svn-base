@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>楼口12349</title>
+    <!--meta标签-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="browsermode" content="application" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="author" content="glivia | 286864566" />
+    <meta name="application-name" content="title | title.com" />
+    <meta name="keywords" content="#" />
+    <meta name="description" content="#" />
+
+    <!--
+    ################################################
+    IOS图标
+    ################################################
+    -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="#" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="#" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="#" />
+    <link rel="apple-touch-icon-precomposed" href="#" />
+    <link rel="shortcut icon" href="#" />
+
+    <!--
+    ################################################
+    css
+    ################################################
+    -->
+    <link type="text/css" rel="stylesheet" href="./assets/css/base.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.animate.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.css" />
+</head>
+
+<body>
+<!--
+################################################
+header
+################################################
+-->
+<div class="header">
+    <div class="title">楼口12349</div>
+</div>
+
+<!--
+################################################
+首页 index
+################################################
+-->
+<div id="index" class="page index">
+    <div class="content">
+         <!--banner图-->
+         <div class="index-banner">
+            <div class="slider">
+              <ul>
+                <li><a href="http://www.baidu.com" target="_blank"><img src="./assets/images/bg-xhz-01.jpg"></a></li>
+                <li><a href="http://www.baidu.com" target="_blank"><img src="./assets/images/bg-xhz-02.jpg"></a></li>
+                <li><a href="http://www.baidu.com" target="_blank"><img src="./assets/images/bg-xhz-01.jpg"></a></li>
+                <li><a href="http://www.baidu.com" target="_blank"><img src="./assets/images/bg-xhz-02.jpg"></a></li>
+                <li><a href="http://www.baidu.com" target="_blank"><img src="./assets/images/bg-xhz-01.jpg"></a></li>
+              </ul>
+            </div>
+        </div>
+        <!--9宫格-->
+        <div class="index-nine C mt20">
+            <a href="#moveHouseSecond" class="brn bbn">
+                <span><i class="icon iconfont">󰄴</i></span>
+                搬家
+            </a>
+            <a href="#eleFixSecond" class="brn bbn">
+                <span><i class="icon iconfont">󰆍</i></span>
+                家电维修
+            </a>
+            <a href="#eleCleanSecond" class="bbn">
+                <span><i class="icon iconfont"></i></span>
+                家电清洗
+            </a>
+            <a href="#openLock" class="brn bbn">
+                <span><i class="icon iconfont">󰆕</i></span>
+                开锁服务
+            </a>
+            <a href="#" class="brn bbn">
+                <span><i class="icon iconfont">󰁧</i></span>
+                空调移机
+            </a>
+            <a href="#" class="bbn">
+                <span><i class="icon iconfont">󰅑</i></span>
+                数码产品
+            </a>
+            <a href="#" class="bln brn">
+                <span><i class="icon iconfont"></i></span>
+                水电管道
+            </a>
+            <a href="#" class="brn">
+                <span><i class="icon iconfont"></i></span>
+                月嫂
+            </a>
+            <a href="#moreClass">
+                <span><i class="icon iconfont">󰅁</i></span>
+                更多
+            </a>
+        </div>
+
+    </div></div>
+
+<!--
+################################################
+订单 order
+################################################
+-->
+<div id="order" class="page order out">
+    <div class="content">
+        <div class="order-item">
+             <!--预约类型-->
+             <p class="row2 C">
+                <span class="l"><i class="icon icon-th"></i>类型:<b>熊孩子-新居开荒</b></span>
+                 <span class="r"><i class="icon icon-yen"></i>预计费用:<b>30元</b></span>
+             </p>
+             <!--预约时间-->
+             <p class="row2"><i class="icon icon-time"></i>预约时间:<b>2014-02-03 13:29:30</b></p>
+             <!--预约地址-->
+             <p class="row2"><i class="icon icon-map-marker"></i>地址:<b>常州市天宁区九州新世界15-1幢1211室</b></p>
+             <!--联系人-->
+             <p class="row2"><i class="icon icon-user"></i>联系人:<b>顾苏琦(13401616196)</b></p>
+             <!--备注信息-->
+             <p class="row2"><i class="icon icon-comment"></i>备注:<s>无</s></p>
+             <a href='#' class="one-more-time">再来一次</a>
+         </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--
+################################################
+我的 my
+################################################
+-->
+
+
+<div id="my" class="page my out">
+    <div class="content">
+         <div class="user-center-top">
+            <div class="user-avatar"><img src="./assets/images/bg-user-avatar.png" width="80" height="80" /></div>
+            <div class="user-info-notice">欢迎您<br /><b>13401616196</b></div>
+        </div>
+        <!--ITEM-->
+        <a class="list-item mt20" href='#feedback'>
+            <i class="icon icon-comment"></i>意见反馈
+        </a>                   
+        <a class="list-item" href='tel:12349'>
+            <i class="icon icon-phone-alt"></i>联系客服
+        </a>
+        <a class="list-item" href='#about' style="border-bottom:1px solid #ddd">
+            <i class="icon icon-bookmark"></i>关于我们
+        </a>  
+        <a href='#'  class="user-logout">用户注销</a>
+    </div>
+</div>
+
+
+
+
+
+<!--
+################################################
+搬家二级 moveHouseSecond
+################################################
+-->
+
+
+
+<div id="moveHouseSecond" class="page out OutPage moveHouseSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">搬家</div>
+    </div>
+    <a class="list-item mt20" href='#moveHouse1'>小型面包车</a>                   
+    <a class="list-item" href='#moveHouse2'>金杯面包车</a>  
+    <a class="list-item" href='#moveHouse3' style="border-bottom:1px solid #ddd">厢货或普卡</a>  
+</div>
+
+
+
+
+<!--
+################################################
+电器维修二级 eleFixSecond
+################################################
+-->
+
+
+<div id="eleFixSecond" class="page out OutPage eleFixSecond">
+    
+        <div class="headerInner">
+            <a class="icon_left" href='javascript:void(0)' data-rel="back">
+                <img class="back" src="./assets/images/icon_back.png" width="20" />
+                <span>返回</span>
+            </a>
+            <div class="title">电器维修</div>
+        </div>
+    <div class="content2 C">
+        <a class="list-item mt20" href='#eleFix1'>空调</a>                   
+        <a class="list-item" href='#eleFix2'>冰箱</a>  
+        <a class="list-item" href='#eleFix3'>洗衣机</a>  
+        <a class="list-item" href='#eleFix4'>电视机</a>  
+        <a class="list-item" href='#eleFix5'>微波炉</a>  
+        <a class="list-item" href='#eleFix6'>热水器</a>  
+        <a class="list-item" href='#eleFix7'>油烟机</a>  
+        <a class="list-item" href='#eleFix8' style="border-bottom:1px solid #ddd">煤气灶</a>  
+    </div>
+</div>
+
+
+<!--
+################################################
+家电清洗二级 eleCleanSecond
+################################################
+-->
+
+
+<div id="eleCleanSecond" class="page out OutPage eleCleanSecond">
+        <div class="headerInner">
+            <a class="icon_left" href='javascript:void(0)' data-rel="back">
+                <img class="back" src="./assets/images/icon_back.png" width="20" />
+                <span>返回</span>
+            </a>
+            <div class="title">家电清洗</div>
+        </div>
+    <div class="content2 C">
+        <a class="list-item mt20" href='#eleClean1'>油烟机清洗</a>                   
+        <a class="list-item" href='#eleClean2'>油烟机深度保洁</a>  
+        <a class="list-item" href='#eleClean3'>空调清洗</a>  
+        <a class="list-item" href='#eleClean4'>洗衣机清洗</a>  
+        <a class="list-item" href='#eleClean5' style="border-bottom:1px solid #ddd">微波炉清洗</a>  
+    </div>
+</div>
+
+
+<!--
+################################################
+空调移机二级 airMoveSecond
+################################################
+-->
+
+
+<div id="airMoveSecond" class="page out OutPage airMoveSecond">
+        <div class="headerInner">
+            <a class="icon_left" href='javascript:void(0)' data-rel="back">
+                <img class="back" src="./assets/images/icon_back.png" width="20" />
+                <span>返回</span>
+            </a>
+            <div class="title">空调移机</div>
+        </div>
+    <div class="content2 C">
+        <a class="list-item mt20" href='#airMove1'>空调移机</a>                   
+        <a class="list-item" href='#airMove2' style="border-bottom:1px solid #ddd">空调换支架</a>  
+    </div>
+</div>
+
+
+<!--
+################################################
+更多分类 moreClass
+################################################
+-->
+
+
+<div id="moreClass" class="page out OutPage moreClass">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">全部分类</div>
+    </div>
+    <div class="moreTypeList">
+         <ul>
+            <li><a href="#">水电管道</a></li>
+            <li><a href="#">月嫂</a></li>
+            <li><a href="#">开锁服务</a></li>
+            <li><a href="#">电器维修</a></li>
+            <li><a href="#">电器维修</a></li>
+            <li><a href="#">电器维修</a></li>
+         </ul>
+    </div>
+</div>
+
+
+
+<!--
+################################################
+首页->家电维修->家电维修1 eleFix1
+################################################
+-->
+<div id="eleFix1" class="page OutPage eleFix1 out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">家电维修1</div>
+        <div class="icon_right"><a href='#eleFix1Info' data-animationstart="showServiceInfo">服务说明</a></div>
+    </div>
+    <div class="content2 C">
+    
+
+                <!--费用信息-->
+                <a class="service-info" href='./reserver-info-fix-yyj.html' style="display:block;">
+                    <p>费用 :人工费<span>30元-80元</span><i class="icon icon-chevron-right r"></i></p>
+                </a>
+                <!--填的基本信息-->
+                <div class="basic-info mt20 reserve">
+                    <div class="title"><span>基本信息</span></div>
+
+                    <!--煤气灶类型-->
+                   <div class="row-group">
+                        <div class="row row-type-yyj row-canchoose">
+                            <span><i class="icon icon-th"></i>品牌</span>
+                            <select class="js_select_type">
+                                <option value="0">请选择品牌</option>
+                                <option value="1">老板</option>
+                                <option value="2">方太</option>
+                                <option value="3">帅康</option>
+                                <option value="4">其它</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="comment-info mt20 reserve js_comment_info">
+                        <div class="row">
+                            <span><i class="icon icon-comment"></i>备注信息</span>
+                            <textarea></textarea>
+                        </div>
+                        <!--油烟机-->
+                        <div class="comment-attr js_rst_item js_rst_yyj C">
+                            <a href='#'><i class="icon icon-plus"></i>不通电</a>
+                            <a href='#'><i class="icon icon-plus"></i>控制按钮失灵</a>
+                            <a href='#'><i class="icon icon-plus"></i>照明损坏</a>
+                            <a href='#'><i class="icon icon-plus"></i>电机不工作</a>
+                        </div>
+
+                </div>
+                </div>
+                <!--联系人信息-->
+                <div class="contact-info mt20 reserve">
+                    <div class="title"><span>联系人信息</span></div>
+                     <div class="row">
+                        <span><i class="icon icon-map-marker"></i>预约地址</span>
+                        <input type="text" value="" name="" />
+                    </div>
+                    <div class="row">
+                        <span><i class="icon icon-time"></i>预约时间</span>
+                        <input type="text" value="" name="reserver-time" id="time1" placeholder="请至少提前3小时预定" />
+                    </div>
+                    <div class="row">
+                        <span><i class="icon icon-user"></i>联系人</span>
+                        <input type="tel" value="" name="username" />
+                    </div>
+                    <div class="row">
+                        <span><i class="icon icon-phone"></i>电话</span>
+                        <input type="text" value="" name="phone" />
+                    </div>
+                </div>
+
+    </div>
+</div>
+
+<!--
+################################################
+首页->家电维修->家电维修1->服务说明 eleFix1Info
+################################################
+-->
+<div id="eleFix1Info" class="page OutPage eleFix1Info out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">服务说明</div>
+    </div>
+    <div class="content2 C">
+        <div id="container-1" class="containerOut">
+        <div id="container-2" class="containerIn">
+            <div class="container C">
+        
+                <div class="title-nav"><i class="icon icon-yen"></i> 费用透明</div>
+                <div class="descrition-content C">
+                    <table>
+                        <tr>
+                            <th width="70">服务项目</th>
+                            <th width="30">服务价格(元)</th>
+                        </tr>
+                        <tr>
+                            <td>挂壁式</td>
+                            <td>80</td>
+                        </tr>
+                        <tr>
+                            <td>柜机</td>
+                            <td>130</td>
+                        </tr>
+                        <tr>
+                            <td>风口机</td>
+                            <td>70</td>
+                        </tr>
+                        <tr>
+                            <td>吸顶机</td>
+                            <td>150</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="title-nav"><i class="icon icon-transfer"></i> 服务流程</div>
+                <div class="descrition-content C">
+                    <table>
+                        <tr>
+                            <td>1、开机验机</td>
+                            <td>2、清洗过滤网</td>
+                        </tr>
+                        <tr>
+                            <td>3、蒸洗蒸发器</td>
+                            <td>4、蒸洗风轮</td>
+                        </tr>
+                        <tr>
+                            <td>5、水洗出风口</td>
+                            <td>6、擦拭干净</td>
+                        </tr>
+                        <tr>
+                            <td>7、装机验机</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="title-nav"><i class="icon icon-thumbs-up"></i> 服务特色</div>
+                <div class="descrition-content C">
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-yen"></i>
+                            财产保证
+                        </div>
+                        <div class="r">清洗过程中因为服务人员造成的财产损失由服务企业先行协商赔付。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-heart"></i>
+                            诚信保障
+                        </div>
+                        <div class="r">爽约或私自涨价免费赠送同类型服务一次。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-home"></i>
+                            安全保障
+                        </div>
+                        <div class="r">服务商行为记录良好，服务人员全部实名制。</div>   
+                    </div>
+                    <div class="keep C">
+                        <div class="l">
+                            <i class="icon icon-thumbs-up"></i>
+                            品质保障
+                        </div>
+                        <div class="r">未按标准流程进行清洗服务或私自加价的，可申请订单赔付。</div>   
+                    </div>
+                </div>
+        </div></div></div>
+    </div>
+</div>
+
+
+
+<!--
+################################################
+我的->用户反馈 feedback
+################################################
+-->
+
+<div id="feedback" class="page OutPage feedback out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">意见反馈</div>
+    </div>
+    <div class="feedback-box">
+        <textarea></textarea>
+        <a href='#' class="active">提交</a>
+    </div>
+</div>
+
+
+
+<!--
+################################################
+我的->关于我们 about
+################################################
+-->
+
+
+<div id="about" class="page OutPage about out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">关于我们</div>
+    </div>
+    <div class="law-content C">
+        <h1>123232</h1>
+    </div>
+</div>
+
+
+<!--
+################################################
+footer
+################################################
+-->
+
+
+<div class="footer">
+    <h4 class="active"><a href="#index" data-rel="auto"><i class="icon icon-home"></i>首页</a></h4>
+    <h4><a href="#order" data-rel="auto"><i class="icon icon-file"></i>订单</a></h4>
+    <h4><a href="#my" data-rel="auto"><i class="icon icon-user"></i>我的</a></h4>
+</div>
+
+
+
+
+<!--
+################################################
+js
+################################################
+-->
+
+<script type="text/javascript" src="./assets/js/sea.js"></script>
+<script type="text/javascript">
+    seajs.use("./assets/js/seaConfig.js",function(){
+        seajs.use("./assets/js/app.js");
+    });
+</script>
+</body>
+</html>

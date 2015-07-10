@@ -1,0 +1,7 @@
+define(function(require, exports, module) {
+	exports.init = function(page) {
+	   var base         = require("base");
+	   console.dir(base);
+	   base.isInit("#container-order");
+	}
+});

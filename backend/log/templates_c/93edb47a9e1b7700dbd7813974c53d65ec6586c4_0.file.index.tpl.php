@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-07 17:43:39
+<?php /* Smarty version 3.1.27, created on 2015-07-10 16:56:50
          compiled from "E:\myphp\www\12349bk\backend\view\index.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:17240559b9f4b405dd0_13541588%%*/
+/*%%SmartyHeaderCode:2004559f88d25c7458_90209091%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,30 +9,31 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '93edb47a9e1b7700dbd7813974c53d65ec6586c4' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\index.tpl',
-      1 => 1436144743,
+      1 => 1436490391,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17240559b9f4b405dd0_13541588',
+  'nocache_hash' => '2004559f88d25c7458_90209091',
   'variables' => 
   array (
     '_s' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_559b9f4b4251e4_72357164',
+  'unifunc' => 'content_559f88d25ea6d9_18058643',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_559b9f4b4251e4_72357164')) {
-function content_559b9f4b4251e4_72357164 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_559f88d25ea6d9_18058643')) {
+function content_559f88d25ea6d9_18058643 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '17240559b9f4b405dd0_13541588';
+$_smarty_tpl->properties['nocache_hash'] = '2004559f88d25c7458_90209091';
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>楼口12349 后台管理系统</title>
 
 <!-- Begin styles Rendering -->
@@ -115,6 +116,43 @@ $_smarty_tpl->properties['nocache_hash'] = '17240559b9f4b405dd0_13541588';
 <?php echo $_smarty_tpl->tpl_vars['_s']->value->jsHeader;?>
 
 <!-- End Javascript Renderring -->
+
+
+<!-- 通用方法， 检查浏览器是否支持WebSocket技术，并建立Socket链接 -->
+<!-- 广播接收机，用于接受及时消息 -->
+<?php echo '<script'; ?>
+ type="text/javascript">
+    
+    jQuery(document).ready(function($) {
+        
+        window.WebSocket = window.WebSocket || window.MozWebSocket;
+        if(!window.WebSocket) {
+            jAlert("您的浏览器并不支持WebSocket，请更换新式浏览器访问，不然您将不能收到及时消息通知");
+            return;
+        }
+
+        var socket = new WebSocket("ws://<?php echo $_smarty_tpl->tpl_vars['_s']->value->websocket_url;?>
+:<?php echo $_smarty_tpl->tpl_vars['_s']->value->websocket_port;?>
+");
+        socket.onopen    = function(msg) { 
+           // jAlert("Welcome - status "+this.readyState);
+           //建立成功
+        };
+
+        socket.onmessage = function(msg) { 
+            // 广播消息
+           jAlert("Received: "+msg.data); 
+        };
+
+        socket.onclose   = function(msg) { 
+            // 失去链接
+           // jAlert("后台消息通知服务停止，代码："+this.readyState); 
+        };
+
+    });
+
+<?php echo '</script'; ?>
+>
 
 </body>
 </html>

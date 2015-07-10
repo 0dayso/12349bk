@@ -1,0 +1,22 @@
+<div id="servicesContent" class="page OutPage servicesContent out">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">服务说明</div>
+    </div>
+    <div class="content2 C">
+        <div id="container-1" class="containerOut">
+            <div id="container-2" class="containerIn">
+                <div class="container C">
+                    <?php
+                        include "info.php";
+                        $type = $_REQUEST['tid'];
+                        echo $type;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

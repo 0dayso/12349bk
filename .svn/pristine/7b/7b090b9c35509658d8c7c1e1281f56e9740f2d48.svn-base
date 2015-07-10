@@ -1,0 +1,15 @@
+define(function(require,exports){
+	var iScroll = require("is");
+ 
+
+	exports.isInit = function(obj){
+		var demo = new iScroll(obj, {
+			scrollbars: true,
+			mouseWheel: true,
+			interactiveScrollbars: true,
+			shrinkScrollbars: 'scale',
+			fadeScrollbars: true
+		});
+	}
+
+})

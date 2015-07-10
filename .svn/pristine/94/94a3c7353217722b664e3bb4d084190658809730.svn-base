@@ -1,0 +1,9 @@
+define(function(){
+	return {
+		"moveHouse1" :{
+			"fee_announce" : "" ,
+			"service_flow" : "" ,
+			"tip"          : ""
+		}	
+	}
+})

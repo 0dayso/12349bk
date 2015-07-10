@@ -1,0 +1,7 @@
+define(function(require,exports){
+	var baseUrl = 'http://api.lk12349.com/';
+	return {
+		//提交评论
+		"commentSubmit" : baseUrl + "my/submitComment/"
+	}
+})
