@@ -2567,3 +2567,7 @@ blockquote.bq2 {
 .formtable .stdform span.field, .stdform div.field {
 	  margin-left: 120px;
 }
+
+.hide{
+	display: none;
+}

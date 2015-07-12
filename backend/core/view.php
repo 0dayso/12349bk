@@ -130,7 +130,8 @@ Flight::map('printjs', function() {
 Flight::map('defaultassets', function($tag = 1) {
 
 	if($tag == 1) { // css
-		$html = '<link rel="stylesheet" href="/public/css/style.default.css" type="text/css" />';
+		$html = '<link rel="stylesheet" href="/public/css/style.default.css" type="text/css" />
+		<link rel="stylesheet" href="/public/css/font-awesome.min.css" type="text/css" />';
 	}else{
 		$html = '
 		<script type="text/javascript" src="/public/js/plugins/jquery-1.7.min.js"></script>

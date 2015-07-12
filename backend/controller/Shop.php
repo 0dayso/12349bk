@@ -535,8 +535,77 @@ class Shop {
 	 */
 	public static function shoptype() {
 
+
+		$search = isset(Flight::request()->query->search)?Flight::request()->query->search:'';
+
+		// 获取所有服务类型
+		$db = Flight::get('db');
+
+		$con = array("is_use" => 1);
+		if($search) {
+			$con = array("is_use" => 1, "set_name[~]" => $search);
+		}
+
+		$sers = $db->select("lk_service", array("ser_id","ser_name"), $con);
+		$ser_array = array();
+		if($sers) {
+			foreach ($sers as $ser) {
+				$ser_array[$ser['ser_id']] = array("ser_name" => $ser['ser_name']);
+			}
+		}
+
+		$items = $db->select("lk_service_item", array("item_id","item_name","ser_id"), array("is_use" => 1));
+		$item_array = array();
+		if($items) {
+			foreach ($items as $item) {
+				if(isset($ser_array[$item['ser_id']])) {
+					$ser_array[$item['ser_id']]['items'][] = array("item_id" => $item['item_id'], "item_name" => $item['item_name']);
+				}
+			}
+		}
+
+		if(isset(Flight::request()->query->cur_ser_id)) {
+			$cur_ser_id = Flight::request()->query->cur_ser_id;
+		}else{
+			$cur_ser_id = "";
+		}
+
 		Flight::jsrender('/public/js/shop/shoptype.js');
-		Flight::render("shop/shoptype");
+		Flight::render("shop/shoptype", array("sers" => $ser_array, "cur_ser_id" => $cur_ser_id));
+
+	}
+
+
+	/**
+	 * 新增子类
+	 *
+	 * @author zhaozl
+	 * @since   2015-07-12T23:56:32+0800
+	 */
+	public static function addSubType() {
+
+		$data = Flight::request()->data;
+		$ser_id = isset($data['ser_id'])?$data['ser_id']:'';
+		$sub_item = isset($data['sub_item'])?$data['sub_item']:'';
+
+		if($ser_id) {
+
+			Flight::get('db')->insert("lk_service_item", array(
+				'item_name' => $sub_item,
+				'item_price' => ,
+				'ser_id' => ,
+				'price_detail' => ,
+				'professional_detail' => ,
+				'user_protected' => ,
+				'is_use' => ,
+				'sort_order' => ,
+				'limit_order' => ,
+
+			));
+
+		}
+
+
 
 	}
 

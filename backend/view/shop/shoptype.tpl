@@ -1,0 +1,41 @@
+<div id="contentwrapper" class="contentwrapper">
+	<div class="tableoptions dataTables_wrapper" style="text-align: right;">
+        <input type="text" class="inner-editor" id="search_text" placeholder="查找服务类型">&nbsp;
+        <button class="radius3" id="search_btn">Search</button>
+    </div>
+    <table id="shoplist" class="stdtable" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th style="width: 20px;"></th>
+				<th>#</th>
+				<th>类型名称</th>
+				<th>二级类型</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach from=$sers item=item name=ser_name key=key}
+				<tr id="{$key}" class="main_ser">
+					<td><a href="javascript:void(0);" class="expand_btn" data-id="{$key}"><span class="{if $key eq $cur_ser_id}icon-minus{else}icon-plus{/if}">&nbsp;</span></a></td>
+					<td>{$smarty.foreach.ser_name.iteration}</td>
+					<td>{$item['ser_name']}</td>
+					<td>&nbsp;&nbsp;&nbsp;</td>
+					<td>
+						<a href="javascript:void(0);" class="btn_link add_item" data-id="{$key}">添加子类</a>
+						&nbsp;&nbsp;&nbsp;
+						<a href="javascript:void(0);" class="btn_link del_ser" data-id="{$key}">删除</a>
+					</td>
+				</tr>
+				{foreach from=$item['items'] item=subitem name=subname}
+					<tr id="{$subitem['item_id']}" class="sub_item{$key} {if $key eq $cur_ser_id}show{else}hide{/if}">
+						<td>&nbsp;</td>
+						<td>{$smarty.foreach.subname.iteration})</td>
+						<td>&nbsp;</td>
+						<td>{$subitem['item_name']}</td>
+						<td><a href="javascript:void(0);" class="btn_link del_sub" data-id="{$subitem['item_id']}">删除</a></td>
+					</tr>
+				{/foreach}
+			{/foreach}
+		</tbody>
+    </table>
+</div>
