@@ -1,0 +1,76 @@
+<?php
+class Login{
+	/**
+	 * checkLogin
+	 * @return [type] [description]
+	 */
+	public static function checkLogin(){
+		$database = Flight::get('db');
+		$openid   = $_POST['open_id'];
+
+		//$openid   = 1111;
+		//$result   = $database->select("lk_user",array("user_id","phone_mob"),array("open_id[=]" => $openid ));
+
+		//$userId   = $result['user_id'];
+		//$userTel  = $result['userTel'];
+		echo $openid;
+
+		//print_r( $result['user_id'] );
+
+		// if( $result ){
+		// 	//如果有记录
+			
+		// 	echo json_encode(array(
+		// 		"success" => 'true',
+		// 		"userId"  => $userId,
+		// 		"userTel" => $userTel
+		// 	));
+		// }else{
+		// 	//如果没记录
+		// 	echo json_encode(array(
+		// 		"success" => 'true',
+		// 		"userId"  => 'none'
+		// 	));
+		// }
+	}	
+
+
+	/**
+	 * sendMSG 发送短信
+	 * @return [type] [description]
+	 */
+	public static function sendMSG(){
+		$database = Flight::get('db');
+	 
+	}	
+
+
+	/**
+	 * doLogin
+	 * @return [type] [description]
+	 */
+	public static function doLogin(){
+		$database = Flight::get('db');
+		$openid   = $_POST['openid'];
+		$telnum   = $_POST['telnum'];
+		$telnum   = $_POST['telnum'];
+
+		$result   = $database->select("lk_user","*",array("buyer_id[=]" => $userid ));
+
+
+		if( $result ){
+			//如果有记录
+			echo json_encode(array(
+				"success" => 'true',
+				"userId"  => 'none'
+			));
+		}else{
+			//如果没记录
+			echo json_encode(array(
+				"success" => 'true',
+				"userId"  => $userId,
+				"userTel" => $userTel
+			));
+		}
+	}	
+}

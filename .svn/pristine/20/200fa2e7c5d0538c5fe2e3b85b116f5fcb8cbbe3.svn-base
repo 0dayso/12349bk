@@ -1,0 +1,16 @@
+$(function() {
+    /**
+     * 得到优惠券列表
+     */
+
+    function getCoupList() {
+
+    }
+
+    /**
+     * 得到使用记录
+     */
+    function getUseInfo() {
+
+    }
+})

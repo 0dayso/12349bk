@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-10 16:56:50
+<?php /* Smarty version 3.1.27, created on 2015-07-13 17:47:08
          compiled from "E:\myphp\www\12349bk\backend\view\index.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2004559f88d25c7458_90209091%%*/
+/*%%SmartyHeaderCode:829055a3891c393614_54911955%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,24 +9,24 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '93edb47a9e1b7700dbd7813974c53d65ec6586c4' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\index.tpl',
-      1 => 1436490391,
+      1 => 1436773441,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2004559f88d25c7458_90209091',
+  'nocache_hash' => '829055a3891c393614_54911955',
   'variables' => 
   array (
     '_s' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_559f88d25ea6d9_18058643',
+  'unifunc' => 'content_55a3891c3c6298_54905662',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_559f88d25ea6d9_18058643')) {
-function content_559f88d25ea6d9_18058643 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a3891c3c6298_54905662')) {
+function content_55a3891c3c6298_54905662 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '2004559f88d25c7458_90209091';
+$_smarty_tpl->properties['nocache_hash'] = '829055a3891c393614_54911955';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,33 +123,33 @@ $_smarty_tpl->properties['nocache_hash'] = '2004559f88d25c7458_90209091';
 <?php echo '<script'; ?>
  type="text/javascript">
     
-    jQuery(document).ready(function($) {
+    // jQuery(document).ready(function($) {
         
-        window.WebSocket = window.WebSocket || window.MozWebSocket;
-        if(!window.WebSocket) {
-            jAlert("您的浏览器并不支持WebSocket，请更换新式浏览器访问，不然您将不能收到及时消息通知");
-            return;
-        }
+    //     window.WebSocket = window.WebSocket || window.MozWebSocket;
+    //     if(!window.WebSocket) {
+    //         jAlert("您的浏览器并不支持WebSocket，请更换新式浏览器访问，不然您将不能收到及时消息通知");
+    //         return;
+    //     }
 
-        var socket = new WebSocket("ws://<?php echo $_smarty_tpl->tpl_vars['_s']->value->websocket_url;?>
+    //     var socket = new WebSocket("ws://<?php echo $_smarty_tpl->tpl_vars['_s']->value->websocket_url;?>
 :<?php echo $_smarty_tpl->tpl_vars['_s']->value->websocket_port;?>
 ");
-        socket.onopen    = function(msg) { 
-           // jAlert("Welcome - status "+this.readyState);
-           //建立成功
-        };
+    //     socket.onopen    = function(msg) { 
+    //        // jAlert("Welcome - status "+this.readyState);
+    //        //建立成功
+    //     };
 
-        socket.onmessage = function(msg) { 
-            // 广播消息
-           jAlert("Received: "+msg.data); 
-        };
+    //     socket.onmessage = function(msg) { 
+    //         // 广播消息
+    //        jAlert("Received: "+msg.data); 
+    //     };
 
-        socket.onclose   = function(msg) { 
-            // 失去链接
-           // jAlert("后台消息通知服务停止，代码："+this.readyState); 
-        };
+    //     socket.onclose   = function(msg) { 
+    //         // 失去链接
+    //        // jAlert("后台消息通知服务停止，代码："+this.readyState); 
+    //     };
 
-    });
+    // });
 
 <?php echo '</script'; ?>
 >

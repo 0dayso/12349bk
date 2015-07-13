@@ -1,0 +1,19 @@
+$(function() {
+
+    /**
+     * Banner图初始化
+     */
+    var sW = $(window).width();
+    $(".slider").yxMobileSlider({
+        width: sW,
+        height: 150,
+        during: 3000
+    });
+
+
+    $(".footer h4").click(function() {
+        $(".footer h4").removeClass('active');
+        $(this).addClass('active');
+    });
+
+})

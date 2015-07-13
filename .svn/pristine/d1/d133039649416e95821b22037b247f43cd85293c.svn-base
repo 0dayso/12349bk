@@ -1,0 +1,100 @@
+<?php
+
+// header('Content-type: application/json');
+
+class Order{
+	
+	/**
+	 * 得到订单
+	 * @author glivia
+	 * @method post
+	 * @param  $userid
+	 * @return 
+	 */
+	public function getOrderList(){
+
+		$database = Flight::get('db');
+		$userid   = $_POST['userid'];
+
+		$result   = $database->select("lk_order","*",array("buyer_id[=]" => $userid ));
+
+		if( $result ){
+
+			echo json_encode( array(
+				"code"   => '1001',
+				"data"   => json_encode($result)
+			) );
+
+		}
+
+		exit();
+	}
+
+	/**
+	 * 订单支付
+	 * @author glivia
+	 * @method post
+	 * @param  $orderid , $userid
+	 * @return 
+	 */
+	public function orderPay(){
+
+		$database = Flight::get('db');
+		$orderid   = $_POST['orderid'];
+		$userid   = $_POST['userid'];
+
+		
+	}
+
+
+	/**
+	 * 得到订单信息
+	 * @author glivia
+	 * @method post
+	 * @param  $orderid , $userid
+	 * @return 
+	 */
+	public function orderInfo(){
+		$database  = Flight::get('db');
+		$orderid   = $_POST['orderid'];
+		$userid    = $_POST['userid'];
+	}
+
+
+	/**
+	 * 取消订单
+	 * @author glivia
+	 * @method post
+	 * @param  $orderid , $userid
+	 * @return 
+	 */
+	public function orderCancel(){
+
+		$database  = Flight::get('db');
+		$orderid   = $_POST['orderid'];
+		$userid    = $_POST['userid'];
+
+		
+	}
+
+
+	/**
+	 * 订单评论
+	 * @author glivia
+	 * @method post
+	 * @param  $orderid , $userid , $content
+	 * @return 
+	 */
+	public function orderComment(){
+
+		$database   = Flight::get('db');
+		$orderid    = $_POST['orderid'];
+		$userid     = $_POST['userid'];
+		$content    = $_POST['content'];
+
+		
+	}
+
+
+
+}

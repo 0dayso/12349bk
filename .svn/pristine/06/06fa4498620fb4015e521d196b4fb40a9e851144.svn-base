@@ -1,0 +1,48 @@
+<?php
+
+class Service{
+	/**
+	 * 发送服务
+	 * @return [type] [description]
+	 */
+	public static function sendService(){
+		$database      = Flight::get('db');
+
+		$userid        = $_POST['userid'];
+		$tel           = $_POST['tel'];
+		$address       = $_POST['address'];
+		$username      = $_POST['username'];
+		$servicetime   = $_POST['servicetime'];
+		$comment       = $_POST['comment'];
+		$sid           = $_POST['sid'];
+
+
+		if( !$userid ||  !$tel ||  !$address || !$username || !$servicetime || !$comment || !$sid){
+			echo json_encode(array(
+				"success"   => 'false',
+				"notice" => '参数缺少'
+			));
+		}
+
+
+		$buyerName  = $database->select("lk_user",array("user_name"),array("user_id[=]" => $userid ));
+
+		$result = $database->insert('lk_order', array(
+			'buyer_id'         =>  $userid,
+		    'buyer_name'       =>  $buyerName,
+		    'add_time'         =>  time(),
+		    'type'             =>  'service',
+		    'need_time'        =>  $servicetime,
+		    'remark'           =>  $comment
+		));
+
+		if( $result ){
+
+			echo json_encode( array(
+				"success"     => 'true',
+				"notice"   => '下单成功，请耐心等待!'
+			) );
+
+		}
+	}
+}

@@ -3,14 +3,14 @@
 return array(
 
 	'SITE_URL'      => 'http://www.ls.com',
-	'STATIC_URL'      => 'http://www.ls.com/files',
+	'STATIC_URL'      => 'http://localhost:8085/files',
 	'DB_TYPE'       => 'mysql',
 	'DB_ENCODING'   => 'utf8',
-	'DB_HOST'       => '127.0.0.1',
+	'DB_HOST'       => '10.49.0.137',
 	'DB_NAME'       => 'lk12349',
-	'DB_USER'       => 'root',
+	'DB_USER'       => 'lk12349',
 	'DB_PORT'       => '3306',
-	'DB_PWD'        => 'password',
+	'DB_PWD'        => '123456',
 	
 	'CACHE_SERVER'  => 'memcached',
 	'MEMCACHE_HOST' => '127.0.0.1',

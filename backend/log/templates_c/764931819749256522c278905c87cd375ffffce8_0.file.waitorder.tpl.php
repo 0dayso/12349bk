@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-09 10:21:22
+<?php /* Smarty version 3.1.27, created on 2015-07-13 17:15:39
          compiled from "E:\myphp\www\12349bk\backend\view\order\waitorder.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:29059559ddaa2aad0f0_65152244%%*/
+/*%%SmartyHeaderCode:1998555a381bba51dd4_84451718%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -13,16 +13,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '29059559ddaa2aad0f0_65152244',
+  'nocache_hash' => '1998555a381bba51dd4_84451718',
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_559ddaa2ad41f9_37297455',
+  'unifunc' => 'content_55a381bba7cd65_93703535',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_559ddaa2ad41f9_37297455')) {
-function content_559ddaa2ad41f9_37297455 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a381bba7cd65_93703535')) {
+function content_55a381bba7cd65_93703535 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '29059559ddaa2aad0f0_65152244';
+$_smarty_tpl->properties['nocache_hash'] = '1998555a381bba51dd4_84451718';
 ?>
 <div id="contentwrapper" class="contentwrapper">
     <table id="waitorders" class="stdtable" cellspacing="0" width="100%">

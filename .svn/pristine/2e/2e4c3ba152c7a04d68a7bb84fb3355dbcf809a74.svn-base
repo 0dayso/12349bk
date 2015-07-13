@@ -1,0 +1,73 @@
+<?php
+header('Content-type: application/json');
+class My{
+
+
+	/**
+	 * 获得我的优惠券
+	 * @author glivia
+	 * @method post
+	 * @param  $userid
+	 * @return 
+	 */
+	public function getCoupList(){
+
+		$database = Flight::get('db');
+		$userid  = $_POST['userid'];
+
+	}
+
+	/**
+	 * 是否有该分类下的免费券
+	 * @author glivia
+	 * @method post
+	 * @param  $userid 
+	 * @return 
+	 */
+	public function hasCoup(){
+
+		$database = Flight::get('db');
+		$userid  = $_POST['userid'];
+		$itemid  = $_POST['itemid'];
+		
+	}
+
+
+	/**
+	 * 提交用户反馈
+	 * @author glivia
+	 * @method post
+	 * @param  $content , $userid
+	 * @return 
+	 */
+	public function submitComment(){
+
+		
+		$content = $_POST['content'];
+		$userid  = $_POST['userid'];
+		
+		//缺少参数,返回
+		if( !$content || !$userid ){
+			echo json_encode(array(
+				"code"   => '1000',
+				"notice" => '参数缺少'
+			));
+		}
+
+		$result = $database->insert('lk_feedback', array(
+			'cmt_content'    =>  $content,
+		    'cmt_user'       =>  $userid,
+		    'add_time'       =>  time(),
+		    'is_view'        =>  0
+		));
+
+
+		if( $result ){
+			echo json_encode(array(
+				"code"   => '1001',
+				"notice" => '评论成功'
+			));
+		}
+
+	}
+}
