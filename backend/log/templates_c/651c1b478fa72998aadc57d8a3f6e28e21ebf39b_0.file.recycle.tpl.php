@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-13 16:45:22
+<?php /* Smarty version 3.1.27, created on 2015-07-14 10:41:39
          compiled from "E:\myphp\www\12349bk\backend\view\shop\recycle.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2109155a37aa2b1d4a4_66040566%%*/
+/*%%SmartyHeaderCode:2841555a476e37bac98_41170737%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -13,16 +13,16 @@ $_valid = $_smarty_tpl->decodeProperties(array (
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2109155a37aa2b1d4a4_66040566',
+  'nocache_hash' => '2841555a476e37bac98_41170737',
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55a37aa2b21329_10100823',
+  'unifunc' => 'content_55a476e37beb17_45263399',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55a37aa2b21329_10100823')) {
-function content_55a37aa2b21329_10100823 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a476e37beb17_45263399')) {
+function content_55a476e37beb17_45263399 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '2109155a37aa2b1d4a4_66040566';
+$_smarty_tpl->properties['nocache_hash'] = '2841555a476e37bac98_41170737';
 ?>
 <div id="contentwrapper" class="contentwrapper">
     <table id="recycleshop" class="stdtable" cellspacing="0" width="100%">

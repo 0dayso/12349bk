@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-10 10:32:48
+<?php /* Smarty version 3.1.27, created on 2015-07-14 11:53:58
          compiled from "E:\myphp\www\12349bk\backend\view\shop\addShop.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2530559f2ed06b1f16_09966145%%*/
+/*%%SmartyHeaderCode:1886355a487d6ad8653_70642893%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,29 +9,27 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '218b92e4ee012e2ac258aac5de65b0ad44af7bad' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\shop\\addShop.tpl',
-      1 => 1436495007,
+      1 => 1436777692,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2530559f2ed06b1f16_09966145',
+  'nocache_hash' => '1886355a487d6ad8653_70642893',
   'variables' => 
   array (
-    'type' => 0,
     'ser_items' => 0,
     'regions' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_559f2ed06c1914_30881462',
+  'unifunc' => 'content_55a487d6af3be8_39750892',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_559f2ed06c1914_30881462')) {
-function content_559f2ed06c1914_30881462 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a487d6af3be8_39750892')) {
+function content_55a487d6af3be8_39750892 ($_smarty_tpl) {
 if (!is_callable('smarty_function_html_options')) require_once 'E:\\myphp\\www\\12349bk\\backend\\vender\\smarty\\plugins\\function.html_options.php';
 
-$_smarty_tpl->properties['nocache_hash'] = '2530559f2ed06b1f16_09966145';
-if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
-
+$_smarty_tpl->properties['nocache_hash'] = '1886355a487d6ad8653_70642893';
+?>
 <div class="contentwrapper">
 	
 	<form class="stdform formtable" action="../shop/addShop" method="post" enctype="multipart/form-data">
@@ -47,7 +45,7 @@ if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
 					<p>
 			        	<label>商家类型：</label>
 			            <span class="field">
-			            	<select name="item_ids" id="item_ids" data-placeholder="请选择类型" class="chzn-select" multiple="multiple" style="width:350px;" tabindex="4">
+			            	<select name="item_ids[]" id="item_ids" data-placeholder="请选择类型" class="chzn-select" multiple="multiple" style="width:350px;" tabindex="4">
 								<?php echo smarty_function_html_options(array('options'=>$_smarty_tpl->tpl_vars['ser_items']->value),$_smarty_tpl);?>
 
 							</select>
@@ -137,6 +135,18 @@ if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
 			<tr>
 				<td colspan="2">
 					<p>
+                        <label>结算类型</label>
+                        <span class="field">
+                        	<input type="radio" name="check_type" value="1" checked="checked"/>月结 &nbsp; &nbsp;
+                        	<input type="radio" name="check_type" value="2" /> 半月结 &nbsp; &nbsp;
+                        	<input type="radio" name="check_type" value="3" /> 周结 &nbsp; &nbsp;
+                        </span>
+                    </p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<p>
                         <label>是否启用</label>
                         <span class="field">
                         	<input type="radio" name="is_use" value="1" checked="checked"/>是 &nbsp; &nbsp;
@@ -164,9 +174,6 @@ if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
         </p>
 	</form>
 
-</div>
-
-<?php }
-}
+</div><?php }
 }
 ?>

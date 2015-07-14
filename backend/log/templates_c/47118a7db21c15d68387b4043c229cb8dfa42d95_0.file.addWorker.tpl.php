@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-13 17:47:08
+<?php /* Smarty version 3.1.27, created on 2015-07-14 13:20:59
          compiled from "E:\myphp\www\12349bk\backend\view\shop\addWorker.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:2200355a3891c3cdfa2_19024987%%*/
+/*%%SmartyHeaderCode:2472755a49c3b30ab87_89737946%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,11 +9,11 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '47118a7db21c15d68387b4043c229cb8dfa42d95' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\shop\\addWorker.tpl',
-      1 => 1436780593,
+      1 => 1436835310,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2200355a3891c3cdfa2_19024987',
+  'nocache_hash' => '2472755a49c3b30ab87_89737946',
   'variables' => 
   array (
     'ser_items' => 0,
@@ -21,14 +21,14 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55a3891c3d9b23_65096510',
+  'unifunc' => 'content_55a49c3b32de11_78474984',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55a3891c3d9b23_65096510')) {
-function content_55a3891c3d9b23_65096510 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a49c3b32de11_78474984')) {
+function content_55a49c3b32de11_78474984 ($_smarty_tpl) {
 if (!is_callable('smarty_function_html_options')) require_once 'E:\\myphp\\www\\12349bk\\backend\\vender\\smarty\\plugins\\function.html_options.php';
 
-$_smarty_tpl->properties['nocache_hash'] = '2200355a3891c3cdfa2_19024987';
+$_smarty_tpl->properties['nocache_hash'] = '2472755a49c3b30ab87_89737946';
 ?>
 <div class="contentwrapper">
 	
@@ -125,12 +125,7 @@ $_smarty_tpl->properties['nocache_hash'] = '2200355a3891c3cdfa2_19024987';
 		<br>
         <p class="stdformbutton">
         	<button id="submitBtn" class="submit radius2">提交</button>
-
-			<!-- 
-
-        	<button type="button" class="btn btn-primary">（首选项）Primary</button>
-        	<button type="button" class="btn btn-primary">（首选项）Primary</button>
-        	<button type="button" class="btn btn-primary">（首选项）Primary</button> -->
+			<input type="reset" class="reset radius2" value="重置">
         </p>
 	</form>
 

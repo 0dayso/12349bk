@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	
+
 	jQuery('input:radio, select.uniformselect, input:file').uniform();
 
 	jQuery(".chzn-select").chosen({no_results_text: "找不到选项!", include_group_label_in_selected: true}).change(function(event) {
@@ -10,28 +10,30 @@ jQuery(document).ready(function($) {
             $("#"+id+"_chosen").addClass("error");
 	});
 
+	$('input[name="need_time"]').datepicker({
+        dateFormat: "yy-mm-dd",
+        showClearButton: true
+    });
+
 	jQuery(".stdform").validate({
+		ignore: ":hidden:not(select)",
 		rules: {
-			shop_name: "required",
-			address: "required",
-			business_license: "required",
-			legal_person: "required",
-			officer: "required",
-			bank: "required",
-			phone: "required",
-			bank_account_name: "required",
-			bank_accunt: "required"
+			need_time: "required",
+			contact: "required",
+			phone_mob: {
+				required: true,
+				digits:true
+			},
+			address: "required"
 		},
 		messages: {
-			shop_name: "请填写商家名称",
-			address: "请填写详细地址",
-			business_license: "请上传营业执照",
-			legal_person: "请上传法人身份证",
-			officer: "请填写负责人",
-			bank: "请填写开户银行",
-			phone: "请填写手机号码",
-			bank_account_name: "请填写银行账户",
-			bank_accunt: "请填写收款账户"
+			need_time: "请选择服务时间",
+			contact: "请填写联系人",
+			phone_mob: {
+				required: "请填写联系电话",
+				digits: "联系电话格式不对"
+			},
+			address: "请填写服务地址"
 		},
         errorPlacement : function(error, element) {  
         	if(element.attr('type') == 'file') {
@@ -48,7 +50,5 @@ jQuery(document).ready(function($) {
         	}
         }
 	});
-	$('#item_ids').rules("add", {required: true, messages: {required: "请选择服务类型"}});
-	$('#region_id').rules("add", {required: true, messages: {required: "请选择区域"}});
 
 });
