@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-14 17:29:37
+<?php /* Smarty version 3.1.27, created on 2015-07-15 14:03:43
          compiled from "E:\myphp\www\12349bk\backend\view\order\processorder.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:3225555a4d6818b50a9_48571428%%*/
+/*%%SmartyHeaderCode:482755a5f7bf2c3974_14933595%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,25 +9,20 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '232bc4cb13568aae0e3ae8265716732b66cf4622' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\order\\processorder.tpl',
-      1 => 1436866155,
+      1 => 1436925084,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3225555a4d6818b50a9_48571428',
-  'variables' => 
-  array (
-    'shops' => 0,
-  ),
+  'nocache_hash' => '482755a5f7bf2c3974_14933595',
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55a4d6818bcda7_45506167',
+  'unifunc' => 'content_55a5f7bf2c77f8_80374513',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55a4d6818bcda7_45506167')) {
-function content_55a4d6818bcda7_45506167 ($_smarty_tpl) {
-if (!is_callable('smarty_function_html_options')) require_once 'E:\\myphp\\www\\12349bk\\backend\\vender\\smarty\\plugins\\function.html_options.php';
+if ($_valid && !is_callable('content_55a5f7bf2c77f8_80374513')) {
+function content_55a5f7bf2c77f8_80374513 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '3225555a4d6818b50a9_48571428';
+$_smarty_tpl->properties['nocache_hash'] = '482755a5f7bf2c3974_14933595';
 ?>
 <div id="contentwrapper" class="contentwrapper">
     <table id="processorder" class="stdtable" cellspacing="0" width="100%">
@@ -36,7 +31,8 @@ $_smarty_tpl->properties['nocache_hash'] = '3225555a4d6818b50a9_48571428';
 
 <div class="hide">
 	<div id="dialog" title="请选择商家服务人员" style="">
-		<form class="stdform formtable" action="../order/assignWorker">
+		<form class="stdform formtable" action="../order/assignWorker" method="POST">
+			<input type="hidden" name="order_id" id="order_id" />
 			<table width="100%" cellspacing="0" collspacing="0">
 				<tr>
 					<td>
@@ -45,19 +41,17 @@ $_smarty_tpl->properties['nocache_hash'] = '3225555a4d6818b50a9_48571428';
 				            <span class="field">
 				            	<select name="shop" id="shop" data-placeholder="请选择商家" class="chzn-select" style="width:350px;" tabindex="-1">
 				            		<option value="">请选择商家</option>
-									<?php echo smarty_function_html_options(array('options'=>$_smarty_tpl->tpl_vars['shops']->value),$_smarty_tpl);?>
-
 								</select>
 							</span>
 				        </p>
 					</td>
 				</tr>
-				<tr style="display: none;">
+				<tr id="staffField" style="display: none;">
 					<td>
 						<p>
 				        	<label>服务人员</label>
 				            <span class="field">
-				            	<select name="staff_id" id="staff_id" data-placeholder="请选择服务人员" class="chzn-select" style="width:350px;" tabindex="-1">
+				            	<select name="staff" id="staff" data-placeholder="请选择服务人员" class="chzn-select" style="width:350px;" tabindex="-1">
 								</select>
 							</span>
 				        </p>

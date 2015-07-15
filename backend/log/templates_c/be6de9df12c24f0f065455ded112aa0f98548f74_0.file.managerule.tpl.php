@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-07-14 11:54:27
+<?php /* Smarty version 3.1.27, created on 2015-07-15 16:28:53
          compiled from "E:\myphp\www\12349bk\backend\view\marketing\managerule.tpl" */ ?>
 <?php
-/*%%SmartyHeaderCode:1023755a487f36fea27_66374492%%*/
+/*%%SmartyHeaderCode:1430855a619c50fb402_81712326%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,27 +9,31 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'be6de9df12c24f0f065455ded112aa0f98548f74' => 
     array (
       0 => 'E:\\myphp\\www\\12349bk\\backend\\view\\marketing\\managerule.tpl',
-      1 => 1436771309,
+      1 => 1436948506,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1023755a487f36fea27_66374492',
+  'nocache_hash' => '1430855a619c50fb402_81712326',
   'variables' => 
   array (
     'type' => 0,
     'ser_items' => 0,
     'rule' => 0,
+    'countArray' => 0,
+    'key' => 0,
+    'items' => 0,
+    'item' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55a487f37c9c56_01953126',
+  'unifunc' => 'content_55a619c5168a20_20493914',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55a487f37c9c56_01953126')) {
-function content_55a487f37c9c56_01953126 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55a619c5168a20_20493914')) {
+function content_55a619c5168a20_20493914 ($_smarty_tpl) {
 if (!is_callable('smarty_function_html_options')) require_once 'E:\\myphp\\www\\12349bk\\backend\\vender\\smarty\\plugins\\function.html_options.php';
 
-$_smarty_tpl->properties['nocache_hash'] = '1023755a487f36fea27_66374492';
+$_smarty_tpl->properties['nocache_hash'] = '1430855a619c50fb402_81712326';
 if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
 
 <div class="contentwrapper">
@@ -56,6 +60,9 @@ if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
                     <?php echo smarty_function_html_options(array('options'=>$_smarty_tpl->tpl_vars['ser_items']->value),$_smarty_tpl);?>
 
                 </select>
+            </span>
+            <span id="timesField" class="field">
+                
             </span>
         </p>
         <p class="p_money">
@@ -156,6 +163,38 @@ if ($_smarty_tpl->tpl_vars['type']->value == 'add') {?>
                     <?php echo smarty_function_html_options(array('options'=>$_smarty_tpl->tpl_vars['ser_items']->value),$_smarty_tpl);?>
 
                 </select>
+            </span>
+            <span id="timesField" class="field">
+                <div id="hideTable" class="hide">
+                    <table width="30%">
+                        <tbody>
+                        <?php
+$_from = $_smarty_tpl->tpl_vars['countArray']->value;
+if (!is_array($_from) && !is_object($_from)) {
+settype($_from, 'array');
+}
+$_smarty_tpl->tpl_vars['item'] = new Smarty_Variable;
+$_smarty_tpl->tpl_vars['item']->_loop = false;
+$_smarty_tpl->tpl_vars['key'] = new Smarty_Variable;
+foreach ($_from as $_smarty_tpl->tpl_vars['key']->value => $_smarty_tpl->tpl_vars['item']->value) {
+$_smarty_tpl->tpl_vars['item']->_loop = true;
+$foreach_item_Sav = $_smarty_tpl->tpl_vars['item'];
+?>
+                            <tr>
+                                <td><span style="width: 200px;"><?php echo $_smarty_tpl->tpl_vars['items']->value[$_smarty_tpl->tpl_vars['key']->value];?>
+</span></td>
+                                <td><input type="text" id="times[<?php echo $_smarty_tpl->tpl_vars['key']->value;?>
+]" name="times[<?php echo $_smarty_tpl->tpl_vars['key']->value;?>
+]" value="<?php echo $_smarty_tpl->tpl_vars['item']->value;?>
+" style="width: 100px;"/>次</td>
+                            </tr>    
+                        <?php
+$_smarty_tpl->tpl_vars['item'] = $foreach_item_Sav;
+}
+?>
+                        </tbody>
+                    </table>
+                </div>
             </span>
         </p>
         <p class="p_money">

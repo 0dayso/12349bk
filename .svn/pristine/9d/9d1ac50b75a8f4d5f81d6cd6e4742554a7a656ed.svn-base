@@ -148,38 +148,31 @@ class Marketing {
 		$serItems = Shop::getServiceItems(2);
 		$result = array();
 		if($res) {
+			$index = $start+1;
 			foreach ($res as $key => $value) {
 				if($value['item_ids']) {
 
 					$items = explode(',', $value['item_ids']);
 
 					$item_names = '';
-					$countArray = array();
 					foreach ($items as $item_id) {
-						if(!isset($countArray[$item_id])) {
-							$countArray[$item_id] = 1;
-						}else{
-							$countArray[$item_id]++;
-						}
+						$item_names .= $serItems[$item_id] . ',';
 					}
 
-					$trueItems = array_unique($items);
-					foreach ($trueItems as $iid) {
-						$item_names .= '<br />'. $serItems[$iid] . ' x ' . $countArray[$iid];
-					}
-
+					$item_names = trim($item_names, ',');
 				}else{
 					$item_names = '';
 				}
 
 				$result[] = array(
-					'id' => $value['id'],
+					'index' => $index,
 					'coupon_type' => $value['coupon_type'] == 0?'现金券':($value['coupon_type'] == 1?'满减券':'服务抵消券'),
 					'coupon_name' => $value['coupon_name'],
 					'rule' => $value['coupon_type'] == 0?$value['money'].'元':($value['coupon_type'] == 1?"满{$value['minprice']}减{$value['money']}券":"<b>抵消服务:</b> {$item_names}"),
 					'coupon_id' => $value['id'],
 				);
 
+				$index++;
 			}
 		}
 
@@ -227,7 +220,7 @@ class Marketing {
 			$data = Flight::request()->data;
 			$coupon_name = isset($data['coupon_name'])?$data['coupon_name']:'';
 			$coupon_type = isset($data['coupon_type'])?$data['coupon_type']:'';
-			$subitem_ids = isset($data['item_ids'])? $data['item_ids']:'';
+			$item_ids = isset($data['item_ids'])?implode(',', $data['item_ids']):'';
 			$money = isset($data['money'])?$data['money']:'';
 			$minprice = isset($data['minprice'])?$data['minprice']:'';
 			$canusetype = isset($data['canusetype'])?$data['canusetype']:'';
@@ -237,19 +230,6 @@ class Marketing {
 			$maxnum = isset($data['maxnum'])?$data['maxnum']:'';
 			$prefix = isset($data['prefix'])?$data['prefix']:'';
 			$isuse = isset($data['isuse'])?$data['isuse']:'';
-
-			$times = isset($data['times'])?$data['times']:'';
-
-			$item_ids = '';
-			foreach ($times as $key => $value) {
-				if(in_array($key, $subitem_ids)) {
-					for ($i=0; $i < $value; $i++) { 
-						$item_ids .= $key.',';
-					}
-					
-				}
-			}
-			$item_ids = trim($item_ids, ',');
 
 			$db = Flight::get('db');
 
@@ -355,7 +335,7 @@ class Marketing {
 			$id = isset($data['id'])?$data['id']:'';
 			$coupon_name = isset($data['coupon_name'])?$data['coupon_name']:'';
 			$coupon_type = isset($data['coupon_type'])?$data['coupon_type']:'';
-			$subitem_ids = isset($data['item_ids'])?$data['item_ids']:'';
+			$item_ids = isset($data['item_ids'])?implode(',', $data['item_ids']):'';
 			$money = isset($data['money'])?$data['money']:'';
 			$minprice = isset($data['minprice'])?$data['minprice']:'';
 			$canusetype = isset($data['canusetype'])?$data['canusetype']:'';
@@ -365,21 +345,6 @@ class Marketing {
 			$maxnum = isset($data['maxnum'])?$data['maxnum']:'';
 			$prefix = isset($data['prefix'])?$data['prefix']:'';
 			$isuse = isset($data['isuse'])?$data['isuse']:'';
-
-			$times = isset($data['times'])?$data['times']:'';
-
-			$item_ids = '';
-			foreach ($times as $key => $value) {
-				if(in_array($key, $subitem_ids)) {
-					for ($i=0; $i < $value; $i++) { 
-						$item_ids .= $key.',';
-					}
-					
-				}
-			}
-			$item_ids = trim($item_ids, ',');
-
-
 
 			$db = Flight::get('db');
 
@@ -468,38 +433,11 @@ class Marketing {
 			$rule['begintime'] = substr($rule['begintime'], 0, 10);
 			$rule['endtime'] = substr($rule['endtime'], 0, 10);
 
-
-			$db = Flight::get('db');
-
-			$sers = $db->select('lk_service', array('ser_id', 'ser_name'), array('is_use' => '1', 'ORDER' => "sort_order ASC") );
-
-			// 所有
-			$all = $db->select('lk_service_item', array('item_id', 'item_name', 'ser_id'), array('is_use' => '1' ,'ORDER' => "sort_order ASC") );
-			$allItems = array();
-
-			$res = array();
-			foreach ($all as $item) {
-				$ser_name = $db->get('lk_service', 'ser_name', array('ser_id' => $item['ser_id']));
-				$res[$item['item_id']] = '<b class="group-name">'.$ser_name.'</b>' .$item['item_name'];
-			}
-
-			$oldItems = explode(',', $rule['item_ids']);
-			$countArray = array();
-			foreach ($oldItems as $item_id) {
-				if(!isset($countArray[$item_id])) {
-					$countArray[$item_id] = 1;
-				}else{
-					$countArray[$item_id]++;
-				}
-			}
-
-			$rule['item_ids'] = implode(',', array_unique(explode(',', $rule['item_ids'])));
-
 			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
 			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
 			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
 			Flight::jsrender('/public/js/marketing/managerule.js');
-			Flight::render('marketing/managerule', array('type' => 'edit', 'ser_items' => $serItems, "rule" => $rule, "countArray" => $countArray, "items" => $res));
+			Flight::render('marketing/managerule', array('type' => 'edit', 'ser_items' => $serItems, "rule" => $rule));
 		}
 
 	}

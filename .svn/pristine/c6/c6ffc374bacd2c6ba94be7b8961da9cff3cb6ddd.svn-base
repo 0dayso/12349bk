@@ -56,7 +56,7 @@ class Dashboard{
 			}
 		}
 
-		unset($condtion['LIMIT']);
+		unset($condition['LIMIT']);
 		$iFilteredTotal = $db->count('lk_admin', $condtion);
 		$iTotalRecords = $db->count('lk_admin');
 
@@ -277,7 +277,7 @@ class Dashboard{
 			}
 		}
 
-		unset($condtion['LIMIT']);
+		unset($condition['LIMIT']);
 		$iFilteredTotal = $db->count('lk_group', $condtion);
 		$iTotalRecords = $db->count('lk_group');
 
@@ -377,7 +377,7 @@ class Dashboard{
 			}
 			//判断输入name的是否存在
 			$db = Flight::get('db');
-			$isgroup = $db->get('lk_group', 'group_id', array("AND" =>array('group_name' => $group_name,  'group_id[!]' => $group_id)) );
+			$isgroup = $db->get('lk_group', 'group_id', array('group_name' => $group_name,  'group_id[!]' => $group_id));
 
 			if($isgroup) {
 				Handle::result("错误", "该组已经存在, 请重新输入" );
