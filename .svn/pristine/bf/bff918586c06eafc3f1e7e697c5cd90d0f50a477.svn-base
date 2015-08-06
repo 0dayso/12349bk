@@ -1,0 +1,163 @@
+<?php
+// header('Content-type: application/json');
+class My {
+
+
+	/**
+	 * 获得我的优惠券
+	 * @author glivia
+	 * @method post
+	 * @param  $userid
+	 * @param  $token
+	 * @return json
+	 */
+	public function getCoupList(){
+
+		$database = Flight::get('db');
+		$uid      = P('userid');
+
+		if( !$uid ){
+			Flight::json(array('success' => false, 'msg' => '未传入用户ID'));
+			exit();
+		}
+
+		$res = $database->select("lk_coup_list",array("begintime","endtime","ser_id","item_id","commoncode","money","minprice","codepassword"),
+			array(
+			"AND" => array(
+				"user_id"   => $uid,
+			    "ischecked" => 0,
+			    "isuse"     => 1
+		)));
+
+		if( $res ){
+			self::returnJson(array(
+				"success" => "true",
+				"data"    => $res
+			));
+		}else{
+			self::returnJson(array(
+				"success" => "false"
+			));
+		}
+
+	}
+
+	/**
+	 * 是否有该分类下的免费券
+	 * @author glivia
+	 * @method post
+	 * @param  $userid 
+	 * @param  $itemid
+	 * @param  $token
+	 * @return 
+	 */
+	public function hasCoup(){
+
+		$database = Flight::get('db');
+		$uid      = P('userid');
+		$itemid   = P('itemid');
+
+		//缺少参数,返回
+		if( !$uid || !$itemid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$time = date('Y-m-d H:i:s');
+
+		if($coup_list = $db->select("lk_coup_list", "*", array(
+			"AND" => array(
+				"user_id" => $uid, 
+				"begintime[<]" => $time,
+				"endtime[>]" => $time,
+				"item_id" => $itemid,
+				"isuse" => 1,
+				"ischecked" => 0,
+			)
+		))){
+			Flight::json(array("success" => true, 'data' => $coup_list));
+			die;
+		}else{
+			Flight::json(array("success" => false, 'msg' => '找不到相关数据'));
+			die;
+		}
+		
+	}
+
+
+	/**
+	 * 提交用户反馈
+	 * @author glivia
+	 * @method post
+	 * @param  $content 
+	 * @param  $userid
+	 * @param  $token
+	 * @return 
+	 */
+	public function submitComment(){
+
+		$database =  Flight::get('db');
+		$cnt      =  P('content');
+		$uid      =  P('userid');
+		
+		//缺少参数,返回
+		if( !$cnt || !$uid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$result = $database->insert('lk_feedback', array(
+			'cmt_content'    =>  $cnt,
+		    'cmt_user'       =>  $uid,
+		    'add_time'       =>  time(),
+		    'is_view'        =>  0
+		));
+
+		if( $result ){
+			Flight::json(array(
+				"success"   => 'true'
+			));
+			exit();
+		}else{
+			Flight::json(array(
+				"success"   => 'false'
+			));
+			exit();
+		}
+
+	}
+
+	/**
+	 * 获取用户信息
+	 * @param $userid
+	 * @param $token
+	 * @return [type] [description]
+	 */
+	public static function getUserInfo(){
+		$database = Flight::get('db');
+		$uid      = P("userid");
+
+		if( !$uid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$result = $database->select("lk_user",array("user_name","phone_mob","open_id"),array(
+			"user_id" => $uid 
+		));
+
+		if( $result ){
+			echo json_encode(array(
+				"success"   => 'true',
+				"data"      => $result
+			));
+			exit();
+		}else{
+			echo json_encode(array(
+				"success"   => 'false'
+			));
+			exit();
+		}
+
+	}
+}

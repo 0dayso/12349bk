@@ -1,0 +1,794 @@
+<?php
+
+class Marketing {
+
+	/**
+	 * 优惠券管理
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function coupon() {
+
+		Flight::jsrender('/public/js/marketing/coupon.js');
+		Flight::render('marketing/coupon');
+
+	}
+
+	/**
+	 * 获取优惠券
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function getCoupons() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$sSearch_1 = isset($req->sSearch_1)?$req->sSearch_1:'';
+
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = strtoupper($req['sSortDir_0']);
+
+		$db = Flight::get('db');
+
+		$sql = "SELECT A.*, B.coupon_name FROM lk_coup_list A 
+		LEFT JOIN lk_coup_rule B ON A.coupon_id = B.id 
+		WHERE A.isuse = 1";
+
+		// L类型查询
+		if($sSearch_1 > 0) {
+			$sql .= " AND coupon_id = '{$sSearch_1}'";
+		}
+
+		// 查询店铺名和负责人姓名
+		if($search) {
+			$sql .= " AND (A.commoncode LIKE '%{$search}%' OR B.coupon_name LIKE '%{$search}%' OR A.phone_mob LIKE '%{$search}%')";
+		}
+
+		$countSql = $sql;
+		$sql .= " ORDER BY {$sort_item} {$sort_sort} LIMIT {$start},{$length}";
+
+		$res = $db->query($sql)->fetchAll();
+
+		$result = array();
+		if($res) {
+			$index = $start+1;
+			foreach ($res as $key => $value) {
+
+				$result[] = array(
+					'index' => $index,
+					'commoncode' => $value['commoncode'],
+					'coupon_name' => $value['coupon_name'],
+					'phone_mob' => $value['phone_mob'],
+					'ischecked' => $value['ischecked'] == 1?'是':'否',
+					'createtime' => $value['createtime'],
+					'endtime' => $value['endtime'],
+					'coup_id' => $value['id'],
+					'user_id' => $value['user_id'],
+				);
+
+				$index++;
+			}
+		}
+
+		$iFilteredTotal = count($db->query($countSql)->fetchAll());
+		$iTotalRecords = $db->count('lk_coup_list', array("isuse" => 1));
+
+		Flight::json(array(
+			'aaData' => $result, 
+			"sEcho" => intval($req->sEcho),
+			"iTotalRecords" => $iTotalRecords,
+			"iTotalDisplayRecords" => $iFilteredTotal,
+		));
+
+	}
+
+	/**
+	 * 优惠券类型管理
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function couponrule() {
+
+		Flight::jsrender('/public/js/marketing/couponrule.js');
+		Flight::render('marketing/couponrule');
+	}
+
+	/**
+	 * 获取优惠券类型
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function getRules() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$sSearch_1 = isset($req->sSearch_1)?$req->sSearch_1:'';
+
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = strtoupper($req['sSortDir_0']);
+
+		$db = Flight::get('db');
+
+		$sql = "SELECT * FROM lk_coup_rule WHERE isuse = 1";
+
+		// L类型查询
+		if($sSearch_1 > 0) {
+			$sql .= " AND FIND_IN_SET({$sSearch_1}, `item_ids`)";
+		}
+
+		// 查询店铺名和负责人姓名
+		if($search) {
+			$sql .= " AND coupon_name LIKE '%{$search}%'";
+		}
+		$countSql = $sql;
+
+		$sql .= " ORDER BY {$sort_item} {$sort_sort} LIMIT {$start},{$length}";
+
+		$res = $db->query($sql)->fetchAll();
+
+		$serItems = Shop::getServiceItems(2);
+		$result = array();
+		if($res) {
+			foreach ($res as $key => $value) {
+				if($value['item_ids']) {
+
+					$items = explode(',', $value['item_ids']);
+
+					$item_names = '';
+					$countArray = array();
+					foreach ($items as $item_id) {
+						if(!isset($countArray[$item_id])) {
+							$countArray[$item_id] = 1;
+						}else{
+							$countArray[$item_id]++;
+						}
+					}
+
+					$trueItems = array_unique($items);
+					foreach ($trueItems as $iid) {
+						$item_names .= '<br />'. $serItems[$iid] . ' x ' . $countArray[$iid];
+					}
+
+				}else{
+					$item_names = '';
+				}
+
+				$result[] = array(
+					'id' => $value['id'],
+					'coupon_type' => $value['coupon_type'] == 0?'现金券':($value['coupon_type'] == 1?'满减券':'服务抵消券'),
+					'coupon_name' => $value['coupon_name'],
+					'rule' => $value['coupon_type'] == 0?$value['money'].'元':($value['coupon_type'] == 1?"满{$value['minprice']}减{$value['money']}券":"<b>抵消服务:</b> {$item_names}"),
+					'coupon_id' => $value['id'],
+				);
+
+			}
+		}
+
+		$iFilteredTotal = count($db->query($countSql)->fetchAll());
+		$iTotalRecords = $db->count('lk_coup_rule', array("isuse" => 1));
+
+		Flight::json(array(
+			'aaData' => $result, 
+			"sEcho" => intval($req->sEcho),
+			"iTotalRecords" => $iTotalRecords,
+			"iTotalDisplayRecords" => $iFilteredTotal,
+		));
+
+	}
+
+	/**
+	 * 获取当前优惠券的
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function getCoupRules() {
+
+		$rules = Flight::get('db')->select("lk_coup_rule", array("id","coupon_name"), array("isuse" => 1));
+
+		$types = array();
+		foreach ($rules as $rule) {
+			$types[$rule['id']] = $rule['coupon_name'];
+		}
+
+		Flight::json($types);
+	}
+
+	/**
+	 * 新增Coupon Rule
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function addRule() {
+
+		if(IS_POST) {
+
+			$data = Flight::request()->data;
+			$coupon_name = isset($data['coupon_name'])?$data['coupon_name']:'';
+			$coupon_type = isset($data['coupon_type'])?$data['coupon_type']:'';
+			$subitem_ids = isset($data['item_ids'])? $data['item_ids']:'';
+			$money = isset($data['money'])?$data['money']:'';
+			$minprice = isset($data['minprice'])?$data['minprice']:'';
+			$canusetype = isset($data['canusetype'])?$data['canusetype']:'';
+			$canuseday = isset($data['canuseday'])?$data['canuseday']:'';
+			$begintime = isset($data['begintime'])?$data['begintime']:'';
+			$endtime = isset($data['endtime'])?$data['endtime']:'';
+			$maxnum = isset($data['maxnum'])?$data['maxnum']:'';
+			$prefix = isset($data['prefix'])?$data['prefix']:'';
+			$isuse = isset($data['isuse'])?$data['isuse']:'';
+
+			$times = isset($data['times'])?$data['times']:'';
+
+			$item_ids = '';
+			foreach ($times as $key => $value) {
+				if(in_array($key, $subitem_ids)) {
+					for ($i=0; $i < $value; $i++) { 
+						$item_ids .= $key.',';
+					}
+					
+				}
+			}
+			$item_ids = trim($item_ids, ',');
+
+			$db = Flight::get('db');
+
+			if(!$coupon_name) {
+				Handle::result("错误", "未获取到优惠券名" );
+			}
+
+			if($db->has("lk_coup_rule", array('coupon_name' => $coupon_name))){
+				Handle::result("错误", "优惠券名已经存在, 请重新输入" );
+			}
+
+			if($canusetype == 1) {
+				$canuseday = isset($data['canuseday'])?$data['canuseday']:'';
+				$begintime = '';
+				$endtime = '';
+			}else{
+				$canuseday = '';
+				$begintime = isset($data['begintime'])?$data['begintime'].' 00:00:00':'';
+				$endtime = isset($data['endtime'])?$data['endtime'].' 23:59:59':'';
+			}
+
+			switch ($coupon_type) {
+				case '0':
+				// 现金券
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'money' => $money,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				case '1':
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'money' => $money,
+						'minprice' => $minprice,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				case '2':
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'item_ids' => $item_ids,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				default:
+					break;
+			}
+
+			$lastId = $db->insert("lk_coup_rule", $in_data);
+
+			if($lastId) {
+				Handle::result("成功", "添加成功", '../marketing/couponrule', "点击继续添加", '../marketing/addRule' );
+			}else{
+				Handle::result("错误", "添加失败" );
+			}
+
+		}else{
+
+			$serItems = Shop::getServiceItems();
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/marketing/managerule.js');
+			Flight::render('marketing/managerule', array('type' => 'add', 'ser_items' => $serItems));
+		}
+
+	}
+
+	/**
+	 * 新增Coupon Rule
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function editRule() {
+
+		if(IS_POST) {
+
+			$data = Flight::request()->data;
+			$id = isset($data['id'])?$data['id']:'';
+			$coupon_name = isset($data['coupon_name'])?$data['coupon_name']:'';
+			$coupon_type = isset($data['coupon_type'])?$data['coupon_type']:'';
+			$subitem_ids = isset($data['item_ids'])?$data['item_ids']:'';
+			$money = isset($data['money'])?$data['money']:'';
+			$minprice = isset($data['minprice'])?$data['minprice']:'';
+			$canusetype = isset($data['canusetype'])?$data['canusetype']:'';
+			$canuseday = isset($data['canuseday'])?$data['canuseday']:'';
+			$begintime = isset($data['begintime'])?$data['begintime']:'';
+			$endtime = isset($data['endtime'])?$data['endtime']:'';
+			$maxnum = isset($data['maxnum'])?$data['maxnum']:'';
+			$prefix = isset($data['prefix'])?$data['prefix']:'';
+			$isuse = isset($data['isuse'])?$data['isuse']:'';
+
+			$times = isset($data['times'])?$data['times']:'';
+
+			$item_ids = '';
+			foreach ($times as $key => $value) {
+				if(in_array($key, $subitem_ids)) {
+					for ($i=0; $i < $value; $i++) { 
+						$item_ids .= $key.',';
+					}
+					
+				}
+			}
+			$item_ids = trim($item_ids, ',');
+
+
+
+			$db = Flight::get('db');
+
+			if(!$coupon_name) {
+				Handle::result("错误", "未获取到优惠券名" );
+			}
+
+			if($db->has("lk_coup_rule", array('coupon_name' => $coupon_name, "id[!]" => $id))){
+				Handle::result("错误", "优惠券名已经存在, 请重新输入" );
+			}
+
+			if($canusetype == 1) {
+				$canuseday = isset($data['canuseday'])?$data['canuseday']:'';
+				$begintime = '';
+				$endtime = '';
+			}else{
+				$canuseday = '';
+				$begintime = isset($data['begintime'])?$data['begintime'].' 00:00:00':'';
+				$endtime = isset($data['endtime'])?$data['endtime'].' 23:59:59':'';
+			}
+
+			switch ($coupon_type) {
+				case '0':
+				// 现金券
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'money' => $money,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				case '1':
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'money' => $money,
+						'minprice' => $minprice,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				case '2':
+					$in_data = array(
+						'coupon_name' => $coupon_name,
+						'coupon_type' => $coupon_type,
+						'item_ids' => $item_ids,
+						'canusetype' => $canusetype,
+						'canuseday' => $canuseday,
+						'begintime' => $begintime,
+						'endtime' => $endtime,
+						'maxnum' => $maxnum,
+						'prefix' => $prefix,
+						'isuse' => $isuse,
+					);
+					break;
+				default:
+					break;
+			}
+
+			$lastId = $db->update("lk_coup_rule", $in_data, array("id" => $id));
+
+			if($lastId) {
+				Handle::result("成功", "编辑成功", '../marketing/couponrule', "点击再次编辑", '../marketing/editRule?coupon_id='.$id );
+			}else{
+				Handle::result("错误", "添加失败" );
+			}
+
+		}else{
+
+			$serItems = Shop::getServiceItems();
+
+			$coupon_id = Flight::request()->query->coupon_id;
+
+			$rule = Flight::get('db')->get("lk_coup_rule", "*", array("id" => $coupon_id));
+			$rule['begintime'] = substr($rule['begintime'], 0, 10);
+			$rule['endtime'] = substr($rule['endtime'], 0, 10);
+
+
+			$db = Flight::get('db');
+
+			$sers = $db->select('lk_service', array('ser_id', 'ser_name'), array('is_use' => '1', 'ORDER' => "sort_order ASC") );
+
+			// 所有
+			$all = $db->select('lk_service_item', array('item_id', 'item_name', 'ser_id'), array('is_use' => '1' ,'ORDER' => "sort_order ASC") );
+			$allItems = array();
+
+			$res = array();
+			foreach ($all as $item) {
+				$ser_name = $db->get('lk_service', 'ser_name', array('ser_id' => $item['ser_id']));
+				$res[$item['item_id']] = '<b class="group-name">'.$ser_name.'</b>' .$item['item_name'];
+			}
+
+			$oldItems = explode(',', $rule['item_ids']);
+			$countArray = array();
+			foreach ($oldItems as $item_id) {
+				if(!isset($countArray[$item_id])) {
+					$countArray[$item_id] = 1;
+				}else{
+					$countArray[$item_id]++;
+				}
+			}
+
+			$rule['item_ids'] = implode(',', array_unique(explode(',', $rule['item_ids'])));
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/marketing/managerule.js');
+			Flight::render('marketing/managerule', array('type' => 'edit', 'ser_items' => $serItems, "rule" => $rule, "countArray" => $countArray, "items" => $res));
+		}
+
+	}
+	/**
+	 * 删除rule
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function del_rule() {
+
+		if(IS_POST) {
+			$coupon_id = Flight::request()->data->coupon_id;
+			$db = Flight::get('db');
+			$db->update("lk_coup_rule",  array('isuse' => 2) ,array('id' => $coupon_id));
+
+			Flight::json(array('success' => true, 'msg' => '删除成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../dashboard/admin');
+		}
+
+	}
+
+
+
+	/**
+	 * 生成券码
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function addCouponCode() {
+
+		if(IS_POST) {
+			$coupon_id = Flight::request()->data->coupon_id;
+			$number = Flight::request()->data->number;
+
+			$db = Flight::get('db');
+			$rule = $db->get('lk_coup_rule', "*", array("id" => $coupon_id));
+
+			if($rule['coupon_type'] == 2) {
+				$ser_item = $db->query("SELECT ser_id, item_id FROM lk_service_item WHERE FIND_IN_SET(item_id, '{$rule['item_ids']}')");
+				$item_sers = array();
+				foreach ($ser_item as $key => $value) {
+					$item_sers[$value['item_id']] = $value['ser_id'];
+				}
+			}
+
+			if($rule['canusetype'] == 1) {
+				$start = date('Y-m-d', time()).' 00:00:00';
+				$end = date('Y-m-d', time()+$rule['canuseday']*86400) . ' 23:59:59';
+			}else{
+				$start = $rule['begintime'];
+				$end = $rule['endtime'];
+			}
+
+			$in_data = array();
+			for ($i=0; $i < $number; $i++) { 
+
+				$commoncode = $rule['prefix'].self::generateRandChar(1);
+				$codepassword = self::generateRandChar(2);
+
+				if($rule['coupon_type'] == 2) {
+					$items = explode(",", $rule['item_ids']);
+
+					foreach ($items as $item_id) {
+						$in_data[] = array(
+							'coupon_id' => $coupon_id,
+							'begintime' => $start,
+							'endtime' => $end,
+							'ser_id' => $item_sers[$item_id],
+							'item_id' => $item_id,
+							'commoncode' => $commoncode,
+							'codepassword' => $codepassword,
+							'createtime' => date('Y-m-d H:i:s'),
+						);
+					}
+
+				}else{
+					$in_data[] = array(
+						'coupon_id' => $coupon_id,
+						'begintime' => $start,
+						'endtime' => $end,
+						'money' => $rule['money'],
+						'minprice' => $rule['minprice'],
+						'commoncode' => $commoncode,
+						'codepassword' => $codepassword,
+						'createtime' => date('Y-m-d H:i:s'),
+					);
+				}
+
+			}
+
+			if(count($in_data)) {
+				$db->insert("lk_coup_list", $in_data);
+				$db->update("lk_coup_rule", array("num[+]" => count($in_data), "residuenum[+]" => count($in_data)), array("id" => $coupon_id));
+
+			}
+
+			Flight::json(array('success' => true, 'msg' => '添加成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../marketing/couponrule');
+		}
+
+	}
+
+
+	/**
+	 * 生成随机字符
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	private static function generateRandChar($type = 1) {
+		// 密码字符集，可任意添加你需要的字符  
+		if($type == 1) {
+			$code = date(ymdHi).rand(10000, 99999);
+
+			if(Flight::get('db')->get("lk_coup_list", "id", array("commomcode" => $code))) {
+	        	return self::generateRandChar($type);
+	        }
+	        return $code;
+		}else{
+
+			return rand(10000000, 99999999);  
+		}
+
+	}
+
+	/**
+	 * 分配用户券码
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function assignUser() {
+
+		if(IS_POST) {
+			$coup_id = Flight::request()->data->coup_id;
+			$phone_mob = Flight::request()->data->phone_mob;
+
+			$db = Flight::get('db');
+			$user_id = $db->get("lk_user", "user_id", array("AND" => array("phone_mob" => trim($phone_mob), "status" => 1)));
+
+			if($db->has("lk_coup_list", array("AND" => array("id" => $coup_id, "user_id" => 0, "isuse" => 1, "isprint" => 0)))) {
+				$db->update("lk_coup_list",  array(
+					'user_id' => $user_id?$user_id:0, 
+					'phone_mob' => $phone_mob, 
+					'createtime' => date('Y-m-d H:i:s')) ,array('id' => $coup_id));
+
+				Flight::json(array('success' => true, 'msg' => '分配成功'));
+
+			}else{
+				Flight::json(array('success' => false, 'msg' => '此券码无效，或者已经分配用户'));
+			}
+
+		}else{
+			Handle::result('302', '非法请求', '../marketing/coupon');
+		}
+
+	}
+
+	/**
+	 * 包年用户展示
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-24
+	 */
+	public static function yearcoupon() {
+
+		// 
+		$db = Flight::get('db');
+
+		$coupons = $db->select("lk_recharge", "*", array("AND" => array(
+			"type" => 2,
+			"coupon_id" => 1,
+			"status[>]" => 0
+		)));
+
+		$res = array();
+		if($coupons) {
+			foreach ($coupons as $key => $value) {
+				$res[] = array(
+					"INDEX" => $key+1,
+					"r_order_sn" => $value['r_order_sn'],
+					"phone_mob" => $value['phone_mob'],
+					"state" => $value['status'] == 1?'<font color="red">优惠券未发放</font>':'<font color="green">优惠券已发放</font>',
+					"buy_time" => date('Y-m-d H:i:s', $value['ftime']),
+				);
+			}
+		}
+
+		Flight::jsrender('/public/js/marketing/yearcoupon.js');
+		Flight::render('marketing/yearcoupon', array("coups" => $res));
+
+	}
+
+
+	public static function sendCodes() {
+
+		$db = Flight::get("db");
+
+		$recharges = $db->select("lk_recharge", "*", array("status" => 1));
+
+		foreach ($recharges as $key => $value) {
+			$phone = $value['phone_mob'];
+
+			self::addCouponCode1($phone);
+		}
+
+		$db->update("lk_recharge", array("status" => 2), array("status" => 1));
+
+	}
+
+	/**
+	 * 生成券码
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	private static function addCouponCode1($phone, $coupon_id = 1, $user_id = '') {
+
+		$db = Flight::get('db');
+		$rule = $db->get('lk_coup_rule', "*", array("id" => $coupon_id));
+
+		if($rule['coupon_type'] == 2) {
+			$ser_item = $db->query("SELECT ser_id, item_id FROM lk_service_item WHERE FIND_IN_SET(item_id, '{$rule['item_ids']}')");
+			$item_sers = array();
+			foreach ($ser_item as $key => $value) {
+				$item_sers[$value['item_id']] = $value['ser_id'];
+			}
+		}
+
+		if($rule['canusetype'] == 1) {
+			$start = date('Y-m-d', time()).' 00:00:00';
+			$end = date('Y-m-d', time()+$rule['canuseday']*86400) . ' 23:59:59';
+		}else{
+			$start = $rule['begintime'];
+			$end = $rule['endtime'];
+		}
+
+		$in_data = array();
+
+		$commoncode = $rule['prefix'].self::generateRandChar(1);
+		$codepassword = self::generateRandChar(2);
+
+		if($rule['coupon_type'] == 2) {
+			$items = explode(",", $rule['item_ids']);
+
+			foreach ($items as $item_id) {
+				$in_data[] = array(
+					'coupon_id' => $coupon_id,
+					'user_id' => $user_id,
+					'phone_mob' => $phone,
+					'begintime' => $start,
+					'endtime' => $end,
+					'ser_id' => $item_sers[$item_id],
+					'item_id' => $item_id,
+					'commoncode' => $commoncode,
+					'codepassword' => $codepassword,
+					'createtime' => date('Y-m-d H:i:s'),
+				);
+			}
+
+		}else{
+			$in_data[] = array(
+				'coupon_id' => $coupon_id,
+				'user_id' => $user_id,
+				'phone_mob' => $phone,
+				'begintime' => $start,
+				'endtime' => $end,
+				'money' => $rule['money'],
+				'minprice' => $rule['minprice'],
+				'commoncode' => $commoncode,
+				'codepassword' => $codepassword,
+				'createtime' => date('Y-m-d H:i:s'),
+			);
+		}
+
+		if(count($in_data)) {
+			$db->insert("lk_coup_list", $in_data);
+			$db->update("lk_coup_rule", array("num[+]" => count($in_data), "residuenum[+]" => count($in_data)), array("id" => $coupon_id));
+		}
+
+	}
+
+
+}

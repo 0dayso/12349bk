@@ -14,11 +14,15 @@ return array(
 	'order'		=> array(
 		'title' => '订单管理',
 		'subs'	=> array(
+			'addcouponorder' => '包年券下单',
 			'addorder' => '后台快速下单',
 			'waitorder' => '待审核订单',
-			'processorder' => '待接单订单',
+			'processorder' => '待分配订单',
+			'weitpayprder' => '待支付订单',
+			'finishorder' => '完成(待回访)订单',
 			'complainorder' => '投诉订单',
 			'allorder' => '全部订单',
+			'completeorder' => '已完成订单',
 		),
 	),
 	'finance' 	=> array(
@@ -35,6 +39,7 @@ return array(
 		'subs'	=> array(
 			'coupon' => '优惠券管理',
 			'couponrule' => '优惠券类型管理',
+			'yearcoupon' => '包年用户'
 		),
 	),
 	'shop' 		=> array(

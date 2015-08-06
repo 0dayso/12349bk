@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * 财务管理
+ * 
+ */
+class Finance {
+
+
+	/**
+	 * 商家报表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-16
+	 */
+	public static function shop() {
+
+		Flight::jsrender('/public/js/finance/shop.js');
+		Flight::render('finance/shop');
+
+	}
+
+	/**
+	 * 获取商家报表数据
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-16
+	 */
+	public static function getShops() {
+
+		
+		
+
+
+
+
+	}
+
+
+}

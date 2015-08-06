@@ -1,0 +1,470 @@
+<?php
+include "./bInit.php";
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>楼口12349</title>
+    <!--meta标签-->
+    <!--测试阶段-->
+  <!--   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" /> -->
+    <!--测试阶段-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="browsermode" content="application" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="author" content="glivia | 286864566" />
+    <meta name="application-name" content="楼口12349" />
+    <meta name="keywords" content="楼口12349" />
+    <meta name="description" content="楼口12349" />
+    <link rel="icon" type="image/x-icon" href="./assets/images/fav.ico" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/base.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobiscroll.custom-2.5.0.min.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.animate.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/css/mobilebone.css" />
+</head>
+<body data-userid="<?php echo Session::get("userid") ?>">
+  
+<!--加载loading-->
+<div class="loadingbox" style="width: 200px; z-index: 999999; position: fixed; border-radius: 15px; cursor: pointer; left: 50%; top: 50%;margin-left:-100px;margin-top:-100px; background: rgba(0, 0, 0, 0.701961);">
+  <div class="topPart" style='width: 100%; text-align: center; padding-top: 10px;'>
+    <img src="./assets/images/loading/loading9.gif" style="max-width: 100%; height: 100px;">
+  </div>
+  <p class="font" style="text-align: center; font-size: 16px; color: rgb(255, 255, 255); margin: 5px 0px 10px;">正在加载...</p>
+</div>
+
+<!--一级头部-->
+<div class="header">
+    <div class="title">楼口12349</div>
+</div>
+
+<!--首页-->
+<div id="home" class="page home out">
+    <div  id="c1" class="ic1">
+        <div class="ic2">
+            <!--banner图-->
+            <div class="index-banner">
+                <div class="slider">
+                    <ul>
+                        <li>
+                            <!--100块钱套餐-->
+                            <a href="./pay/100.php" data-reload data-ajax="false" >
+                              <img src="./assets/images/banner3.jpg" height="150">
+                            </a>
+                        </li>
+                        <li>
+                            <!--楼口12349顺利上线-->
+                            <a href="#" ><img src="./assets/images/banner.jpg" height="150"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--9宫格-->
+            <div class="index-nine C mt20">
+              
+                <a href="#fullYearSecond" id="fullYearAItem" >
+                  <span><i class="icon iconfont">󰅒</i><b>包年优惠券入口</b></span>
+                </a>
+
+                <a href="#moveHouseSecond" class="brn bbn">
+                    <span><i class="icon iconfont">󰄴</i></span> 搬家
+                </a>
+                <a href="#eleFixSecond" class="brn bbn">
+                    <span><i class="icon iconfont">󰆍</i></span> 家电维修
+                </a>
+                <a href="#eleCleanSecond" class="bbn">
+                    <span><i class="icon iconfont"></i></span> 家电清洗
+                </a>
+                <!-- <a data-ajax="false" data-reload href='./do.php?type=fixLock&time=1&title=开锁服务&tid=17' class="brn bbn">
+                    <span><i class="icon iconfont">󰆕</i></span> 开锁服务
+                </a>  -->
+                <a  href='#lockSecond' class="brn bbn">
+                    <span><i class="icon iconfont">󰆕</i></span> 锁具服务
+                </a>
+                <a href="#airMoveSecond" class="brn bbn">
+                    <span><i class="icon iconfont">󰁧</i></span> 空调移机
+                </a>
+                <a href="#digFixSecond" class="bbn">
+                    <span><i class="icon iconfont">󰅑</i></span> 电脑网络
+                </a>
+                <a href="#pipeFixSecond" class="bln brn">
+                    <span><i class="icon iconfont"></i></span> 水电管道
+                </a>
+                <a href="#babyKeeperSecond" class="brn">
+                    <span><i class="icon iconfont"></i></span> 月嫂
+                </a>
+                <a data-ajax="false" data-reload href='./do.php?type=keepClean&time=24&title=保洁&tid=30'>
+                    <span><i class="icon iconfont">󰊋</i></span> 家庭保洁
+                </a>
+                <!--  <a href="#" class="keepFocus">
+                    <span><i class="icon iconfont">󰃄</i></span>
+                    敬请期待
+                </a> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--包年套餐-->
+<div id="fullYearSecond" class="page out OutPage fullYearSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">家庭包年套餐</div>
+    </div>
+    <div id="c90" class="ic1">
+        <div class="ic2">
+          
+          <a class="list-item mt20"   data-ajax="false"   data-reload href='./do.php?type=bnClean&time=24&title=(包年)两小时保洁&tid=34'>(包年)2小时保洁</a>
+          <a class="list-item"   data-ajax="false"   data-reload href='./do.php?type=bnPipe&time=1&title=(包年)管道疏通&tid=32'>(包年)管道疏通</a>
+          <a class="list-item"   data-ajax="false"   data-reload href='./do.php?type=bnAirCondition&time=72&title=(包年)空调保养&tid=35'>(包年)空调保养</a>
+          <a class="list-item"   data-ajax="false"   data-reload href='./do.php?type=bnYYJ&time=72&title=(包年)油烟机清洗&tid=33'>(包年)油烟机清洗</a>
+          <a class="list-item"   data-ajax="false"   data-reload href='./do.php?type=bnLock&time=24&title=(包年)锁具保养&tid=31'>(包年)锁具保养</a>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--footer-->
+
+
+<div class="footer">
+    <h4><a href="#home" data-rel="auto"><i class="icon icon-home"></i>首页</a></h4>
+    <h4><a href="#order" data-rel="auto"><i class="icon icon-file"></i>订单</a></h4>
+    <h4><a href="#my" data-rel="auto"><i class="icon icon-user"></i>我的</a></h4>
+</div>
+
+<!--锁具二级--> 
+
+<div id="lockSecond" class="page out OutPage lockSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">锁具服务</div>
+    </div>
+    <div id="c2" class="ic1">
+        <div class="ic2">
+          <a class="list-item mt20"   data-ajax="false"   data-reload href='./do.php?type=fixLock2&time=1&title=锁具保养&tid=31'>锁具保养</a>
+          <a class="list-item"        data-ajax="false"    data-reload href='./do.php?type=fixLock1&time=1&title=开锁服务&tid=17'>开锁服务</a>
+        </div>
+    </div>
+</div>
+
+
+<!--搬家二级--> 
+
+<div id="moveHouseSecond" class="page out OutPage moveHouseSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">搬家</div>
+    </div>
+    <div id="c2" class="ic1">
+        <div class="ic2">
+          <a class="list-item mt20"   data-ajax="false"   data-reload href='./do.php?type=moveHouse1&time=24&title=小型面包车&tid=1'>小型面包车</a>
+          <a class="list-item"        data-ajax="false"    data-reload href='./do.php?type=moveHouse2&time=24&title=金杯面包车&tid=2'>金杯面包车</a>
+          <a class="list-item"        data-ajax="false"    data-reload href='./do.php?type=moveHouse3&time=24&title=厢货或普卡&tid=3' style="border-bottom:1px solid #ddd">厢货或普卡</a>  
+        </div>
+    </div>
+</div>
+
+
+
+<!--订单-->
+<div id="order" class="page order out">
+  <div id="c30" class="ic1">
+      <div class="ic2">
+          <div class="container C"></div>
+      </div>
+  </div>
+</div>
+
+
+
+<!--电器维修二级-->
+<div id="eleFixSecond" class="page out OutPage eleFixSecond">
+      <div class="headerInner">
+          <a class="icon_left" href='#home'>
+              <img class="back" src="./assets/images/icon_back.png" width="20" />
+              <span>返回</span>
+          </a>
+          <div class="title">电器维修</div>
+      </div>
+      <div id="c3" class="ic1">
+        <div class="ic2">
+          <a class="list-item mt20"  data-ajax="false"   data-reload href='./do.php?type=eleFix1&time=2&title=空调&tid=4'>空调</a>                   
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix2&time=2&title=冰箱&tid=5'>冰箱</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix3&time=2&title=洗衣机&tid=6'>洗衣机</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix4&time=2&title=电视机&tid=7'>电视机</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix5&time=2&title=微波炉&tid=8'>微波炉</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix6&time=2&title=热水器&tid=9'>热水器</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix7&time=2&title=油烟机&tid=10'>油烟机</a>  
+          <a class="list-item" data-ajax="false"   data-reload href='./do.php?type=eleFix8&time=2&title=煤气灶&tid=11' style="border-bottom:1px solid #ddd">煤气灶</a>  
+        </div>
+    </div>
+</div>
+
+
+<!--家电清洗二级-->
+<div id="eleCleanSecond" class="page out OutPage eleCleanSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home' >
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">家电清洗</div>
+    </div>
+    <div id="c4" class="ic1">
+        <div class="ic2">
+          <!-- <a class="list-item mt20"  data-ajax="false" data-reload href='./do.php?type=eleClean1&time=24&title=油烟机清洗&tid=12' >油烟机清洗</a>               -->
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=eleClean2&time=24&title=油烟机清洗&tid=13' >油烟机清洗</a>
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=eleClean3&time=24&title=空调清洗&tid=14' >空调清洗</a>  
+          <!-- <a class="list-item" data-ajax="false" data-reload href='./do.php?type=eleClean4&time=24&title=洗衣机清洗&tid=15' >洗衣机清洗</a>   -->
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=eleClean5&time=24&title=微波炉清洗&tid=16'  style="border-bottom:1px solid #ddd">微波炉清洗</a>  
+      </div>
+    </div>
+</div>
+
+
+<!--空调移机二级-->
+<div id="airMoveSecond" class="page out OutPage airMoveSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">空调移机</div>
+    </div>
+    <div id="c5" class="ic1">
+        <div class="ic2">
+          <a class="list-item mt20" data-ajax="false" data-reload href='./do.php?type=airMove1&time=3&title=空调移机&tid=18'>空调移机</a>                   
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=airMove2&time=3&title=空调换支架&tid=19' style="border-bottom:1px solid #ddd">空调换支架</a>  
+        </div>
+    </div>
+</div>
+
+
+
+<!--数码产品二级-->
+<div id="digFixSecond" class="page out OutPage digFixSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">电脑网络</div>
+    </div>
+    <div id="c6" class="ic1">
+        <div class="ic2">
+        <a class="list-item mt20" data-ajax="false"  data-reload href='./do.php?type=digFix1&time=1&title=台式机维修&tid=20'>台式机维修</a> 
+        <a class="list-item" data-ajax="false" data-reload href='./do.php?type=digFix2&time=1&title=笔记本维修&tid=21'>笔记本维修</a>            
+        <a class="list-item" data-ajax="false" data-reload href='./do.php?type=digFix3&time=1&title=网络维修&tid=22' style="border-bottom:1px solid #ddd">网络维修</a>                   
+    </div></div>
+</div>
+
+
+<!--水电管道-->
+<div id="pipeFixSecond" class="page out OutPage pipeFixSecond">
+    <div class="headerInner">
+        <a class="icon_left" href='#home'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">水电管道</div>
+    </div>
+    <div id="c7" class="ic1">
+        <div class="ic2">
+          <a class="list-item mt20" data-ajax="false" data-reload href='./do.php?type=pipeFix1&time=1&title=洁具维修&tid=23'>洁具维修</a> 
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=pipeFix2&time=1&title=洁具安装、更换&tid=24'>洁具安装、更换</a>            
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=pipeFix3&time=1&title=管道疏通&tid=25'>管道疏通</a>                  
+          <a class="list-item" data-ajax="false" data-reload href='./do.php?type=pipeFix4&time=1&title=管道维修&tid=26'>管道维修</a>                  
+          <a class="list-item" data-ajax="false" style="border-bottom:1px solid #ddd" data-reload href='./do.php?type=pipeFix5&time=1&title=电工&tid=27'>电工</a>   
+        </div>                
+    </div>
+</div>
+
+<!--月嫂-->
+<div id="babyKeeperSecond" class="page out OutPage babyKeeperSecond">
+  <div class="headerInner">
+      <a class="icon_left" href='#home'>
+          <img class="back" src="./assets/images/icon_back.png" width="20" />
+          <span>返回</span>
+      </a>
+      <div class="title">月嫂</div>
+  </div>
+  <div id="c8" class="ic1">
+    <div class="ic2">
+        <a class="list-item mt20" data-ajax="false" data-reload href='./do.php?type=babyKeeper1&time=480&title=月嫂(白班)&tid=28'>月嫂（白班）</a> 
+        <a class="list-item" data-ajax="false" data-reload href='./do.php?type=babyKeeper2&time=480&title=月嫂(住家)&tid=29' style="border-bottom:1px solid #ddd">月嫂（住家）</a>            
+    </div>
+  </div>
+</div>
+
+
+
+<!--我的-->
+<div id="my" class="page my out">
+    <div id="c9" class="ic1">
+        <div class="ic2">
+             <?php
+                    //如果没有手机号码
+                    if( !Session::get("phone_mob") ){
+                      echo "<a class='bmblock' data-ajax='false' data-reload  href='bindMobile.php'>尚未绑定手机,点击这里绑定!</a>";
+                    }
+
+              ?>
+              <div class="user-center-top">
+                <div class="user-avatar">
+                  <img src="./assets/images/bg-user-avatar.png" width="80" height="80" />
+                </div>
+                <div class="user-info-notice">
+                  欢迎您<br />
+                  <b><?php echo Session::get("nickname") ?></b>
+                </div>
+              </div>
+              <!--ITEM-->
+              <a class="list-item mt20" href='#coup'  style="position:relative">
+                  <i class="icon icon-tags"></i>我的优惠券
+                  <?php if( !Session::get("phone_mob") ){ ?>
+                  <span style="position:absolute;right:60px;top:15px; display: inline-block; line-height:30px;height:30px;font-size:9pt;padding:0 5px; background: #f9f2f4; color:#c7254e;border-radius: 4px;">需要先绑定手机</span>
+                  <?php } ?>
+              </a>   
+              <a class="list-item" href='#feedback'>
+                  <i class="icon icon-comment"></i>意见反馈
+              </a>                  
+              <a class="list-item" href='tel:0519-12349'>
+                  <i class="icon icon-phone-alt"></i>联系客服
+              </a>
+              <a class="list-item" href='#about' style="border-bottom:1px solid #ddd">
+                  <i class="icon icon-bookmark"></i>关于我们
+              </a>  
+        </div>
+    </div>
+</div>
+ 
+<!--我的优惠券-->
+<div id="coup" class="page OutPage out coup">
+    <div class="headerInner">
+      <a class="icon_left" href='#my'>
+          <img class="back" src="./assets/images/icon_back.png" width="20" />
+          <span>返回</span>
+      </a>
+      <div class="title">我的优惠券</div>
+      <div class="icon_right">
+          <a href='#useLog'>使用记录</a>
+      </div>
+    </div>
+    <div id="c10" class="ic1">
+         <?php
+                    //如果没有手机号码
+                    if( !Session::get("phone_mob") ){
+                      echo "<a class='bmblock' data-ajax='false' data-reload  href='bindMobile.php'>请绑定手机后查看,立即去绑定!</a>";
+                    }
+
+              ?>
+        <div class="ic2">
+         
+        </div>
+    </div>
+</div> 
+
+
+<!--使用记录-->
+<div id="useLog" class="page OutPage out useLog">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">使用记录</div>
+    </div>
+    <div id="c11" class="ic1">
+      <div class="ic2"></div>
+    </div>
+</div>
+
+
+<!--用户反馈-->
+<div id="feedback" class="page OutPage out feedback">
+    <div class="headerInner">
+        <a class="icon_left" href='#my'>
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">意见反馈</div>
+    </div>
+    <div id="c12" class="ic1">
+        <div class="ic2">
+            <div class="feedback-box">
+              <textarea class="feedbackText"></textarea>
+              <a href='javascript:void(0)' class="feebackUp">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--关于我们-->
+<div id="about" class="page OutPage out about">
+    <div class="headerInner">
+        <a class="icon_left" href='javascript:void(0)' data-rel="back">
+            <img class="back" src="./assets/images/icon_back.png" width="20" />
+            <span>返回</span>
+        </a>
+        <div class="title">关于我们</div>
+    </div>
+    <div id="c13" class="ic1">
+        <div class="ic2 law-content">
+            <p>常州市12349便民服务平台（以下简称12349平台）建于2010年9月7日，是由市、区两级人民政府共同打造的以“为老服务、公益服务、便民服务和生活咨询”为一体的公共服务信息平台。</p>
+            <p>按照“党委领导、政府搭台、社会参与、企业运作”的思路进行建设，秉承“以人为本、情系百姓、诚信为民、安全快捷”的服务宗旨，依托近300家品牌服务商，开通15大类，300多小项的服务内容，包括水电维修、家电维修、家政服务等，构建成为一个“全市联动、全年无休”的服务体系。截止至2015年6月，已累计接电55万个，提供服务36万人次。</p>
+            <p>2015年4月，12349平台引入电商“O2O”模式，与常州楼口电子商务有限公司展开深入合作，服务品牌成功升级为“楼口12349”。利用互联网进一步解决市场信息不对称问题，节省服务的环节，提高服务的效率，只为给用户带来更新的体验、更高的价值和更好的服务，让用户的生活互联起来，智慧起来。</p>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="./assets/js/lib/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./assets/js/lib/mobilebone.js"></script>
+<script type="text/javascript" src="./assets/js/lib/iscroll.js"></script>
+<script type="text/javascript" src="./assets/js/lib/fastclick.min.js"></script>
+<script type="text/javascript" src="./assets/js/lib/yxMobileSlider.js"></script>
+<script type="text/javascript" src="./assets/js/lib/dialog.js"></script>
+<script type="text/javascript" src="./assets/js/module/init.js"></script>
+<script type="text/javascript" src="./assets/js/module/index.js"></script>
+
+<script type="text/javascript">
+$(function(){
+  $(".loadingbox").remove();
+})
+</script>
+<?php require_once "./shareConf.php" ?>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?php
+/**
+ * 主页功能展示
+ */
+class Main {
+
+	public static function index() {
+
+		
+		
+	}
+
+}

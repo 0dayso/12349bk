@@ -1,0 +1,99 @@
+<?php
+
+
+class Coup {
+
+	/**
+	 * 激活优惠券
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-30
+	 */
+	public static function index() {
+
+		$data = Flight::request()->query;
+		$commoncode = isset($data['commoncode'])?$data['commoncode']:'';
+		$codepassword = isset($data['codepassword'])?$data['codepassword']:'';
+		$phone_mob = isset($data['phone_mob'])?$data['phone_mob']:'';
+
+		if($commoncode && $codepassword) {
+			$db = Flight::get('db');
+			$coup = $db->get("lk_coup_list", "*", array("AND" => array( "commoncode" => $commoncode, "codepassword" => $codepassword)));
+			if(!$coup) {
+				Handle::result("找不到优惠券，请输入正确的优惠券码");
+			}else{
+				if($coup['phone_mob'] > 0) {
+					Handle::result("此优惠券已经被激活");
+				}
+
+				if($phone_mob) {
+					$user_id = $db->get("lk_user", "user_id", array("phone_mob" => $phone_mob));
+					$coup_data = array(
+						"user_id" => $user_id?$user_id:0,
+						"phone_mob" => $phone_mob,
+						"begintime" => date('Y-m-d').' 00:00:00',
+						"endtime" => date('Y-m-d', time()+365*86400).' 23:59:59',
+					);
+					
+					$db->update("lk_coup_list", $coup_data, array("AND" => array( "commoncode" => $commoncode, "codepassword" => $codepassword)));
+					Handle::result("^^激活成功", 2);
+				}
+
+			}
+		}
+
+		Flight::cssrender("/public/css/magister.css");
+		Flight::jsrender("/public/js/plugins/magister.js");
+		Flight::render('coup/index', array('commoncode' => $commoncode, 'codepassword' => $codepassword, 'phone_mob' => $phone_mob));
+
+	}
+
+	/**
+	 * 激活优惠券
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-30
+	 */
+	public static function active() {
+
+		$data = Flight::request()->data;
+		$commoncode = isset($data['commoncode'])?$data['commoncode']:'';
+		$codepassword = isset($data['codepassword'])?$data['codepassword']:'';
+		$phone_mob = isset($data['phone_mob'])?$data['phone_mob']:'';
+
+		if($commoncode && $codepassword && $phone_mob) {
+
+			$db = Flight::get('db');
+			$user_id = $db->get("lk_user", "user_id", array("phone_mob" => $phone_mob));
+
+
+			$coup = $db->get("lk_coup_list", "*", array("AND" => array( "commoncode" => $commoncode, "codepassword" => $codepassword)));
+			if(!$coup) {
+				Handle::result("找不到优惠券，请输入正确的优惠券码");
+			}else{
+				if($coup['phone_mob'] > 0) {
+					Handle::result("此优惠券已经被激活");
+				}
+
+				$coup_data = array(
+					"user_id" => $user_id?$user_id:0,
+					"phone_mob" => $phone_mob,
+					"begintime" => date('Y-m-d').' 00:00:00',
+					"endtime" => date('Y-m-d', time()+365*86400).' 23:59:59',
+				);
+				
+				$db->update("lk_coup_list", $coup_data, array("AND" => array( "commoncode" => $commoncode, "codepassword" => $codepassword)));
+
+				Handle::result("^^激活成功", 2);
+
+			}
+
+		}else{
+			Handle::result("非法请求");
+		}
+
+	}
+
+}

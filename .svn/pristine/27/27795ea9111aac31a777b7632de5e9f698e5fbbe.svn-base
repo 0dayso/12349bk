@@ -1,0 +1,1352 @@
+<?php
+
+class Shop {
+
+	/**
+	 * 商家列表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function shoplist() {
+
+		Flight::jsrender('/public/js/shop/shoplist.js');
+		Flight::render("shop/shoplist");
+
+	}
+
+	/**
+	 * 获取商户数据
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getShops() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$sSearch_1 = isset($req->sSearch_1)?$req->sSearch_1:'';
+
+		$type = isset($req->type)?$req->type:'';
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = strtoupper($req['sSortDir_0']);
+
+		$db = Flight::get('db');
+
+		$sql = "SELECT * FROM lk_shop WHERE 1 = 1";
+
+		// L类型查询
+		if($sSearch_1 > 0) {
+			$sql .= " AND FIND_IN_SET({$sSearch_1}, `item_ids`)";
+		}
+
+		// 查询店铺名和负责人姓名
+		if($search) {
+			$sql .= " AND (shop_name LIKE '%{$search}%' OR officer LIKE '%{$search}%')";
+		}
+
+		switch ($type) {
+			case '1':
+				$sql .= ' AND is_del = 0 AND status = 0';
+				break;
+			case '2':
+				// 被删除的商家
+				$sql .= ' AND is_del = 1';
+				break;
+			default:
+				// 全部不包括被删除的
+				$sql .= ' AND is_del = 0';
+				break;
+		}
+
+		$countSql = $sql;
+		$sql .= " ORDER BY {$sort_item} {$sort_sort} LIMIT {$start},{$length}";
+
+		$res = $db->query($sql)->fetchAll();
+
+		$serItems = self::getServiceItems(2);
+		$result = array();
+		if($res) {
+			foreach ($res as $key => $value) {
+				$items = explode(',', $value['item_ids']);
+
+				$item_names = '';
+				foreach ($items as $item_id) {
+					$item_names .= $serItems[$item_id] . ',';
+				}
+
+				$result[] = array(
+					'index' => $key+1,
+					'shop_name' => $value['shop_name'],
+					'item_types' => rtrim($item_names, ','),
+					'officer' => $value['officer'],
+					'phone' => $value['phone'],
+					'address_detail' => $value['address'],
+					'shop_id' => $value['shop_id'],
+					'bank_account_name' => $value['bank_account_name'],
+					'bank' => $value['bank'],
+					'bank_accunt' => $value['bank_accunt'],
+				);
+
+			}
+		}
+
+		$iFilteredTotal = count($db->query($countSql)->fetchAll());
+		$iTotalRecords = $db->count('lk_shop');
+
+		Flight::json(array(
+			'aaData' => $result, 
+			"sEcho" => intval($req->sEcho),
+			"iTotalRecords" => $iTotalRecords,
+			"iTotalDisplayRecords" => $iFilteredTotal,
+		));
+
+	}
+
+
+	/**
+	 * 添加商家
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function addShop() {
+
+		if(IS_POST) {
+			$data = Flight::request()->data;
+
+			$shop_name = isset($data["shop_name"])?trim($data["shop_name"]):'';
+
+			if(!$shop_name) {
+				Handle::result("缺少关键数据", "商户名未获取到" );
+			}
+
+			$item_ids = isset($data["item_ids"])?trim(implode(',', $data["item_ids"])):'';
+			if(!$item_ids) {
+				Handle::result("缺少关键数据", "至少选择一个商户类型" );
+			}
+
+			$region_id = isset($data["region_id"])?trim($data["region_id"]):'';
+			if(!$region_id) {
+				Handle::result("缺少关键数据", "请选择商户所在区域" );
+			}
+
+			$address = isset($data["address"])?trim($data["address"]):'';
+			if(!$address) {
+				Handle::result("缺少关键数据", "请填写商家地址" );
+			}
+
+			// $data["business_license"]	=> "005.jpg"
+			// $data["legal_person"]		=> "51d24328c2634.jpg"
+			// $data["logo"]				=> "51d24328c2634.jpg"
+			
+			$officer = isset($data["officer"])?trim($data["officer"]):'';
+			if(!$officer) {
+				Handle::result("缺少关键数据", "请填写商家负责人" );
+			}
+
+			$bank = isset($data["bank"])?trim($data["bank"]):'';
+			if(!$bank) {
+				Handle::result("缺少关键数据", "请填写商家开户银行" );
+			}
+
+			$phone = isset($data["phone"])?trim($data["phone"]):'';
+			if(!$phone) {
+				Handle::result("缺少关键数据", "请填写商家联系手机号码" );
+			}
+
+			$bank_account_name = isset($data["bank_account_name"])?trim($data["bank_account_name"]):'';
+			if(!$bank_account_name) {
+				Handle::result("缺少关键数据", "请填写商家银行开户账户名" );
+			}
+
+			$bank_accunt = isset($data["bank_accunt"])?trim($data["bank_accunt"]):'';
+			if(!$bank_accunt) {
+				Handle::result("缺少关键数据", "请填写商家银行收款账号(卡号)" );
+			}
+
+			$is_use = isset($data["is_use"])?$data["is_use"]:'1';
+			$is_recommend = isset($data["is_recommend"])?$data["is_recommend"]:'0';
+			$check_type = isset($data["check_type"])?$data["check_type"]:'1';
+
+			$files = Flight::request()->files;
+
+			// if(!isset($files['business_license'])) {
+			// 	Handle::result("缺少关键数据", "请填写上传商家的营业执照照片" );
+			// }
+
+			// if(!isset($files['legal_person'])) {
+			// 	Handle::result("缺少关键数据", "请填写上传商家法人照片" );
+			// }
+
+			foreach ($files as $name => $file) {
+				// 上传文件并生成URL
+				if(!$file['name']) {
+					continue;
+				}
+				$fileExt = explode('.', $file['name']);
+				$fileExt = end($fileExt);
+
+				if(!in_array($fileExt, array('jpg', 'jpeg', 'png', 'gif', 'bmp'))) {
+				    Handle::result("失败", "文件格式不对，仅支持'jpg', 'jpeg', 'png', 'gif', 'bmp'" );
+				}
+
+				$curDate = date('Ymd');
+				$target_path = FILE_PATH . '/images/' . $curDate;
+				verifyPath($target_path, true);
+
+				$randChar = self::generateRandChar(10);
+
+				$file_path = $target_path . '/' .$randChar. '.'. $fileExt;
+				if(move_uploaded_file($file['tmp_name'], $file_path)) {
+				    $$name = Flight::get('STATIC_URL').'/images/'.$curDate. '/' .$randChar. '.'. $fileExt;
+				}
+			}
+
+			$business_license = isset($business_license)?$business_license:'';
+			// if(!$business_license) {
+			// 	Handle::result("缺少关键数据", "商家营业执照照片上传失败" );
+			// }
+
+			$legal_person = isset($legal_person)?$legal_person:'';
+			// if(!$legal_person) {
+			// 	Handle::result("缺少关键数据", "商家法人照片上传失败" );
+			// }
+
+			$logo = isset($logo)?$logo:'';
+
+			$db = Flight::get('db');
+			if($db->has('lk_shop', array('shop_name' => $shop_name))) {
+				Handle::result("重复", "此商家已经存在请重新定义商家名" );
+			}
+
+			$last_id = $db->insert('lk_shop', array(
+				"shop_name" 			=> $shop_name,
+				"item_ids" 				=> $item_ids,
+				"region_id" 			=> $region_id,
+				"address" 				=> $address,
+				"business_license" 		=> $business_license,
+				"legal_person" 			=> $legal_person,
+				"logo" 					=> $logo,
+				"officer" 				=> $officer,
+				"phone" 				=> $phone,
+				"bank_account_name" 	=> $bank_account_name,
+				"bank" 					=> $bank,
+				"bank_accunt" 			=> $bank_accunt,
+				"add_time" 				=> time(),
+				"is_use" 				=> $is_use,
+				"is_recommend" 			=> $is_recommend,
+				"check_type" 			=> $check_type,
+			));
+
+			if($last_id) {
+				Handle::result("成功", "添加成功", '../shop/shoplist', "点击继续添加", '../shop/addShop' );
+			}else{
+				Handle::result("失败", "添加数据失败");
+			}
+
+		}else{
+
+			$regions = self::getRegions();
+			$serItems = self::getServiceItems();
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/shop/addShop.js');
+
+			Flight::render("shop/addShop", array('regions' => $regions, 'ser_items' => $serItems));
+			
+		}
+
+	}
+
+	/**
+	 * 编辑商家
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function editShop() {
+		if(IS_POST) {
+			$data = Flight::request()->data;
+
+			$shop_name = isset($data["shop_name"])?trim($data["shop_name"]):'';
+			$shop_id = isset($data["shop_id"])?trim($data["shop_id"]):'';
+
+			if(!$shop_name) {
+				Handle::result("缺少关键数据", "商户名未获取到" );
+			}
+
+			$item_ids = isset($data["item_ids"])?trim(implode(',', $data["item_ids"])):'';
+			if(!$item_ids) {
+				Handle::result("缺少关键数据", "至少选择一个商户类型" );
+			}
+
+			$region_id = isset($data["region_id"])?trim($data["region_id"]):'';
+			if(!$region_id) {
+				Handle::result("缺少关键数据", "请选择商户所在区域" );
+			}
+
+			$address = isset($data["address"])?trim($data["address"]):'';
+			if(!$address) {
+				Handle::result("缺少关键数据", "请填写商家地址" );
+			}
+
+			$officer = isset($data["officer"])?trim($data["officer"]):'';
+			if(!$officer) {
+				Handle::result("缺少关键数据", "请填写商家负责人" );
+			}
+
+			$bank = isset($data["bank"])?trim($data["bank"]):'';
+			if(!$bank) {
+				Handle::result("缺少关键数据", "请填写商家开户银行" );
+			}
+
+			$phone = isset($data["phone"])?trim($data["phone"]):'';
+			if(!$phone) {
+				Handle::result("缺少关键数据", "请填写商家联系手机号码" );
+			}
+
+			$bank_account_name = isset($data["bank_account_name"])?trim($data["bank_account_name"]):'';
+			if(!$bank_account_name) {
+				Handle::result("缺少关键数据", "请填写商家银行开户账户名" );
+			}
+
+			$bank_accunt = isset($data["bank_accunt"])?trim($data["bank_accunt"]):'';
+			if(!$bank_accunt) {
+				Handle::result("缺少关键数据", "请填写商家银行收款账号(卡号)" );
+			}
+
+			$is_use = isset($data["is_use"])?$data["is_use"]:'1';
+			$is_recommend = isset($data["is_recommend"])?$data["is_recommend"]:'0';
+			$check_type = isset($data["check_type"])?$data["check_type"]:'1';
+
+			$files = Flight::request()->files;
+
+			$old_data = Flight::get('db')->get("lk_shop", "*" , array("shop_id" => $shop_id));
+
+			if($files && count($files)){
+				foreach ($files as $name => $file) {
+					if(!$file['name'])
+						continue;
+					// 上传文件并生成URL
+					$fileExt = explode('.', $file['name']);
+					$fileExt = end($fileExt);
+
+					if(!in_array($fileExt, array('jpg', 'jpeg', 'png', 'gif', 'bmp'))) {
+					    Handle::result("失败", "文件格式不对，仅支持'jpg', 'jpeg', 'png', 'gif', 'bmp'" );
+					}
+
+					if(isset($old_data[$name])) {
+						$file_url = str_replace(Flight::get('STATIC_URL'), "", $old_data[$name]);
+						$old_file_path = FILE_PATH . $file_url;
+						if(file_exists($old_file_path)) {
+							unlink($old_file_path);
+						}
+					}
+
+					$curDate = date('Ymd');
+					$target_path = FILE_PATH . '/images/' . $curDate;
+					verifyPath($target_path, true);
+
+					$randChar = self::generateRandChar(10);
+
+					$file_path = $target_path . '/' .$randChar. '.'. $fileExt;
+					if(move_uploaded_file($file['tmp_name'], $file_path)) {
+					    $$name = Flight::get('STATIC_URL').'/images/'.$curDate. '/' .$randChar. '.'. $fileExt;
+					}
+				}
+			}
+
+			$in_data = array(
+				"shop_name" 			=> $shop_name,
+				"item_ids" 				=> $item_ids,
+				"region_id" 			=> $region_id,
+				"address" 				=> $address,
+				"officer" 				=> $officer,
+				"phone" 				=> $phone,
+				"bank_account_name" 	=> $bank_account_name,
+				"bank" 					=> $bank,
+				"bank_accunt" 			=> $bank_accunt,
+				"add_time" 				=> time(),
+				"is_use" 				=> $is_use,
+				"is_recommend" 			=> $is_recommend,
+				"check_type" 			=> $check_type,
+			);
+
+			$business_license = isset($business_license)?$business_license:'';
+			$legal_person = isset($legal_person)?$legal_person:'';
+			$logo = isset($logo)?$logo:'';
+
+			if($business_license) {
+				$in_data['business_license'] = $business_license;
+			}
+
+			if($legal_person) {
+				$in_data['legal_person'] = $legal_person;
+			}
+
+			if($logo) {
+				$in_data['logo'] = $logo;
+			}
+
+			$db = Flight::get('db');
+			if($db->has('lk_shop', array("AND" => array('shop_name' => $shop_name, 'shop_id[!]' => $shop_id )))) {
+				Handle::result("重复", "此商家已经存在请重新定义商家名" );
+			}
+
+			$last_id = $db->update('lk_shop', $in_data, array('shop_id' => $shop_id));
+
+			if($last_id) {
+				Handle::result("成功", "编辑成功", '../shop/shoplist', "点击继续编辑", '../shop/editShop?shop_id='.$shop_id );
+			}else{
+				Handle::result("失败", "添加数据失败");
+			}
+
+		}else{
+
+			$regions = self::getRegions();
+			$serItems = self::getServiceItems();
+
+			$shop_id = Flight::request()->query->shop_id;
+
+			$shop_info = Flight::get('db')->get("lk_shop", "*", array("shop_id" => $shop_id));
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/shop/editShop.js');
+
+			Flight::render("shop/editShop", array('regions' => $regions, 'ser_items' => $serItems, "shop_info" => $shop_info));
+			
+		}
+	}
+
+
+	/**
+	 * 生成随机字符
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	private static function generateRandChar($length = 8) {
+		// 密码字符集，可任意添加你需要的字符  
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";  
+		$strings = "";  
+		for ( $i = 0; $i < $length; $i++ )  
+		{  
+			// 这里提供两种字符获取方式  
+			// 第一种是使用 substr 截取$chars中的任意一位字符；  
+			// 第二种是取字符数组 $chars 的任意元素  
+			// $strings .= substr($chars, mt_rand(0, strlen($chars) – 1), 1);  
+			$strings .= $chars[ mt_rand(0, strlen($chars) - 1) ];  
+		}  
+		return $strings;  
+	}
+
+	/**
+	 * 获取区域
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getRegions($type = 1) {
+
+		$db = Flight::get('db');
+
+		$regions = $db->select('lk_region', array('region_id', 'region_name'), array('parent_id' => '530', 'ORDER' => "sort_order ASC") );
+
+		// 所有
+		$allRegions = $db->select('lk_region', array('region_id', 'region_name', 'parent_id'), array('parent_id[>]' => '0' ,'ORDER' => "sort_order ASC") );
+		$allRegs = array();
+
+		$res = array();
+		if($type == 2) {
+			foreach ($allRegions as $region) {
+				$region_name = $db->get('lk_region', 'region_name', array('region_id' => $region['parent_id']));
+				$res[$region['region_id']] = $region_name. '·' .$region['region_name'];
+			}
+
+		}else{
+			
+			foreach ($allRegions as $alre) {
+				$allRegs[$alre['parent_id']]["{$alre['region_id']}"] = $alre['region_name'];
+			}
+
+			if($regions) {
+				foreach ($regions as $value) {
+					if(!isset($allRegs[$value['region_id']])) {
+						$res[$value['region_name']] = array("{$value['region_id']}" => "{$value['region_name']}");
+					}else{
+						$res[$value['region_name']] = $allRegs[$value['region_id']];
+					}
+				}
+
+			}
+		}
+
+
+
+
+		return $res;
+
+	}
+
+	/**
+	 * [getServiceItems description]
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getServiceItems( $type = 1) {
+		$db = Flight::get('db');
+
+		$sers = $db->select('lk_service', array('ser_id', 'ser_name'), array('is_use' => '1', 'ORDER' => "sort_order ASC") );
+
+		// 所有
+		$all = $db->select('lk_service_item', array('item_id', 'item_name', 'ser_id'), array('is_use' => '1' ,'ORDER' => "sort_order ASC") );
+		$allItems = array();
+
+		$res = array();
+		if($type == 2) {
+			foreach ($all as $item) {
+				$ser_name = $db->get('lk_service', 'ser_name', array('ser_id' => $item['ser_id']));
+				$res[$item['item_id']] = $ser_name. '·' .$item['item_name'];
+			}
+
+		}else{
+			foreach ($all as $item) {
+				$allItems[$item['ser_id']]["{$item['item_id']}"] = $item['item_name'];
+			}
+
+			if($sers) {
+				foreach ($sers as $value) {
+					$res[$value['ser_name']] = $allItems[$value['ser_id']];
+				}
+
+			}
+		}
+
+		return $res;
+	}
+
+
+	/**
+	 * [getServiceItems description]
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-08
+	 */
+	public static function getCouponServiceItems( $type = 1) {
+		$db = Flight::get('db');
+
+		// 所有
+		$all = $db->select('lk_service_item', array('item_id', 'item_name', 'ser_id'), 
+			array("ser_id" => 10 ,'ORDER' => "sort_order ASC") );
+		$res = array();
+		foreach ($all as $key => $value) {
+			$res[$value['item_id']] = $value['item_name'];
+		}
+
+		return $res;
+	}
+
+	/**
+	 * 删除店铺
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function delShop() {
+
+		if(IS_POST) {
+			$shop_id = Flight::request()->data->shop_id;
+			$db = Flight::get('db');
+			$db->update("lk_shop",  array('is_del' => 1) ,array('shop_id' => $shop_id));
+
+			// add shop action
+			$db->insert("lk_shop_action", array(
+				'shop_id' => $shop_id, 
+				'action' => 4, 
+				'admin_id' => Session::get('admin_id'), 
+				'msg' => trim(Flight::request()->data->reason),
+				'add_time' => time() 
+			));
+
+			Flight::json(array('success' => true, 'msg' => '删除成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../dashboard/admin');
+		}
+
+	}
+
+
+	/**
+	 * 审核商家
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function verifyshop() {
+		Flight::jsrender('/public/js/shop/verifyshop.js');
+		Flight::render("shop/verifyshop");
+	}
+
+	/**
+	 * 本删除的商家
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function recycle() {
+		Flight::jsrender('/public/js/shop/recycle.js');
+		Flight::render("shop/recycle");
+	}
+
+	/**
+	 * 审核打回商家申请
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function check_shop() {
+
+		$req = Flight::request()->data;
+		$shop_id = isset($req['shop_id'])?$req['shop_id']:'';
+		$type = isset($req['type'])?$req['type']:'';
+
+		if($shop_id) {
+
+			// 判断订单是否存在并有效
+			$db = Flight::get('db');
+			$hasOrder = $db->has('lk_shop',array('AND' => array('shop_id' => $shop_id, 'status' => 0)) );
+			if($hasOrder) {
+
+				$admin_id = Session::get('admin_id');
+				$time = time();
+
+				if($type == 1) {
+
+					// 更改订单表审核信息
+					$db->update('lk_shop', array(
+						'status' => 1
+					), array('shop_id' => $shop_id));
+
+					// 添加操作记录
+					$db->insert('lk_shop_action', array(
+						'shop_id' => $shop_id,
+						'admin_id' => $admin_id,
+						'action' => 1,
+						'msg' => '审核通过',
+						'add_time' => $time
+					));
+
+					Flight::json(array('success' => true, 'msg' => '审核订单成功'));
+				}else{
+
+					$reason = isset($req['reason'])?$req['reason']:'';
+					// 更改订单表审核信息
+					$db->update('lk_shop', array(
+						'status' => 2
+					), array('shop_id' => $shop_id));
+
+					// 添加操作记录
+					$db->insert('lk_shop_action', array(
+						'shop_id' => $shop_id,
+						'admin_id' => $admin_id,
+						'action_id' => 2,
+						'msg' => $reason,
+						'add_time' => $time
+					));
+
+					Flight::json(array('success' => true, 'msg' => '打回订单成功'));
+				}
+
+			}else{
+				Flight::json(array('success' => false, 'msg' => '找不到符合条件的订单'));
+			}
+
+		}else{
+			Flight::json(array('success' => false, 'msg' => '传入的数据不正确'));
+		}
+
+	}
+
+	/**
+	 * 还原商家
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function rollbackShop() {
+
+		if(IS_POST) {
+			$shop_id = Flight::request()->data->shop_id;
+			$db = Flight::get('db');
+			$db->update("lk_shop",  array('is_del' => 0) ,array('shop_id' => $shop_id));
+
+			// add shop action
+			$db->insert("lk_shop_action", array(
+				'shop_id' => $shop_id, 
+				'action' => 5, 
+				'admin_id' => Session::get('admin_id'), 
+				'msg' => "还原商户",
+				'add_time' => time() 
+			));
+
+			Flight::json(array('success' => true, 'msg' => '删除成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../dashboard/admin');
+		}
+
+	}
+
+
+	/**
+	 * 店铺类型管理
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	public static function shoptype() {
+
+
+		$search = isset(Flight::request()->query->search)?Flight::request()->query->search:'';
+
+		// 获取所有服务类型
+		$db = Flight::get('db');
+
+		$con = array("is_use" => 1);
+		if($search) {
+			$con = array("is_use" => 1, "ser_name[~]" => $search);
+		}
+
+		$sers = $db->select("lk_service", array("ser_id","ser_name"), $con);
+		$ser_array = array();
+		if($sers) {
+			foreach ($sers as $ser) {
+				$ser_array[$ser['ser_id']] = array("ser_name" => $ser['ser_name']);
+			}
+		}
+
+		$items = $db->select("lk_service_item", array("item_id","item_name","ser_id"), array("is_use" => 1));
+		$item_array = array();
+		if($items) {
+			foreach ($items as $item) {
+				if(isset($ser_array[$item['ser_id']])) {
+					$ser_array[$item['ser_id']]['items'][] = array("item_id" => $item['item_id'], "item_name" => $item['item_name']);
+				}
+			}
+		}
+
+		if(isset(Flight::request()->query->cur_ser_id)) {
+			$cur_ser_id = Flight::request()->query->cur_ser_id;
+		}else{
+			$cur_ser_id = "";
+		}
+
+		Flight::jsrender('/public/js/shop/shoptype.js');
+		Flight::render("shop/shoptype", array("sers" => $ser_array, "cur_ser_id" => $cur_ser_id));
+
+	}
+
+
+	/**
+	 * 新增子类
+	 *
+	 * @author zhaozl
+	 * @since   2015-07-12T23:56:32+0800
+	 */
+	public static function addSubType() {
+
+		$data = Flight::request()->data;
+		$ser_id = isset($data['ser_id'])?$data['ser_id']:'';
+		$sub_item = isset($data['sub_item'])?$data['sub_item']:'';
+
+		if($ser_id) {
+
+			$lastid = Flight::get('db')->insert("lk_service_item", array(
+				'item_name' => $sub_item,
+				'ser_id' => $ser_id,
+			));
+
+			if($lastid) {
+				Flight::json(array('success' => true, 'msg' => '添加成功'));
+			}else{
+				Flight::json(array('success' => false, 'msg' => '添加失败'));
+			}
+
+		}else{
+			Flight::json(array('success' => false, 'msg' => '添加失败'));
+		}
+
+	}
+
+	/**
+	 * 	编辑服务名称
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-19
+	 */
+	public static function editSerName() {
+		$data = Flight::request()->data;
+		$ser_id = isset($data['ser_id'])?$data['ser_id']:'';
+		$new_name = isset($data['new_name'])?$data['new_name']:'';
+
+		if($ser_id) {
+
+			if(Flight::get('db')->has("lk_service", array("AND" => array("ser_name" => $new_name, "ser_id" => $ser_id)))) {
+				Flight::json(array('success' => false, 'msg' => '新的名字已经存在'));
+			}
+
+			$lastid = Flight::get('db')->update("lk_service", array("ser_name" => trim($new_name)), array("ser_id" => $ser_id));
+
+			if($lastid) {
+				Flight::json(array('success' => true, 'msg' => '编辑成功'));
+			}else{
+				Flight::json(array('success' => false, 'msg' => '编辑失败'));
+			}
+
+		}else{
+			Flight::json(array('success' => false, 'msg' => '编辑失败'));
+		}
+	}
+
+	/**
+	 * 	编辑子服务名称
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-19
+	 */
+	public static function editItemName() {
+		$data = Flight::request()->data;
+		$item_id = isset($data['item_id'])?$data['item_id']:'';
+		$new_name = isset($data['new_name'])?$data['new_name']:'';
+
+		if($item_id) {
+
+			if(Flight::get('db')->has("lk_service_item", array("AND" => array("item_name" => $new_name, "item_id" => $item_id)))) {
+				Flight::json(array('success' => false, 'msg' => '新的名字已经存在'));
+			}
+
+			$lastid = Flight::get('db')->update("lk_service_item", array("item_name" => trim($new_name)), array("item_id" => $item_id));
+
+			if($lastid) {
+				Flight::json(array('success' => true, 'msg' => '编辑成功'));
+			}else{
+				Flight::json(array('success' => false, 'msg' => '编辑失败'));
+			}
+
+		}else{
+			Flight::json(array('success' => false, 'msg' => '编辑失败'));
+		}
+	}
+
+	/**
+	 * 删除服务功能
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function delService() {
+
+		if(IS_POST) {
+			$ser_id = Flight::request()->data->ser_id;
+			$db = Flight::get('db');
+			$db->update("lk_service",  array('is_use' => 0) ,array('ser_id' => $ser_id));
+
+			// add shop action
+			Flight::json(array('success' => true, 'msg' => '删除成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../shop/shoptype');
+		}
+
+	}
+
+	/**
+	 * 删除服务功能
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function delServiceItem() {
+
+		if(IS_POST) {
+			$item_id = Flight::request()->data->item_id;
+			$db = Flight::get('db');
+			$db->update("lk_service_item",  array('is_use' => 0) ,array('item_id' => $item_id));
+
+			// add shop action
+			Flight::json(array('success' => true, 'msg' => '删除成功'));
+
+		}else{
+			Handle::result('302', '非法请求', '../shop/shoptype');
+		}
+
+	}
+
+	/**
+	 * 服务人员列表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function worker() {
+		Flight::jsrender('/public/js/shop/worker.js');
+		Flight::render("shop/worker");
+	}
+
+	/**
+	 * 获取工作人员列表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function getWorkers() {
+
+		$req = Flight::request()->query;
+
+		$search = isset($req->sSearch)?$req->sSearch:'';
+		$sSearch_1 = isset($req->sSearch_1)?$req->sSearch_1:'';
+
+		$length = isset($req->iDisplayLength)?$req->iDisplayLength:'';
+		$start = isset($req->iDisplayStart)?$req->iDisplayStart:'';
+		$sort_index = isset($req->iSortCol_0)?$req->iSortCol_0:'0';
+
+		$sort_item = $req['mDataProp_'.$sort_index];
+		$sort_sort = strtoupper($req['sSortDir_0']);
+
+		$db = Flight::get('db');
+
+		$sql = "SELECT SS.*, S.shop_name FROM lk_shopstaff SS LEFT JOIN lk_shop S ON SS.shop_id = S.shop_id WHERE SS.is_use = 1";
+
+		// L类型查询
+		if($sSearch_1 > 0) {
+			$sql .= " AND FIND_IN_SET({$sSearch_1}, SS.`item_ids`)";
+		}
+
+		// 查询店铺名和负责人姓名
+		if($search) {
+			$sql .= " AND (staff_name LIKE '%{$search}%' OR shop_name LIKE '%{$search}%')";
+		}
+
+		$countSql = $sql;
+		$sql .= " ORDER BY {$sort_item} {$sort_sort} LIMIT {$start},{$length}";
+
+		$res = $db->query($sql)->fetchAll();
+
+		$serItems = self::getServiceItems(2);
+		$result = array();
+		if($res) {
+			foreach ($res as $key => $value) {
+				$items = explode(',', $value['item_ids']);
+
+				$item_names = '';
+				foreach ($items as $item_id) {
+					if(isset($serItems[$item_id]))
+						$item_names .= $serItems[$item_id] . ',';
+				}
+
+				$result[] = array(
+					'index' => $key+1,
+					'shop_name' => $value['shop_name'],
+					'item_types' => rtrim($item_names, ','),
+					'staff_name' => $value['staff_name'],
+					'phone_mob' => $value['phone_mob'],
+					'status' => $value['status']== 0?'未审核':($value['status']== 1?'已审核':'打回'),
+					'add_time' => isset($value['add_time']) && $value['add_time']>0?date('Y-m-d H:i:s', $value['add_time']):'',
+					'staff_id' => $value['staff_id'],
+				);
+
+			}
+		}
+
+		$iFilteredTotal = count($db->query($countSql)->fetchAll());
+		$iTotalRecords = $db->count("lk_shopstaff");
+
+		Flight::json(array(
+			'aaData' => $result, 
+			"sEcho" => intval($req->sEcho),
+			"iTotalRecords" => $iTotalRecords,
+			"iTotalDisplayRecords" => $iFilteredTotal,
+		));
+
+	}
+
+	/**
+	 * 新增服务人员
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-13
+	 */
+	public static function addWorker() {
+
+		if(IS_POST) {
+			$data = Flight::request()->data;
+
+			$staff_name = isset($data["staff_name"])?trim($data["staff_name"]):'';
+
+			if(!$staff_name) {
+				Handle::result("缺少关键数据", "员工未获取到" );
+			}
+
+			$item_ids = isset($data["item_ids"])?trim(implode(',', $data["item_ids"])):'';
+			if(!$item_ids) {
+				Handle::result("缺少关键数据", "至少选择一个商户类型" );
+			}
+
+			$phone_mob = isset($data["phone_mob"])?trim($data["phone_mob"]):'';
+			if(!$phone_mob) {
+				Handle::result("缺少关键数据", "请填写手机号码" );
+			}
+
+			if(!preg_match("/^13[0-9]{9}$|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/",$phone_mob)){    
+				Handle::result("缺少关键数据", "请填写正确的手机号码" );
+			}
+
+			$shop_id = isset($data["shop_id"])?trim($data["shop_id"]):'';
+			if(!$shop_id) {
+				Handle::result("缺少关键数据", "请选择所属商家" );
+			}
+
+			$health_date = isset($data["health_date"])?trim($data["health_date"]):'';
+			// if(!$health_date) {
+			// 	Handle::result("缺少关键数据", "请选择健康证到期时间" );
+			// }
+
+			$files = Flight::request()->files;
+
+			// if(!isset($files['health_certificate'])) {
+			// 	Handle::result("缺少关键数据", "请上传健康证" );
+			// }
+
+			// if(!isset($files['id_front'])) {
+			// 	Handle::result("缺少关键数据", "请上传身份证正面" );
+			// }
+
+			// if(!isset($files['id_reverse'])) {
+			// 	Handle::result("缺少关键数据", "请上传身份证反面" );
+			// }
+
+			// if(!isset($files['work_license'])) {
+			// 	Handle::result("缺少关键数据", "请上传上岗证" );
+			// }
+
+			foreach ($files as $name => $file) {
+				if(!$file['name']) {
+					continue;
+				}
+
+				// 上传文件并生成URL
+				$fileExt = explode('.', $file['name']);
+				$fileExt = end($fileExt);
+
+				if(!in_array($fileExt, array('jpg', 'jpeg', 'png', 'gif', 'bmp'))) {
+				    Handle::result("失败", "文件格式不对，仅支持'jpg', 'jpeg', 'png', 'gif', 'bmp'" );
+				}
+
+				$curDate = date('Ymd');
+				$target_path = FILE_PATH . '/images/' . $curDate;
+				verifyPath($target_path, true);
+
+				$randChar = self::generateRandChar(10);
+
+				$file_path = $target_path . '/' .$randChar. '.'. $fileExt;
+				if(move_uploaded_file($file['tmp_name'], $file_path)) {
+				    $$name = Flight::get('STATIC_URL').'/images/'.$curDate. '/' .$randChar. '.'. $fileExt;
+				}
+			}
+
+			$health_certificate = isset($health_certificate)?$health_certificate:'';
+			// if(!$health_certificate) {
+			// 	Handle::result("缺少关键数据", "健康证上传失败" );
+			// }
+
+			$id_front = isset($id_front)?$id_front:'';
+			// if(!$id_front) {
+			// 	Handle::result("缺少关键数据", "身份证正面上传失败" );
+			// }
+
+			$id_reverse = isset($id_reverse)?$id_reverse:'';
+			// if(!$id_reverse) {
+			// 	Handle::result("缺少关键数据", "身份证反面上传失败" );
+			// }
+
+			$work_license = isset($work_license)?$work_license:'';
+			// if(!$work_license) {
+			// 	Handle::result("缺少关键数据", "上岗证上传失败" );
+			// }
+
+			$db = Flight::get('db');
+
+			$last_id = $db->insert('lk_shopstaff', array(
+				"staff_name" => $staff_name,
+				"shop_id" => $shop_id,
+				"item_ids" => $item_ids,
+				"phone_mob" => $phone_mob,
+				"health_certificate" => $health_certificate,
+				"health_date" => strtotime($health_date),
+				"id_front" => $id_front,
+				"id_reverse" => $id_reverse,
+				"work_license" => $work_license,
+				"add_time" => time(),
+			));
+
+			if($last_id) {
+				Handle::result("成功", "添加成功", '../shop/worker', "点击继续添加", '../shop/addWorker' );
+			}else{
+				Handle::result("失败", "添加数据失败");
+			}
+
+
+		}else{
+			$serItems = self::getServiceItems();
+			$shops = Flight::get('db')->select("lk_shop", array("shop_id", "shop_name"), array("AND" => array("is_use" => 1, "is_del" => 0)));
+
+			$shopArray = array();
+			foreach ($shops as $key => $value) {
+				$shopArray[$value['shop_id']] = $value['shop_name'];
+			}
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/shop/addWorker.js');
+			Flight::render("shop/addWorker", array('ser_items' => $serItems, "shops" => $shopArray));
+		}
+
+	}
+
+	/**
+	 * 查看服务人员列表
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-14
+	 */
+	public static function view_worker() {
+
+		$serItems = self::getServiceItems(2);
+
+		$shops = Flight::get('db')->select("lk_shop", array("shop_id", "shop_name"), array("is_use" => 1));
+
+		$shopArray = array();
+		foreach ($shops as $key => $value) {
+			$shopArray[$value['shop_id']] = $value['shop_name'];
+		}
+
+		$staff_id = Flight::request()->query->staff_id;
+		$staff_info = Flight::get('db')->get("lk_shopstaff", "*", array("staff_id" => $staff_id));
+
+		$items = explode(',', $staff_info['item_ids']);
+		$item_names = '';
+		foreach ($items as $item_id) {
+			$item_names .= $serItems[$item_id] . ',';
+		}
+
+		$staff_info['item_ids'] = $item_names;
+		$staff_info['shop_name'] = $shopArray[$staff_info['shop_id']];
+
+		Flight::render("shop/viewWorker", array("staff_info" => $staff_info));
+
+	}
+
+	/**
+	 * 审核服务人员
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-14
+	 */
+	public static function check_worker() {
+		$req = Flight::request()->data;
+		$staff_id = isset($req['staff_id'])?$req['staff_id']:'';
+		$type = isset($req['type'])?$req['type']:'';
+
+		if($staff_id) {
+
+			// 判断订单是否存在并有效
+			$db = Flight::get('db');
+			$hasOrder = $db->has('lk_shopstaff',array('AND' => array('staff_id' => $staff_id, 'status' => 0)) );
+			if($hasOrder) {
+
+				$admin_id = Session::get('admin_id');
+				$time = time();
+
+				if($type == 1) {
+
+					// 更改订单表审核信息
+					$db->update('lk_shopstaff', array(
+						'status' => 1,
+						'commont' => '审核通过',
+						'verifier' => $admin_id,
+						'verify_time' => time()
+					), array('staff_id' => $staff_id));
+
+					Flight::json(array('success' => true, 'msg' => '审核订单成功'));
+				}else{
+
+					$reason = isset($req['reason'])?$req['reason']:'';
+					// 更改订单表审核信息
+					$db->update('lk_shopstaff', array(
+						'status' => 2,
+						'commont' => $reason,
+						'verifier' => $admin_id,
+						'verify_time' => time()
+					), array('staff_id' => $staff_id));
+
+					Flight::json(array('success' => true, 'msg' => '打回订单成功'));
+				}
+
+			}else{
+				Flight::json(array('success' => false, 'msg' => '找不到符合条件的订单'));
+			}
+
+		}else{
+			Flight::json(array('success' => false, 'msg' => '传入的数据不正确'));
+		}
+	}
+
+
+	/**
+	 * 设定商家的佣金比例
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-16
+	 */
+	public static function shopCommission() {
+
+		if(IS_POST) {
+
+			$data = Flight::request()->data;
+
+			$shop_id = isset($data['shop_id'])?$data['shop_id']:'';
+			$rate = isset($data['rate'])?$data['rate']:'';
+
+			if(!$shop_id) {
+				Handle::result("失败", "未指定商家");
+			}
+
+			if(!$rate) {
+				Handle::result("失败", "佣金比例数据丢失");
+			}
+
+			// 弃置旧数据
+			Flight::get('db')->update("lk_shop_commission", array("status" => 0), array("shop_id" => $shop_id));
+
+			$in_data = array();
+			$addtime = time();
+			foreach ($rate as $key => $value) {
+				$in_data[] = array(
+					'shop_id' => $shop_id,
+					'item_id' => $key,
+					'rate' => $value,
+					'add_time' => $addtime,
+					'status' => 1
+				);
+			}
+			if(count($in_data)) {
+				$in_id = Flight::get('db')->insert("lk_shop_commission", $in_data);
+
+				Handle::result("成功", "设置成功", '../shop/shoplist', "点击重新设置", '../shop/shopCommission?shop_id='.$shop_id);
+			}else{
+				Handle::result("失败", "设置失败");
+			}
+
+		}else{
+
+			$serItems = self::getServiceItems(2);
+			$shop_id = Flight::request()->query->shop_id;
+			$shop_info = Flight::get('db')->get("lk_shop", array("shop_id", "shop_name", "item_ids"), array("shop_id" => $shop_id));
+
+			$old_rate = Flight::get('db')->select("lk_shop_commission", "*",  array("AND" => array("shop_id" => $shop_id, "status" => 1)));
+			$rate_array = array();
+			if($old_rate) {
+				foreach ($old_rate as $rate) {
+					$rate_array[$rate['item_id']] = $rate['rate'];
+				}
+			}
+
+			$itemArray = array();
+			$items = explode(',', $shop_info['item_ids']);
+
+			foreach ($items as $item_id) {
+				$itemArray[] = array(
+					'item_id' => $item_id,
+					'item_name' => $serItems[$item_id],
+					'rate' => isset($rate_array[$item_id])?$rate_array[$item_id]:''
+				);
+			}
+
+			Flight::jsrender('/public/js/plugins/jquery.validate.min.js');
+			Flight::jsrender('/public/js/plugins/jquery.tagsinput.min.js');
+			Flight::jsrender('/public/js/plugins/chosen.jquery.min.js');
+			Flight::jsrender('/public/js/shop/shopCommission.js');
+			Flight::render("shop/shopCommission", array('shop_info' => $shop_info, "items" => $itemArray));
+
+
+		}
+
+	}
+
+	/**
+	 * 生成二维码并下载
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-24
+	 */
+	public static function gencode() {
+
+		$db = Flight::get('db');
+		$db->query("update lk_shopstaff set staff_code = REPLACE(UUID(), '-', '') where staff_code = ''");
+
+		$sql = "SELECT SS.*, S.shop_name FROM lk_shopstaff SS LEFT JOIN lk_shop S ON SS.shop_id = S.shop_id WHERE SS.is_use = 1";
+		$res = $db->query($sql)->fetchAll();
+
+		$result = array();
+		if($res) {
+			foreach ($res as $key => $value) {
+				$staffUrl = Flight::get("WEB_URL").'/shop/staffinfo?code='.$value['staff_code'];
+
+				$result[] = array(
+					'index' => $key+1,
+					'shop_name' => $value['shop_name'],
+					'staff_name' => $value['staff_name'],
+					'qcUrl' => generateQRfromGoogle($staffUrl, '200'),
+				);
+			}
+			Flight::render('shop/staffcode', array("res" => $result), false);
+		}else{
+			echo "错误，找不到服务人员";
+		}
+
+	}
+
+}

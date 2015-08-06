@@ -1,0 +1,300 @@
+<?php
+// header('Content-type: application/json');
+class My {
+
+
+	/**
+	 * 获得我的优惠券
+	 * @author glivia
+	 * @method post
+	 * @param  $user_id
+	 * @param  $token
+	 * @return json
+	 */
+	public function getCoupList(){
+
+		$database = Flight::get('db');
+		$uid      = P('user_id');
+
+		if( !$uid ){
+			Flight::json(array('success' => false, 'msg' => '未传入用户ID'));
+			exit();
+		}
+
+		$res = $database->select("lk_coup_list", 
+			array(
+				"[>]lk_service" => "ser_id",
+				"[>]lk_service_item" => "item_id",
+			),
+			array("begintime","endtime","ser_id","item_id","item_name","ser_name","commoncode","money","minprice","codepassword"),
+			array(
+			"AND" => array(
+				"user_id"   => $uid,
+			    "ischecked" => 0,
+			    "isuse"     => 1
+		)));
+
+		if( $res ){
+			self::returnJson(array(
+				"success" => "true",
+				"data"    => $res
+			));
+		}else{
+			self::returnJson(array(
+				"success" => "false"
+			));
+		}
+
+	}
+
+	/**
+	 * 是否有该分类下的免费券
+	 * @author glivia
+	 * @method post
+	 * @param  $user_id 
+	 * @param  $itemid
+	 * @param  $token
+	 * @return 
+	 */
+	public function hasCoup(){
+
+		$database = Flight::get('db');
+		$uid      = P('user_id');
+		$itemid   = P('itemid');
+
+		//缺少参数,返回
+		if( !$uid || !$itemid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$time = date('Y-m-d H:i:s');
+
+		if($coup_list = $db->select("lk_coup_list", "*", array(
+			"AND" => array(
+				"user_id" => $uid, 
+				"begintime[<]" => $time,
+				"endtime[>]" => $time,
+				"item_id" => $itemid,
+				"isuse" => 1,
+				"ischecked" => 0,
+			)
+		))){
+			Flight::json(array("success" => true, 'data' => $coup_list));
+			die;
+		}else{
+			Flight::json(array("success" => false, 'msg' => '找不到相关数据'));
+			die;
+		}
+		
+	}
+
+
+	/**
+	 * 提交用户反馈
+	 * @author glivia
+	 * @method post
+	 * @param  $content 
+	 * @param  $user_id
+	 * @param  $token
+	 * @return 
+	 */
+	public function submitComment(){
+
+		$database =  Flight::get('db');
+		$cnt      =  P('content');
+		$uid      =  P('user_id');
+		
+		//缺少参数,返回
+		if( !$cnt || !$uid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$result = $database->insert('lk_feedback', array(
+			'cmt_content'    =>  $cnt,
+		    'cmt_user'       =>  $uid,
+		    'add_time'       =>  time(),
+		    'is_view'        =>  0
+		));
+
+		if( $result ){
+			Flight::json(array(
+				"success"   => 'true'
+			));
+			exit();
+		}else{
+			Flight::json(array(
+				"success"   => 'false'
+			));
+			exit();
+		}
+
+	}
+
+	/**
+	 * 获取用户信息
+	 * @param $user_id
+	 * @param $token
+	 * @return [type] [description]
+	 */
+	public static function getUserInfo(){
+		$database = Flight::get('db');
+		$uid      = P("user_id");
+
+		if( !$uid ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$result = $database->select("lk_user",array("user_name","phone_mob","open_id"),array(
+			"user_id" => $uid 
+		));
+
+		if( $result ){
+			Flight::json(array(
+				"success"   => 'true',
+				"data"      => $result
+			));
+			exit();
+		}else{
+			Flight::json(array(
+				"success"   => 'false'
+			));
+			exit();
+		}
+
+	}
+
+	/**
+	 * 生成券码
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-16
+	 */
+	public static function generateCode() {
+
+		$database = Flight::get('db');
+		$user_id   = P("user_id");
+		$coupon_id = 7;
+		$number   = 1;
+
+		$db = Flight::get('db');
+		$rule = $db->get('lk_coup_rule', "*", array("id" => $coupon_id));
+
+		if($rule['coupon_type'] == 2) {
+			$ser_item = $db->query("SELECT ser_id, item_id FROM lk_service_item WHERE FIND_IN_SET(item_id, '{$rule['item_ids']}')");
+			$item_sers = array();
+			foreach ($ser_item as $key => $value) {
+				$item_sers[$value['item_id']] = $value['ser_id'];
+			}
+		}
+
+		if($rule['canusetype'] == 1) {
+			$start = date('Y-m-d', time()).' 00:00:00';
+			$end = date('Y-m-d', time()+$rule['canuseday']*86400) . ' 23:59:59';
+		}else{
+			$start = $rule['begintime'];
+			$end = $rule['endtime'];
+		}
+
+		$in_data = array();
+		for ($i=0; $i < $number; $i++) { 
+
+			$commoncode = $rule['prefix'].self::generateRandChar(11);
+			$codepassword = self::generateRandChar(10);
+
+			if($rule['coupon_type'] == 2) {
+				$items = explode(",", $rule['item_ids']);
+
+				foreach ($items as $item_id) {
+					$in_data[] = array(
+						'coupon_id' => $coupon_id,
+						'user_id' => $user_id,
+						'begintime' => $start,
+						'endtime' => $end,
+						'ser_id' => $item_sers[$item_id],
+						'item_id' => $item_id,
+						'commoncode' => $commoncode,
+						'codepassword' => $codepassword,
+					);
+				}
+
+			}else{
+				$in_data[] = array(
+					'coupon_id' => $coupon_id,
+					'user_id' => $user_id,
+					'begintime' => $start,
+					'endtime' => $end,
+					'money' => $rule['money'],
+					'minprice' => $rule['minprice'],
+					'commoncode' => $commoncode,
+					'codepassword' => $codepassword,
+				);
+			}
+
+		}
+
+		if(count($in_data)) {
+			$db->insert("lk_coup_list", $in_data);
+		}
+
+		Flight::json(array('success' => true, 'msg' => '添加成功'));
+	}
+
+
+	/**
+	 * 生成随机字符
+	 *
+	 * @author zhaozl
+	 * @since  2015-07-10
+	 */
+	private static function generateRandChar($length = 10) {
+		// 密码字符集，可任意添加你需要的字符  
+		$chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";  
+		$strings = "";  
+		for ( $i = 0; $i < $length; $i++ )  
+		{  
+			// 这里提供两种字符获取方式  
+			// 第一种是使用 substr 截取$chars中的任意一位字符；  
+			// 第二种是取字符数组 $chars 的任意元素  
+			// $strings .= substr($chars, mt_rand(0, strlen($chars) – 1), 1);  
+			$strings .= $chars[ mt_rand(0, strlen($chars) - 1) ];  
+		}  
+		return $strings;  
+	}
+
+
+	/**
+	 * 优惠券使用记录
+	 *
+	 * @return [type]     [description]
+	 * @author zhaozl
+	 * @since  2015-07-17
+	 */
+	public static function getCoupenUse() {
+
+		$database =  Flight::get('db');
+		$user_id      =  P('user_id');
+		
+		//缺少参数,返回
+		if( !$user_id ){
+			Flight::json(array("success" => false, "msg" => '缺少关键数据'));
+			exit();
+		}
+
+		$coup_data = $db->select("lk_coup_list", array(
+			"[>]lk_coup_rule" => array("coupon_id" => "id")
+		), "*", array("user_id" => $user_id, "ischekced" => 1, "isuse" => 1));
+
+		if($coup_data) {
+			Flight::json(array('success' => true, 'data' => $coup_data));
+		}else{
+			Flight::json(array('success' => false, 'msg' => "找不到已使用记录"));
+		}
+
+	}
+
+
+}

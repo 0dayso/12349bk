@@ -1,0 +1,17 @@
+<?php
+
+return array(
+
+	//云信 9.+高速通道
+	'YX' => array(
+		'account' 		=> 'LKDZ',//账号
+		'password'		=> 'loukou123456',//密码
+		'url'			=> 'http://yes.itissm.com/api/MsgSend.asmx?WSDL',
+		'sign_name'		=> '【12349】',//签名
+		'msg_encoding'	=> 'UTF-8',
+		'Channel1'		=> 78,	//106应用通道
+		'Channel2'		=> 88,	//营销通道
+		'Channel3'		=> 99,	//备案营销
+	),
+
+);

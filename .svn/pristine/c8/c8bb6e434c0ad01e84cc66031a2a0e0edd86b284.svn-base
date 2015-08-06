@@ -1,0 +1,19 @@
+<?php
+
+class Sms {
+
+
+	public static function sendMsg() {
+
+		
+		
+
+		
+
+
+	}
+
+
+
+
+}

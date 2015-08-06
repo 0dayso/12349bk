@@ -1,0 +1,47 @@
+jQuery(document).ready(function($) {
+
+	jQuery('input:radio').uniform();
+
+	jQuery(".stdform").validate({
+		ignore: ":hidden:not(select)",
+		rules: {
+			order_amount: {
+				required: true,
+				number:true,
+				min: 1
+			}
+		},
+		messages: {
+			order_amount: {
+				required: "请填写订单金额",
+				number: "必须是数字",
+				min: "不能小于1"
+			}
+		}
+	});
+
+	$('input[type="radio"]').change(function(event) {
+		if($(this).val() == 2) {
+			$("#commoncode").rules("add", {required: true, messages: {required: "请填写优惠券卡号"}});
+			$("#codepassword").rules("add", {required: true, messages: {required: "请填写优惠券密码"}});
+
+			$("#couponField").removeClass("hide").addClass("show");
+		}else{
+			$("#commoncode").rules("remove");
+			$("#codepassword").rules("remove");
+			$("#couponField").removeClass("show").addClass("hide");
+		}
+	});
+
+	if($('input[type="radio"]').val() == 2) {
+			$("#commoncode").rules("add", {required: true, messages: {required: "请填写优惠券卡号"}});
+			$("#codepassword").rules("add", {required: true, messages: {required: "请填写优惠券密码"}});
+
+			$("#couponField").removeClass("hide").addClass("show");
+		}else{
+			$("#commoncode").rules("remove");
+			$("#codepassword").rules("remove");
+			$("#couponField").removeClass("show").addClass("hide");
+		}
+
+});
